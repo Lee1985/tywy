@@ -6,7 +6,15 @@
          id="WebApp_ID" 
          version="3.0">
          
-	<display-name>mybatis</display-name>
+	<display-name>tywy</display-name> 
+    <context-param>
+      <param-name>webAppRootKey</param-name>
+      <param-value>tywy</param-value>
+    </context-param>
+    <context-param>
+      <param-name>interfacePath</param-name>
+      <param-value>http://localhost:8080/tywy/</param-value>
+    </context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring.xml,classpath:spring-mybatis.xml</param-value>
