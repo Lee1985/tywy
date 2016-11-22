@@ -21,7 +21,7 @@ import com.tywy.utils.UUIDUtil;
  * 
 * @ClassName: SystemUserInfoController 
 * @Description: 控制层 
-* @author lipeng  
+* @author lipeng 
 * @date 2016-11-22 11:11:20 
 * @Copyright：
  */
