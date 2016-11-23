@@ -30,65 +30,70 @@ public class UUIDUtil {
 		return ss;
 	}
 
-	public static String getRandomStrBySplit(int number,int position,String split) {
+	public static String getRandomStrBySplit(int number, int position, String split) {
 		StringBuffer stringBuffer = new StringBuffer();
-		char[] strs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a',
-				'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm',
-				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-				'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-				'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-				'X', 'Y', 'Z' };
+		char[] strs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+				'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E',
+				'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+				'Z' };
 
 		for (int i = 0; i < number; i++) {
-			if ((i)%position==0&&i>0) {
+			if ((i) % position == 0 && i > 0) {
 				stringBuffer.append(split);
 			}
 			stringBuffer.append(strs[random.nextInt(61)]);
 		}
 		return stringBuffer.toString();
 	}
-	
+
 	public static String getRandomStr(int number) {
 		StringBuffer stringBuffer = new StringBuffer();
-		char[] strs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a',
-				'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm',
-				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-				'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-				'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-				'X', 'Y', 'Z' };
+		char[] strs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+				'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E',
+				'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+				'Z' };
 
 		for (int i = 0; i < number; i++) {
 			stringBuffer.append(strs[random.nextInt(61)]);
 		}
 		return stringBuffer.toString();
 	}
-	
-	 public static String getRandomStrz(int number) {
-			StringBuffer stringBuffer = new StringBuffer();
-			char[] strs = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-					'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-					'X', 'Y', 'Z' };
 
-			for (int i = 0; i < number; i++) {
-				stringBuffer.append(strs[random.nextInt(26)]);
-			}
-			return stringBuffer.toString();
+	public static String getRandomStrz(int number) {
+		StringBuffer stringBuffer = new StringBuffer();
+		char[] strs = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+				'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+		for (int i = 0; i < number; i++) {
+			stringBuffer.append(strs[random.nextInt(26)]);
 		}
-	
+		return stringBuffer.toString();
+	}
+
+	public static String getRandomNum(int number) {
+		StringBuffer stringBuffer = new StringBuffer();
+		char[] strs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+		for (int i = 0; i < number; i++) {
+			stringBuffer.append(strs[random.nextInt(5)]);
+		}
+		return stringBuffer.toString();
+	}
+
 	public static String getConvertCode() {
-		StringBuffer stringBuffer=new StringBuffer();
-		String time=(new Date()).getTime()+"";
-		time=time+getRandomStr(3);
+		StringBuffer stringBuffer = new StringBuffer();
+		String time = (new Date()).getTime() + "";
+		time = time + getRandomStr(3);
 		for (int i = 0; i < 3; i++) {
 			stringBuffer.append(time.substring(0, 4));
 			stringBuffer.append("-");
-			time=time.substring(4);
+			time = time.substring(4);
 		}
 		stringBuffer.append(time);
 		return stringBuffer.toString();
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getUUID());
+		System.out.println(getRandomNum(16));
 	}
 }

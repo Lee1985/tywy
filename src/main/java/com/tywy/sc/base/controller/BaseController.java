@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
-
 @Controller
 public class BaseController {
-	
+
 	public final static Integer pageSize = 10;
-	
-	protected Map<String,Object> getJsonResult(Integer result, String msg,String errorMsg) {
+
+	protected Map<String, Object> getJsonResult(Integer result, String msg, String errorMsg) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (result > 0) {
 			map.put("success", true);
@@ -31,46 +30,47 @@ public class BaseController {
 		}
 		return map;
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	public String handleException(Exception ex,HttpServletRequest request) {	
+	public String handleException(Exception ex, HttpServletRequest request) {
 		String errorMessage = StringUtils.EMPTY;
-		if (ex instanceof MaxUploadSizeExceededException){
-			errorMessage = "文件应不大于 " + getFileMB(((MaxUploadSizeExceededException)ex).getMaxUploadSize());
-		} else{
+		if (ex instanceof MaxUploadSizeExceededException) {
+			errorMessage = "文件应不大于 " + getFileMB(((MaxUploadSizeExceededException) ex).getMaxUploadSize());
+		} else {
 			ex.printStackTrace();
 			errorMessage = "未知错误: " + ex.getMessage();
-		}  
+		}
 		return errorMessage;
-    }
-	
-    private String getFileMB(long byteFile){  
-        if(byteFile==0)  
-           return "0MB";  
-        long mb=1024*1024;  
-        return ""+byteFile/mb+"MB";  
-    }
-    
-    public String encodeParam(String param){    	
-    	try {
-    		if(StringUtils.isNotBlank(param)){
-    			param = URLEncoder.encode(param,"utf-8");
-    		}    		
+	}
+
+	private String getFileMB(long byteFile) {
+		if (byteFile == 0)
+			return "0MB";
+		long mb = 1024 * 1024;
+		return "" + byteFile / mb + "MB";
+	}
+
+	public String encodeParam(String param) {
+		try {
+			if (StringUtils.isNotBlank(param)) {
+				param = URLEncoder.encode(param, "utf-8");
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-    	return param;
-    }
-    
-    public String decodeParam(String param){    	
-    	try {
-    		if(StringUtils.isNotBlank(param)){
-    			param = URLDecoder.decode(param,"utf-8");
-    		}    		
+		return param;
+	}
+
+	public String decodeParam(String param) {
+		try {
+			if (StringUtils.isNotBlank(param)) {
+				param = URLDecoder.decode(param, "utf-8");
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-    	return param;
-    }
+		return param;
+	}
+
 }

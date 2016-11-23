@@ -69,6 +69,11 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
+	<!-- 加载配置信息 -->
+	<listener>
+		<description>load config.properties</description>
+		<listener-class>com.tywy.sc.base.listener.ConfigLoadListener</listener-class>
+	</listener>
 	<!-- spring mvc servlet -->
 	<servlet>
 		<description>spring mvc servlet</description>
