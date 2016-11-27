@@ -17,7 +17,7 @@ public class CfgConstant {
 	/**
 	 * 微信接入token ，用于验证微信接口
 	 */
-	public static String TOKEN = "1qazxsw23edcvfr4";
+	public static String TOKEN = "";
 	/**
 	 * ACCESS_TOKEN有效时间(单位：ms)
 	 */
