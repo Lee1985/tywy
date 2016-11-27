@@ -61,22 +61,27 @@ public class MessageConstanct {
 	 * 事件类型：CLICK(自定义菜单点击事件)
 	 */
 	public static final String EVENT_TYPE_CLICK = "CLICK";
+	
 	/**
 	 * 订阅欢迎语
 	 */
 	public static final String WELCOME_WORDS = "谢谢您的关注！";
+	
 	/**
 	 * 搜索图片欢迎语
 	 */
 	public static final String SEARCH_WELCOME_WORDS = "在公众号下，输入样图编号，可搜索图片！";
+	
 	/**
 	 * 查询结果多张提示语
 	 */
 	public static final String SEARCH_IMG_MANY_WORDS = "您请求的编号不正确哦，请输入正确的信息！";
+	
 	/**
 	 * 未查到结果提示语
 	 */
 	public static final String SEARCH_IMG_NONE_WORDS = "抱歉哦！没有您查询的信息呢~！";
+	
 	/**
 	 * 联系我们欢迎语
 	 */
