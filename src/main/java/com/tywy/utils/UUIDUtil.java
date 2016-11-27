@@ -94,6 +94,6 @@ public class UUIDUtil {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getRandomNum(16));
+		System.out.println(getUUID());
 	}
 }

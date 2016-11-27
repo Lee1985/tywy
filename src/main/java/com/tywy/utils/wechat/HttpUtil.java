@@ -1,4 +1,4 @@
-package com.tywy.utils.wechatUtils;
+package com.tywy.utils.wechat;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

@@ -1,13 +1,11 @@
-package com.tywy.utils.wechatUtils;
+package com.tywy.utils.wechat;
 
 import java.util.Date;
-
-import com.tywy.utils.UUIDUtil;
 
 /**
  * 封装最终的xml格式结果
  */
-public class FormatXmlProcess {
+public class FormatXmlUtil {
 	/**
 	 * 封装文字类的返回消息
 	 * 
@@ -27,9 +25,7 @@ public class FormatXmlProcess {
 		sb.append(date.getTime());
 		sb.append("</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[");
 		sb.append(content);
-		sb.append("]]></Content><MsgId>");
-		sb.append(UUIDUtil.getRandomNum(16));
-		sb.append("</MsgId></xml>");
+		sb.append("]]></Content></xml>");
 		return sb.toString();
 	}
 
@@ -38,10 +34,10 @@ public class FormatXmlProcess {
 	 * 
 	 * @param toUser
 	 * @param fromUser
-	 * @param picUrl
+	 * @param mediaId
 	 * @return
 	 */
-	public String formatImgAnswer(String toUser, String fromUser, String picUrl) {
+	public String formatImgAnswer(String toUser, String fromUser, String mediaId) {
 		StringBuffer sb = new StringBuffer();
 		Date date = new Date();
 		sb.append("<xml><ToUserName><![CDATA[");
@@ -50,13 +46,9 @@ public class FormatXmlProcess {
 		sb.append(fromUser);
 		sb.append("]]></FromUserName><CreateTime>");
 		sb.append(date.getTime());
-		sb.append("</CreateTime><MsgType><![CDATA[text]]></MsgType><PicUrl><![CDATA[");
-		sb.append(picUrl);
-		sb.append("]]></PicUrl><MediaId><![CDATA[");
-		sb.append("media_id");
-		sb.append("]]></MediaId><MsgId>");
-		sb.append(UUIDUtil.getRandomNum(16));
-		sb.append("</MsgId></xml>");
+		sb.append("</CreateTime><MsgType><![CDATA[image]]></MsgType><Image><MediaId><![CDATA[");
+		sb.append(mediaId);
+		sb.append("]]></MediaId></Image></xml>");
 		return sb.toString();
 	}
 

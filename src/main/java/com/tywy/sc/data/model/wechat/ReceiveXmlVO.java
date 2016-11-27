@@ -1,30 +1,30 @@
-package com.tywy.utils.wechatUtils;
+package com.tywy.sc.data.model.wechat;
 
 /**
  * 接收到的微信xml实体类
  */
 public class ReceiveXmlVO {
-	private String ToUserName = "";
-	private String FromUserName = "";
-	private String CreateTime = "";
-	private String MsgType = "";
-	private String MsgId = "";
-	private String Event = "";
-	private String EventKey = "";
-	private String Ticket = "";
-	private String Latitude = "";
-	private String Longitude = "";
-	private String Precision = "";
-	private String PicUrl = "";
-	private String MediaId = "";
-	private String Title = "";
-	private String Description = "";
-	private String Url = "";
+	private String ToUserName = "";// 开发者微信号
+	private String FromUserName = "";// 发送方帐号（一个OpenID）
+	private String CreateTime = "";// 消息创建时间 （整型）
+	private String MsgType = "";// 消息类型
+	private String MsgId = "";// 消息id，64位整型
+	private String Event = "";// 事件类型，subscribe(订阅)、unsubscribe(取消订阅)等
+	private String EventKey = "";// 事件KEY值，qrscene_为前缀，后面为二维码的参数值
+	private String Ticket = "";// 二维码的ticket，可用来换取二维码图片
+	private String Latitude = "";// 地理位置纬度
+	private String Longitude = "";// 地理位置经度
+	private String Precision = "";// 地理位置精度
+	private String PicUrl = "";// 图片链接（由系统生成）
+	private String MediaId = "";// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
+	private String Title = "";// 消息标题
+	private String Description = "";// 消息描述
+	private String Url = "";// 消息链接
 	private String Location_X = "";
 	private String Location_Y = "";
 	private String Scale = "";
 	private String Label = "";
-	private String Content = "";
+	private String Content = "";// 回复的消息内容（换行：在content中能够换行，微信客户端就支持换行显示）
 	private String Format = "";
 	private String Recognition = "";
 

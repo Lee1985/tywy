@@ -1,137 +1,82 @@
 package com.tywy.sc.controller.wechat;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.tywy.constant.CfgConstant;
-import com.tywy.sc.base.controller.BaseController;
-import com.tywy.sc.data.model.WechatUserInfoT;
-import com.tywy.sc.services.WechatUserInfoTService;
-import com.tywy.utils.UUIDUtil;
-import com.tywy.utils.wechatUtils.FormatXmlProcess;
-import com.tywy.utils.wechatUtils.HttpUtil;
-import com.tywy.utils.wechatUtils.ReceiveXmlProcess;
-import com.tywy.utils.wechatUtils.ReceiveXmlVO;
+import com.tywy.sc.services.WeChatCoreService;
+import com.tywy.utils.wechat.SignUtil;
 
 /**
  * 
  * @ClassName: WeChatController
- * @Description: 公众号接口控制层
+ * @Description: 核心请求处理类
  * @author william
  * @date 2016-11-17 16:48:35
- * @Copyright：tywy
  */
+@RequestMapping(value = "/coreServlet")
 @Controller
-public class WeChatController extends BaseController {
+public class WeChatController extends HttpServlet {
+
+	private static final long serialVersionUID = 4440739483644821986L;
+
 	@Resource
-	private WechatUserInfoTService service;
-
-	public static Logger logger = Logger.getLogger(WechatUserInfoTService.class);
-	public static String get_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
-	public static String get_user_url = "https://api.weixin.qq.com/cgi-bin/user/info?lang=zh_CN";
-	public static String access_token = "";
+	private WeChatCoreService wechatService;
 
 	/**
-	 * 获取用户token
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
+	 * 校验请求是否来自微信服务器
 	 */
-	@RequestMapping(value = "/getToken")
+	@RequestMapping(value = "/doGet")
 	@ResponseBody
-	public String getToken(HttpServletRequest request, HttpServletResponse response) {
-		String url = get_token_url + "&appid=" + CfgConstant.APPID + "&secret=" + CfgConstant.APPSECRET;
-		try {
-			String result = HttpUtil.doGet(url);
-			if (StringUtils.contains(result, "errcode")) {
-				logger.error("----获取公众号token失败----" + result);
-			} else {
-				Map<String, String> map = (Map<String, String>) JSON.toJSON(result);
-				access_token = map.get("access_token");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 微信加密签名
+		String signature = request.getParameter("signature");
+		// 时间戳
+		String timestamp = request.getParameter("timestamp");
+		// 随机数
+		String nonce = request.getParameter("nonce");
+		// 随机字符串
+		String echostr = request.getParameter("echostr");
+
+		PrintWriter out = response.getWriter();
+		// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
+		if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+			out.print(echostr);
 		}
-		return access_token;
+		out.close();
+		out = null;
 	}
 
 	/**
-	 * 解析处理xml、获取回复结果
-	 * 
-	 * @param xml接收到的微信数据
-	 * @return 最终的解析结果（xml格式数据）
+	 * 处理微信服务器发来的消息
 	 */
-	@RequestMapping(value = "/processWechatMsg")
+	@RequestMapping(value = "/doPost")
 	@ResponseBody
-	public String processWechatMsg(HttpServletRequest request, HttpServletResponse response, String xml) {
-		/** 解析xml数据 */
-		ReceiveXmlVO xmlEntity = new ReceiveXmlProcess().getReceiveXmlVO(xml);
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 
-		String result = "";
-		if ("text".endsWith(xmlEntity.getMsgType())) {// 文本消息获取回复内容
-
-		} else if ("image".endsWith(xmlEntity.getMsgType())) {// 图片消息获取回复内容
-
-		}
-		/**
-		 * 此时，如果用户输入的是“你好”，在经过上面的过程之后，result为“你也好”类似的内容
-		 * 因为最终回复给微信的也是xml格式的数据，所有需要将其封装为文本类型返回消息
-		 */
-		result = new FormatXmlProcess().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
-				result);
-		return result;
-	}
-
-	/**
-	 * 获取用户token
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/getUserInfo")
-	@ResponseBody
-	public Object getUserInfo(HttpServletRequest request, HttpServletResponse response, String xml) {
-		/** 解析xml数据 */
-		ReceiveXmlVO xmlEntity = new ReceiveXmlProcess().getReceiveXmlVO(xml);
-		String url = get_user_url + "&access_token=" + access_token + "&openid=" + xmlEntity.getFromUserName();
-		int opt = 1;
-		String msg = "";
+		// 调用核心业务类接收消息、处理消息
+		String respMessage;
 		try {
-			String result = HttpUtil.doGet(url);
-			if (StringUtils.contains(result, "errcode")) {
-				logger.error("----获取用户信息失败----" + result);
-			} else {
-				WechatUserInfoT user = JSON.parseObject(result, WechatUserInfoT.class);
-				Map<String, Object> map = new HashMap<>();
-				map.put("openid", user.getOpenid());
-				int size = service.selectCount(map);
-				if (size > 0) {// 已存在
-					opt = service.update(user);
-				} else {
-					user.setId(UUIDUtil.getUUID());
-					opt = service.insert(user);
-				}
-				if (opt <= 0) {
-					msg = "操作失败";
-				}
-			}
+			respMessage = wechatService.processRequest(request);
+			// 响应消息
+			PrintWriter out = response.getWriter();
+			out.print(respMessage);
+			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return getJsonResult(opt, "操作成功", msg);
 	}
 
 }
