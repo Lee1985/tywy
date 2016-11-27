@@ -22,7 +22,7 @@ import com.tywy.sc.services.WeChatCoreService;
  * @date 2016-11-27 16:56:19
  */
 @Controller
-public class WechatMenuController extends BaseController {
+public class WeChatMenuController extends BaseController {
 
 	@Resource
 	private WeChatCoreService wechatService;
