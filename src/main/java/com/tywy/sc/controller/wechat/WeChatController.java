@@ -67,16 +67,11 @@ public class WeChatController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		// 调用核心业务类接收消息、处理消息
-		String respMessage;
-		try {
-			respMessage = wechatService.processRequest(request);
-			// 响应消息
-			PrintWriter out = response.getWriter();
-			out.print(respMessage);
-			out.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String respMessage = wechatService.processRequest(request);
+		// 响应消息
+		PrintWriter out = response.getWriter();
+		out.print(respMessage);
+		out.close();
 	}
 
 }

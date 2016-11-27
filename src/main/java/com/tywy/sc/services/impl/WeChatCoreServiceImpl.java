@@ -1,5 +1,6 @@
 package com.tywy.sc.services.impl;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	 * 处理微信请求信息
 	 */
 	@Override
-	public String processRequest(HttpServletRequest request) throws Exception {
+	public String processRequest(HttpServletRequest request) throws IOException {
 		String respMessage = null;
 
 		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
@@ -163,6 +164,33 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	/**
+	 * 点击菜单调转搜索图片
+	 */
+	@Override
+	public String searchRequest(HttpServletRequest request) throws IOException {
+		String respMessage = null;
+
+		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
+		String xml = ReceiveXmlUtil.parseXml(request);
+		System.out.println("xml is:" + xml);
+
+		// 反射处理XML字符串型消息
+		ReceiveXmlVO xmlEntity = new ReceiveXmlVO();
+		xmlEntity = ReceiveXmlUtil.getReceiveXmlVO(xml, xmlEntity.getClass().getName());
+		String content = "";
+		if (xmlEntity != null && MessageConstanct.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
+			// 首次关注推送消息
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("type", "3");// 类型（1-首次关注；2-联系我们；3-搜索图片）
+			WechatPubReplyT pubReply = replyService.selectEntity(map);
+			content = pubReply.getContent();
+		}
+		respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
+				StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content);
+		return respMessage;
 	}
 
 }

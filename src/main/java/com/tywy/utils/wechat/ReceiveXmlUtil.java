@@ -1,6 +1,7 @@
 package com.tywy.utils.wechat;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
@@ -25,9 +26,10 @@ public class ReceiveXmlUtil {
 	 * 
 	 * @param request
 	 * @return
+	 * @throws IOException
 	 * @throws Exception
 	 */
-	public static String parseXml(HttpServletRequest request) throws Exception {
+	public static String parseXml(HttpServletRequest request) throws IOException {
 
 		String xml = null;
 		/** 读取接收到的xml消息 */
@@ -49,33 +51,37 @@ public class ReceiveXmlUtil {
 	 * @param strXml
 	 * @return
 	 */
-	public static ReceiveXmlVO getReceiveXmlVO(String strXml, String className) throws Exception {
+	public static ReceiveXmlVO getReceiveXmlVO(String strXml, String className) {
 
 		ReceiveXmlVO xmlVO = null;
 		if (strXml.length() <= 0 || strXml == null) {
 			return null;
 		}
 
-		// 将字符串转化为XML文档对象
-		Document document = DocumentHelper.parseText(strXml);
+		try {
+			// 将字符串转化为XML文档对象
+			Document document = DocumentHelper.parseText(strXml);
 
-		xmlVO = new ReceiveXmlVO();
-		// 利用反射机制,调用set方法 ,获取该实体的元类型
-		Class<?> clazz = Class.forName(className);
-		xmlVO = (ReceiveXmlVO) clazz.newInstance();// 创建这个实体的对象
+			xmlVO = new ReceiveXmlVO();
+			// 利用反射机制,调用set方法 ,获取该实体的元类型
+			Class<?> clazz = Class.forName(className);
+			xmlVO = (ReceiveXmlVO) clazz.newInstance();// 创建这个实体的对象
 
-		// 获得文档的根节点
-		Element root = document.getRootElement();
-		// 遍历根节点下所有节点
-		Iterator<?> iterator = root.elementIterator();
-		while (iterator.hasNext()) {
-			Element ele = (Element) iterator.next();
-			// 获取set方法中的参数字段（实体类的属性）
-			Field field = clazz.getDeclaredField(ele.getName());
-			// 获取set方法，field.getType())获取它的参数数据类型
-			Method method = clazz.getDeclaredMethod("set" + ele.getName(), field.getType());
-			// 调用set方法
-			method.invoke(xmlVO, ele.getText());
+			// 获得文档的根节点
+			Element root = document.getRootElement();
+			// 遍历根节点下所有节点
+			Iterator<?> iterator = root.elementIterator();
+			while (iterator.hasNext()) {
+				Element ele = (Element) iterator.next();
+				// 获取set方法中的参数字段（实体类的属性）
+				Field field = clazz.getDeclaredField(ele.getName());
+				// 获取set方法，field.getType())获取它的参数数据类型
+				Method method = clazz.getDeclaredMethod("set" + ele.getName(), field.getType());
+				// 调用set方法
+				method.invoke(xmlVO, ele.getText());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return xmlVO;
 	}
