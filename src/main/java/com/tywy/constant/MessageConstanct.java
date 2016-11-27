@@ -77,5 +77,9 @@ public class MessageConstanct {
 	 * 未查到结果提示语
 	 */
 	public static final String SEARCH_IMG_NONE_WORDS = "抱歉哦！没有您查询的信息呢~！";
+	/**
+	 * 联系我们欢迎语
+	 */
+	public static final String CONTACT_WELCOME_WORDS = "官方电话：1019010919联系在线客服请回复1！";
 
 }

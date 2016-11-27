@@ -167,12 +167,31 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	}
 
 	/**
-	 * 点击菜单调转搜索图片
+	 * 点击菜单跳转搜索图片3
 	 */
 	@Override
 	public String searchRequest(HttpServletRequest request) throws IOException {
-		String respMessage = null;
+		return todoTextTaskMethod(request, "3");
+	}
 
+	/**
+	 * 点击菜单跳转搜索图片2
+	 */
+	@Override
+	public String contactRequest(HttpServletRequest request) throws IOException {
+		return todoTextTaskMethod(request, "2");
+	}
+
+	/**
+	 * 3和2公用的方法
+	 * 
+	 * @param request
+	 * @param type
+	 * @return
+	 * @throws IOException
+	 */
+	private String todoTextTaskMethod(HttpServletRequest request, String type) throws IOException {
+		String respMessage = null;
 		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
 		String xml = ReceiveXmlUtil.parseXml(request);
 		System.out.println("xml is:" + xml);
@@ -184,12 +203,20 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		if (xmlEntity != null && MessageConstanct.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
 			// 首次关注推送消息
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("type", "3");// 类型（1-首次关注；2-联系我们；3-搜索图片）
+			map.put("type", type);// 类型（1-首次关注；2-联系我们；3-搜索图片）
 			WechatPubReplyT pubReply = replyService.selectEntity(map);
 			content = pubReply.getContent();
+			switch (type) {
+			case "2":
+				content = StringUtils.isBlank(content) ? MessageConstanct.CONTACT_WELCOME_WORDS : content;
+				break;
+			case "3":
+				content = StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content;
+				break;
+			}
 		}
 		respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
-				StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content);
+				content);
 		return respMessage;
 	}
 

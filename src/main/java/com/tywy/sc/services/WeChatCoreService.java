@@ -13,4 +13,6 @@ public interface WeChatCoreService extends BaseService<ReceiveXmlVO> {
 
 	String searchRequest(HttpServletRequest request) throws IOException;
 
+	String contactRequest(HttpServletRequest request) throws IOException;
+
 }
