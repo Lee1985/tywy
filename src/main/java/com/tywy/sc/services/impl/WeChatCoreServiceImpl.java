@@ -167,7 +167,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	}
 
 	/**
-	 * 点击菜单跳转搜索图片3
+	 * 点击菜单跳转搜索图片
 	 */
 	@Override
 	public String searchRequest(HttpServletRequest request) throws IOException {
@@ -175,7 +175,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	}
 
 	/**
-	 * 点击菜单跳转搜索图片2
+	 * 点击菜单跳转联系人
 	 */
 	@Override
 	public String contactRequest(HttpServletRequest request) throws IOException {

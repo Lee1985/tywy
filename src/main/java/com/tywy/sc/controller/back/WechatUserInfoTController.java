@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tywy.sc.data.model.WechatUserInfoT;
-import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.base.page.PageInfo;
+import com.tywy.sc.data.model.WechatUserInfoT;
 import com.tywy.sc.services.WechatUserInfoTService;
 import com.tywy.utils.UUIDUtil;
 

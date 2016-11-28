@@ -90,7 +90,7 @@ public class WeChatMenuController extends BaseController {
 	}
 
 	/**
-	 * 搜索图片-初始回复
+	 * 联系人-初始回复
 	 * 
 	 * @param request
 	 * @param response

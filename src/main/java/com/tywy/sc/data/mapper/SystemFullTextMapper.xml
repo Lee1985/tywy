@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tywy.sc.data.dao.SystemFullTextDao">
+
+	<resultMap id="colomnResult"
+		type="com.tywy.sc.data.model.SystemFullText">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="title" column="title" />
+		<result property="msgContent" column="msgContent" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     title,
+	     msgContent
+	 ]]>
+	</sql>
+	<sql id="commonWhere">
+		<where>
+			<if test=" id != null">
+				and id=#{id}
+			</if>
+			<if test=" type != null">
+				and type=#{type}
+			</if>
+			<if test=" title != null">
+				and title=#{title}
+			</if>
+			<if test=" msgContent != null">
+				and msgContent=#{msgContent}
+			</if>
+		</where>
+	</sql>
+	<insert id="insert">
+		insert into system_full_text
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">id,</if>
+			<if test="type!=null">type,</if>
+			<if test="title!=null">title,</if>
+			<if test="msgContent!=null">msgContent,</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">#{id},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="title!=null">#{title},</if>
+			<if test="msgContent!=null">#{msgContent},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+		update system_full_text
+		<set>
+			<if test="id!=null">id=#{id},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="title!=null">title=#{title},</if>
+			<if test="msgContent!=null">msgContent=#{msgContent},</if>
+		</set>
+		where
+		id=#{id}
+	</update>
+
+	<delete id="delete">
+		delete from
+		system_full_text
+		where
+		id=#{id}
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" />
+		from system_full_text
+		<include refid="commonWhere" />
+	</select>
+
+	<!-- 根据条件信息 -->
+	<select id="selectAll" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_full_text
+		]]>
+		<include refid="commonWhere" />
+		<if test="sort != null">
+			order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount" resultType="int">
+
+		select count(id) from system_full_text
+		<include refid="commonWhere" />
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_full_text where 
+			
+			   	 id=#{id} 
+		]]>
+
+	</select>
+</mapper> 
