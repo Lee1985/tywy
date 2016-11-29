@@ -10,6 +10,7 @@ import com.tywy.sc.services.SystemUserService;
 
 @Service
 public class SystemUserServiceImpl extends BaseServiceImpl<SystemUser> implements SystemUserService {
+	
 	@Autowired
 	private SystemUserDao dao;
 

@@ -28,8 +28,9 @@ import com.tywy.utils.UUIDUtil;
  */
 @Controller
 public class SystemRoleController extends BaseController {
+	
 	@Resource
-	private SystemRoleService service;
+	private SystemRoleService systemRoleService;
 
 	@RequestMapping(value = "/system/systemRoleList")
 	public String systemRoleList(HttpServletRequest request, HttpServletResponse response) {
@@ -43,7 +44,7 @@ public class SystemRoleController extends BaseController {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
-		service.selectAll(systemRole, pageInfo);
+		systemRoleService.selectAll(systemRole, pageInfo);
 		return (JSONObject) JSONObject.toJSON(pageInfo);
 	}
 
@@ -51,7 +52,7 @@ public class SystemRoleController extends BaseController {
 	@ResponseBody
 	public JSONArray systemRoleAjaxAll(HttpServletRequest request, HttpServletResponse response, SystemRole systemRole,
 			Integer page, Integer rows) {
-		List<SystemRole> roles = service.selectAll(systemRole);
+		List<SystemRole> roles = systemRoleService.selectAll(systemRole);
 		return (JSONArray) JSONArray.toJSON(roles);
 	}
 
@@ -62,10 +63,10 @@ public class SystemRoleController extends BaseController {
 		String msg = "";
 		if (systemRole.getId() == null || systemRole.getId().equals("")) {
 			systemRole.setId(UUIDUtil.getUUID());
-			result = service.insert(systemRole);
+			result = systemRoleService.insert(systemRole);
 			msg = "保存失败！";
 		} else {
-			result = service.update(systemRole);
+			result = systemRoleService.update(systemRole);
 			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功", msg);
@@ -76,7 +77,7 @@ public class SystemRoleController extends BaseController {
 	public Object systemRoleAjaxDelete(HttpServletRequest request, HttpServletResponse response, SystemRole info) {
 		int result = 0;
 		try {
-			result = service.delete(info);
+			result = systemRoleService.delete(info);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

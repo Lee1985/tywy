@@ -4,7 +4,7 @@
 
 <mapper namespace="com.tywy.sc.data.dao.SystemRoleDao">
 
-	<resultMap id="commonResultMap" type="SystemRole">
+	<resultMap id="commonResultMap" type="com.tywy.sc.data.model.SystemRole">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="description" column="description" />

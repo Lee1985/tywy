@@ -4,7 +4,7 @@
 
 <mapper namespace="com.tywy.sc.data.dao.SystemMenuDao">
 
-	<resultMap id="commonResultMap" type="SystemMenu">
+	<resultMap id="commonResultMap" type="com.tywy.sc.data.model.SystemMenu">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="menuUrl" column="menuUrl" />
@@ -21,7 +21,7 @@
 		</collection>
 	</resultMap>
 
-	<resultMap id="roleMenuResultMap" type="SystemMenu">
+	<resultMap id="roleMenuResultMap" type="com.tywy.sc.data.model.SystemMenu">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="menuUrl" column="menuUrl" />
@@ -40,7 +40,7 @@
 		</collection>
 	</resultMap>
 
-	<resultMap id="roleMenuLoginResultMap" type="SystemMenu">
+	<resultMap id="roleMenuLoginResultMap" type="com.tywy.sc.data.model.SystemMenu">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="menuUrl" column="menuUrl" />
