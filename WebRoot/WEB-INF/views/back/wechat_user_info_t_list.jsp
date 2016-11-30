@@ -139,12 +139,15 @@
 						<option value="1">启用</option>
 						<option value="0">禁用</option>
 					</select>&nbsp;&nbsp;
+			</div style="margin-bottom:5px;">
 				 <a href="javaScript:void()" onclick="searchData()" class="easyui-linkbutton" plain="true"
 				 	data-options="iconCls:'icon-search'">搜索</a>&nbsp;&nbsp;
 				 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock_open" plain="true"
 					onclick="doUpdateStatus('wechatUserInfoTAjaxUpdate.do',1)">启用</a>
 				 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock" plain="true"
 					onclick="doUpdateStatus('wechatUserInfoTAjaxUpdate.do',0)">禁用</a>
+			<div>
+			
 			</div>
 		</div>
 	</div>
