@@ -16,7 +16,7 @@ public class WechatPubReplyT extends BaseEntity implements Serializable {
 	private java.lang.String id; //
 	private java.lang.Integer type; // 类型（1-首次关注；2-联系我们；3-搜索图片）
 	private java.lang.String content; // 内容
-	private java.util.Date createDate; // 收藏时间
+	private String createDate; // 收藏时间
 
 	/**
 	 * 获取属性
@@ -77,7 +77,7 @@ public class WechatPubReplyT extends BaseEntity implements Serializable {
 	 *
 	 * @return createDate
 	 */
-	public java.util.Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
@@ -86,7 +86,7 @@ public class WechatPubReplyT extends BaseEntity implements Serializable {
 	 *
 	 * @param createDate
 	 */
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 

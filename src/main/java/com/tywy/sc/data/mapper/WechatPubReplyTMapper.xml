@@ -16,7 +16,8 @@
 	     id,
 	     type,
 	     content,
-	     createDate
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') createDate
+	     
 	 ]]>
 	</sql>
 	<insert id="insert">

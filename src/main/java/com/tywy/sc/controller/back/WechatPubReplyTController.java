@@ -15,7 +15,6 @@ import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.WechatPubReplyT;
 import com.tywy.sc.services.WechatPubReplyTService;
-import com.tywy.utils.UUIDUtil;
 
 /**
  * 
@@ -31,7 +30,7 @@ public class WechatPubReplyTController extends BaseController {
 
 	@RequestMapping(value = "/wechatPubReplyTList")
 	public String wechatPubReplyTList(HttpServletRequest request, HttpServletResponse response) {
-		return "/wechat_pub_reply_t_list";
+		return "/back/wechat_pub_reply_t_list";
 	}
 
 	@RequestMapping(value = "/wechatPubReplyTAjaxPage")
@@ -41,6 +40,8 @@ public class WechatPubReplyTController extends BaseController {
 		PageInfo<WechatPubReplyT> pageInfo = new PageInfo<WechatPubReplyT>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		info.setSort("type");
+		info.setOrder("asc");
 		service.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -58,29 +59,11 @@ public class WechatPubReplyTController extends BaseController {
 	public Map<String, Object> wechatPubReplyTAjaxSave(HttpServletRequest request, HttpServletResponse response,
 			WechatPubReplyT info) {
 		int result = 0;
-		String msg = "";
-		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
-			result = service.insert(info);
-			msg = "保存失败！";
-		} else {
-			result = service.update(info);
-			msg = "修改失败！";
-		}
-		return getJsonResult(result, "操作成功", msg);
-	}
-
-	@RequestMapping(value = "/wechatPubReplyTAjaxDelete")
-	@ResponseBody
-	public Map<String, Object> wechatPubReplyTAjaxDelete(HttpServletRequest request, HttpServletResponse response,
-			WechatPubReplyT info) {
-		int result = 0;
 		try {
-			result = service.delete(info);
+			result = service.update(info);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-
-		return getJsonResult(result, "操作成功", "删除失败！");
+		return getJsonResult(result, "操作成功", "更新失败！");
 	}
 }

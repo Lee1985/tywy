@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>微信用户表</title>
+<title>微信用户管理</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
