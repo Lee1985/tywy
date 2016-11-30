@@ -35,6 +35,7 @@
 	function formatImg(value, row) {
 		return "<img src="+ row.headimgurl +" style=\"height:50px;background-color:#434343\"/>";
 	}
+	
 	function formatCity(value, row) {
 		return row.country+row.province+row.city;
 	}
