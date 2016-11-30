@@ -31,6 +31,14 @@ public class CfgConstant {
 	 */
 	public static String GET_CUSTOM_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=_ACCESS_TOKEN";
 	/**
+	 * 公众号拉黑用户
+	 */
+	public static String BATCHBLACKLIST = "https://api.weixin.qq.com/cgi-bin/tags/members/batchblacklist?access_token=_ACCESS_TOKEN";
+	/**
+	 * 公众号取消拉黑用户
+	 */
+	public static String BATCHUNBLACKLIST = "https://api.weixin.qq.com/cgi-bin/tags/members/batchunblacklist?access_token=_ACCESS_TOKEN";
+	/**
 	 * 获取服务器访问路径
 	 */
 	public static String GET_SERVER_URL = "";

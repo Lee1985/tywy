@@ -81,6 +81,7 @@
 				if (r) {
 					$.post(url, {
 						id : row.id,
+						openid : row.openid,
 						status : status
 					}, function(result) {
 						if (result.success) {
