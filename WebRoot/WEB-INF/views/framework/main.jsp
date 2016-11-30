@@ -10,7 +10,7 @@
 		<META HTTP-EQUIV="pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="cache-control" CONTENT="no-cache">
 		<META HTTP-EQUIV="cache-control" CONTENT="no-store">
-		<title>试戏管理系统</title>
+		<title>天雅管理系统</title>
 		<%@ include file="/WEB-INF/views/common/style.jsp" %>
 		<script type="text/javascript" src="js/system/easy.js"></script>
 		<script type="text/javascript" src="js/system/sys.js"></script>
@@ -73,7 +73,7 @@
 				</tr>
 			</table>
 		</div>
-		<div data-options="region:'west',split:true" title="试戏管理系统"
+		<div data-options="region:'west',split:true" title="天雅管理系统"
 			style="width: 200px;overflow: auto;">
 			<ul id="tree" class="easyui-tree" style="background-color: #ffffff" 
 			data-options="onLoadSuccess: function (data) {  $('#tree').tree('collapseAll')}">
