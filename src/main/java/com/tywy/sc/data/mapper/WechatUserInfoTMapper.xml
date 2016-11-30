@@ -33,7 +33,7 @@
 	     country,
 	     province,
 	     headimgurl,
-	     subscribe_time,
+	     DATE_FORMAT(subscribe_time,'%Y-%m-%d %H:%i:%S') subscribe_time,
 	     unionid,
 	     remark,
 	     groupid,
@@ -114,51 +114,51 @@
 	<include refid="colomnResult" /> 
 	   from wechat_user_info_t
 	  <where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" subscribe != null and subscribe != '' ">
-					and subscribe=#{subscribe} 
-				</if>
-				<if test=" openid != null and openid != '' ">
-					and openid=#{openid} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
-				</if>
-				<if test=" sex != null and sex != '' ">
-					and sex=#{sex} 
-				</if>
-				<if test=" city != null and city != '' ">
-					and city=#{city} 
-				</if>
-				<if test=" country != null and country != '' ">
-					and country=#{country} 
-				</if>
-				<if test=" province != null and province != '' ">
-					and province=#{province} 
-				</if>
-				<if test=" headimgurl != null and headimgurl != '' ">
-					and headimgurl=#{headimgurl} 
-				</if>
-				<if test=" subscribe_time != null and subscribe_time != '' ">
-					and subscribe_time=#{subscribe_time} 
-				</if>
-				<if test=" unionid != null and unionid != '' ">
-					and unionid=#{unionid} 
-				</if>
-				<if test=" remark != null and remark != '' ">
-					and remark=#{remark} 
-				</if>
-				<if test=" groupid != null and groupid != '' ">
-					and groupid=#{groupid} 
-				</if>
-				<if test=" tagid_list != null and tagid_list != '' ">
-					and tagid_list=#{tagid_list} 
-				</if>
-				<if test=" status != null and status != '' ">
-					and status=#{status} 
-				</if>
+			<if test=" id != null and id != '' ">
+				and id=#{id} 
+			</if>
+			<if test=" subscribe != null and subscribe != '' ">
+				and subscribe=#{subscribe} 
+			</if>
+			<if test=" openid != null and openid != '' ">
+				and openid=#{openid} 
+			</if>
+			<if test=" nickname != null and nickname != '' ">
+				and nickname=#{nickname} 
+			</if>
+			<if test=" sex != null and sex != '' ">
+				and sex=#{sex} 
+			</if>
+			<if test=" city != null and city != '' ">
+				and city=#{city} 
+			</if>
+			<if test=" country != null and country != '' ">
+				and country=#{country} 
+			</if>
+			<if test=" province != null and province != '' ">
+				and province=#{province} 
+			</if>
+			<if test=" headimgurl != null and headimgurl != '' ">
+				and headimgurl=#{headimgurl} 
+			</if>
+			<if test=" subscribe_time != null and subscribe_time != '' ">
+				and subscribe_time=#{subscribe_time} 
+			</if>
+			<if test=" unionid != null and unionid != '' ">
+				and unionid=#{unionid} 
+			</if>
+			<if test=" remark != null and remark != '' ">
+				and remark=#{remark} 
+			</if>
+			<if test=" groupid != null and groupid != '' ">
+				and groupid=#{groupid} 
+			</if>
+			<if test=" tagid_list != null and tagid_list != '' ">
+				and tagid_list=#{tagid_list} 
+			</if>
+			<if test=" status != null and status != '' ">
+				and status=#{status} 
+			</if>
 		</where>
 	</select>
 	
@@ -180,9 +180,9 @@
 					and openid=#{openid} 
 				</if>
 				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
+					and nickname like '%${nickname}%'
 				</if>
-				<if test=" sex != null and sex != '' ">
+				<if test=" sex != null ">
 					and sex=#{sex} 
 				</if>
 				<if test=" city != null and city != '' ">
@@ -212,7 +212,7 @@
 				<if test=" tagid_list != null and tagid_list != '' ">
 					and tagid_list=#{tagid_list} 
 				</if>
-				<if test=" status != null and status != '' ">
+				<if test=" status != null ">
 					and status=#{status} 
 				</if>
 		</where>
