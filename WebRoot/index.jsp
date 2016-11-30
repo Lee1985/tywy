@@ -13,7 +13,7 @@
 		if (null != error && !"".equals(error.trim())) {
 			request.setAttribute("LOGIN_ERROR", error);
 		}
-		request.getRequestDispatcher("welcome.do").forward(request, response);
+		request.getRequestDispatcher("back/welcome.do").forward(request, response);
 	%>
 	<body>
 	</body>

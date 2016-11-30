@@ -1,4 +1,5 @@
 $.fn.tree.defaults.loadFilter = function (data, parent) {
+	debugger;
     var opt = $(this).data().tree.options;
     var idFiled,
     textFiled,

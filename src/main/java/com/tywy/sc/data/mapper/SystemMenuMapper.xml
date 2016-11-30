@@ -118,16 +118,13 @@
 	<!-- 角色登陆start -->
 	<select id="selectAllByRoleLogin" resultMap="roleMenuLoginResultMap">
 		select
-		id,name,pid,level,menuUrl,orderList,description,'${roleId}'
-		roleId,
-		case when exists(select id from system_role_authority where
-		roleId=#{roleId} and menuId=system_menu_info.id)
+		id,name,pid,level,menuUrl,orderList,description,'${roleId}' roleId,
+		case when exists(select id from system_role_authority where roleId=#{roleId} and menuId=system_menu_info.id) 
 		then 1 else 0 end isCheck
 		<![CDATA[
 			from system_menu_info
 		]]>
-		where pid='0' and id in(select menuId from system_role_authority where
-		roleId=#{roleId})
+		where id in(select menuId from system_role_authority where roleId=#{roleId})
 		order by pid,orderList
 	</select>
 	<select id="selectAllByPidRoleLogin" resultMap="roleMenuLoginResultMap">

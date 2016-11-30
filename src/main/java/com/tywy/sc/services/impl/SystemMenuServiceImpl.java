@@ -159,7 +159,6 @@ public class SystemMenuServiceImpl extends BaseServiceImpl<SystemMenu> implement
 
 	@Override
 	public List<SystemMenu> selectAllByPid(String pid) {
-		// TODO Auto-generated method stub
 		return dao.selectAllByPid(pid);
 	}
 
@@ -384,7 +383,6 @@ public class SystemMenuServiceImpl extends BaseServiceImpl<SystemMenu> implement
 
 	@Override
 	public List<SystemMenu> selectAllByRoleLogin(SystemMenu info) {
-		// TODO Auto-generated method stub
 		return dao.selectAllByRoleLogin(info);
 	}
 

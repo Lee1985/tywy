@@ -1,5 +1,6 @@
 package com.tywy.sc.controller.back;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tywy.constant.SessionConstants;
+import com.tywy.sc.base.entity.EUTree;
 import com.tywy.sc.data.model.SystemMenu;
 import com.tywy.sc.data.model.SystemUser;
 import com.tywy.sc.services.SystemMenuService;
@@ -109,25 +111,52 @@ public class SystemMenuController {
 		return json;
 	}
 
-	@RequestMapping(value = "/system/initSystemMenuTree")
+	@RequestMapping(value = "system/initSystemMenuTree")
 	@ResponseBody
-	public JSONArray initSystemMenuTree(HttpServletRequest request, HttpServletResponse response) {
-
-		SystemUser userInfo = (SystemUser) request.getSession().getAttribute(SessionConstants.SESSION_USER);
-
+	public List<EUTree> initSystemMenuTree(HttpServletRequest request, HttpServletResponse response) {
+		SystemUser userInfo = (SystemUser) request.getSession().getAttribute(SessionConstants.SESSION_BACK_USER);
 		if (null == userInfo) {
 			return null;
 		}
 		List<SystemMenu> menus = null;
 		SystemMenu menu = new SystemMenu();
 		menu.setRoleId(userInfo.getRoleId());
+		List<EUTree> treeList = new ArrayList<EUTree>();
 		if (menu.getRoleId().equals("root")) {
 			menus = systemMenuService.selectAllByPid("0");
+			getMenuList (menus, treeList);
 		} else {
 			menus = systemMenuService.selectAllByRoleLogin(menu);
+			for(SystemMenu sysmenu : menus){
+				EUTree euTree = new EUTree();
+				euTree.setAttributes(sysmenu);
+				euTree.setId(sysmenu.getId());
+				euTree.setParent(sysmenu.getPid());
+				euTree.setState("close");
+				euTree.setText(sysmenu.getName());
+				euTree.setMenuUrl(sysmenu.getMenuUrl());
+				treeList.add(euTree);
+			}
 		}
 		request.getSession(true).setAttribute(SessionConstants.SESSION_PERMISSACT, menus);
-		return (JSONArray) JSONArray.toJSON(menus);
+		return treeList;
+	}
+	
+	private void getMenuList (List<SystemMenu> menus, List<EUTree> treeList){
+		for(SystemMenu sysmenu : menus){
+			EUTree euTree = new EUTree();
+			euTree.setAttributes(sysmenu);
+			euTree.setId(sysmenu.getId());
+			euTree.setParent(sysmenu.getPid());
+			euTree.setState("close");
+			euTree.setText(sysmenu.getName());
+			euTree.setMenuUrl(sysmenu.getMenuUrl());
+			treeList.add(euTree);
+			List<SystemMenu> menu2 = sysmenu.getChildren();
+			if(menu2!=null && menu2.size()>0){
+				getMenuList (menu2, treeList);
+			}
+		}
 	}
 
 }
