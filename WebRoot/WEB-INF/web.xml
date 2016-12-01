@@ -46,6 +46,38 @@
     <description>load config.properties</description>
     <listener-class>com.tywy.sc.base.listener.ConfigLoadListener</listener-class>
   </listener>
+  
+  <!-- stream upload start-->
+  <servlet>
+		<servlet-name>TokenServlet</servlet-name>
+		<servlet-class>com.tywy.utils.stream.servlet.TokenServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TokenServlet</servlet-name>
+		<url-pattern>/tk</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>StreamServlet</servlet-name>
+		<servlet-class>com.tywy.utils.stream.servlet.StreamServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StreamServlet</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>FormDataServlet</servlet-name>
+		<servlet-class>com.tywy.utils.stream.servlet.FormDataServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FormDataServlet</servlet-name>
+		<url-pattern>/fd</url-pattern>
+	</servlet-mapping>
+	
+	<!-- stream upload end-->
+  
   <servlet>
     <description>spring mvc servlet</description>
     <servlet-name>springMvc</servlet-name>
