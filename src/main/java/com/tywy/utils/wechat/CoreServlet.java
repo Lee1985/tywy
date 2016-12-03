@@ -1,42 +1,40 @@
-package com.tywy.sc.controller.wechat;
+package com.tywy.utils.wechat;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.tywy.sc.services.WeChatCoreService;
-import com.tywy.utils.wechat.SignUtil;
 
 /**
  * 
- * @ClassName: WeChatController
+ * @ClassName: CoreServlet
  * @Description: 核心请求处理类
  * @author william
  * @date 2016-11-17 16:48:35
  */
-@RequestMapping(value = "/coreServlet")
-@Controller
-public class WeChatController extends HttpServlet {
+public class CoreServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 4440739483644821986L;
+	private static WeChatCoreService wechatService = null;
 
-	@Resource
-	private WeChatCoreService wechatService;
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		wechatService = (WeChatCoreService) wac.getBean(WeChatCoreService.class);
+	}
 
 	/**
 	 * 校验请求是否来自微信服务器
 	 */
-	@RequestMapping(value = "/doGet")
-	@ResponseBody
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 微信加密签名
 		String signature = request.getParameter("signature");
@@ -59,8 +57,6 @@ public class WeChatController extends HttpServlet {
 	/**
 	 * 处理微信服务器发来的消息
 	 */
-	@RequestMapping(value = "/doPost")
-	@ResponseBody
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 		request.setCharacterEncoding("UTF-8");

@@ -1,6 +1,7 @@
 package com.tywy.sc.services.impl;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +19,13 @@ import com.tywy.sc.base.service.BaseServiceImpl;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.data.model.WechatPubReplyT;
 import com.tywy.sc.data.model.WechatUserInfoT;
+import com.tywy.sc.data.model.wechat.AccessTokenVO;
 import com.tywy.sc.data.model.wechat.ReceiveXmlVO;
 import com.tywy.sc.services.WeChatCoreService;
 import com.tywy.sc.services.WechatAlbumListTService;
 import com.tywy.sc.services.WechatPubReplyTService;
 import com.tywy.sc.services.WechatUserInfoTService;
+import com.tywy.utils.DateUtils;
 import com.tywy.utils.UUIDUtil;
 import com.tywy.utils.wechat.FormatXmlUtil;
 import com.tywy.utils.wechat.HttpUtil;
@@ -47,7 +50,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
 		String xml = ReceiveXmlUtil.parseXml(request);
-		System.out.println("xml is:" + xml);
+		System.out.println("------xml is:" + xml);
 
 		// 反射处理XML字符串型消息
 		ReceiveXmlVO xmlEntity = new ReceiveXmlVO();
@@ -91,15 +94,21 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				WechatPubReplyT pubReply = replyService.selectEntity(map);
 				content = pubReply == null ? MessageConstanct.WELCOME_WORDS : pubReply.getContent();
 
-				// 获取微信端用户的信息
-				userInfo = getUserInfo(openid);
-				if (userInfo != null) {
+				// 获取access_token
+				String access_token = getAccessToken();
+				if (access_token != null) {
 
-					// 保存用户的信息
-					userInfo.setId(UUIDUtil.getUUID());
-					wechatuserService.insert(userInfo);
-				} else {
-					System.out.println("----获取微信端用户的信息失败----");
+					// 获取微信端用户的信息
+					userInfo = getUserInfo(openid, access_token);
+					if (userInfo != null) {
+						System.out.println("----userInfo=" + userInfo.toString());
+						// 保存用户的信息
+						userInfo.setId(UUIDUtil.getUUID());
+						userInfo.setSubscribeTime(DateUtils.getDateTimeFormat(new Date()));
+						wechatuserService.insert(userInfo);
+					} else {
+						System.out.println("----获取微信端用户的信息失败----");
+					}
 				}
 			}
 			respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
@@ -115,6 +124,30 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 			break;
 		}
 		return respMessage;
+	}
+
+	/**
+	 * 获取access token
+	 * 
+	 * @return
+	 */
+	private String getAccessToken() {
+		String requestUrl = CfgConstant.GET_ACCESSTOKEN_URL.replace("_APPID", CfgConstant.APPID).replace("_APPSECRET",
+				CfgConstant.APPSECRET);
+		String token = "";
+		try {
+			String result = HttpUtil.doGet(requestUrl);
+			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
+				System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
+				System.out.println("----【getAccessToken Fail】----" + result);
+			} else {
+				AccessTokenVO accessTokenVO = JSON.parseObject(result, AccessTokenVO.class);
+				token = accessTokenVO.getAccess_token();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return token;
 	}
 
 	/**
@@ -147,15 +180,17 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	 * 获取用户基本信息
 	 * 
 	 * @param openid
+	 * @param access_token
 	 * @return
 	 */
-	private WechatUserInfoT getUserInfo(String openid) {
-		String requestUrl = CfgConstant.GET_USERINFO_URL.replace("_ACCESS_TOKEN", CfgConstant.TOKEN).replace("_OPENID",
+	private WechatUserInfoT getUserInfo(String openid, String access_token) {
+		String requestUrl = CfgConstant.GET_USERINFO_URL.replace("_ACCESS_TOKEN", access_token).replace("_OPENID",
 				openid);
 		WechatUserInfoT user = null;
 		try {
 			String result = HttpUtil.doGet(requestUrl);
 			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
+				System.out.println("-----requestUrl----" + requestUrl);
 				System.out.println("----获取用户信息失败----" + result);
 			} else {
 				user = JSON.parseObject(result, WechatUserInfoT.class);

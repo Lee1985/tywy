@@ -106,7 +106,7 @@
 	   delete from
 	     wechat_user_info_t 
 	   where 
-	    id=#{id} 
+	    openid=#{openid}
 	</delete>
 
 	<select id="selectEntity" resultMap="colomnResult">
