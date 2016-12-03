@@ -42,5 +42,9 @@ public class CfgConstant {
 	 * 获取服务器访问路径
 	 */
 	public static String GET_SERVER_URL = "";
+	/**
+	 * 创建个性化菜单
+	 */
+	public static String ADD_CONDITIONAL_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=_ACCESS_TOKEN";
 
 }

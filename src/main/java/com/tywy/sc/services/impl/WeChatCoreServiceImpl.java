@@ -96,7 +96,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 				// 获取access_token
 				String access_token = getAccessToken();
-				if (access_token != null) {
+				if (StringUtils.isNotBlank(access_token)) {
 
 					// 获取微信端用户的信息
 					userInfo = getUserInfo(openid, access_token);
@@ -124,30 +124,6 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 			break;
 		}
 		return respMessage;
-	}
-
-	/**
-	 * 获取access token
-	 * 
-	 * @return
-	 */
-	private String getAccessToken() {
-		String requestUrl = CfgConstant.GET_ACCESSTOKEN_URL.replace("_APPID", CfgConstant.APPID).replace("_APPSECRET",
-				CfgConstant.APPSECRET);
-		String token = "";
-		try {
-			String result = HttpUtil.doGet(requestUrl);
-			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
-				System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
-				System.out.println("----【getAccessToken Fail】----" + result);
-			} else {
-				AccessTokenVO accessTokenVO = JSON.parseObject(result, AccessTokenVO.class);
-				token = accessTokenVO.getAccess_token();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return token;
 	}
 
 	/**
@@ -253,6 +229,30 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
 				content);
 		return respMessage;
+	}
+
+	/**
+	 * 获取access token
+	 * 
+	 * @return
+	 */
+	private String getAccessToken() {
+		String requestUrl = CfgConstant.GET_ACCESSTOKEN_URL.replace("_APPID", CfgConstant.APPID).replace("_APPSECRET",
+				CfgConstant.APPSECRET);
+		String token = "";
+		try {
+			String result = HttpUtil.doGet(requestUrl);
+			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
+				System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
+				System.out.println("----【getAccessToken Fail】----" + result);
+			} else {
+				AccessTokenVO accessTokenVO = JSON.parseObject(result, AccessTokenVO.class);
+				token = accessTokenVO.getAccess_token();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return token;
 	}
 
 }
