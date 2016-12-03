@@ -27,6 +27,7 @@ public class ReceiveXmlVO {
 	private String Content = "";// 回复的消息内容（换行：在content中能够换行，微信客户端就支持换行显示）
 	private String Format = "";
 	private String Recognition = "";
+	private String MenuId = "";
 
 	public String getRecognition() {
 		return Recognition;
@@ -210,5 +211,13 @@ public class ReceiveXmlVO {
 
 	public void setMsgType(String msgType) {
 		MsgType = msgType;
+	}
+
+	public String getMenuId() {
+		return MenuId;
+	}
+
+	public void setMenuId(String menuId) {
+		MenuId = menuId;
 	}
 }

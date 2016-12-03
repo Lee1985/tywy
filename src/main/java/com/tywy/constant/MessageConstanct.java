@@ -63,6 +63,16 @@ public class MessageConstanct {
 	public static final String EVENT_TYPE_CLICK = "CLICK";
 	
 	/**
+	 * 事件类型：CLICK(搜索图片)
+	 */
+	public static final String MENU_CLICK_SEARCH = "searchmenu";
+	
+	/**
+	 * 事件类型：CLICK(联系我们)
+	 */
+	public static final String MENU_CLICK_CONTACT = "contactmenu";
+	
+	/**
 	 * 订阅欢迎语
 	 */
 	public static final String WELCOME_WORDS = "谢谢您的关注！";

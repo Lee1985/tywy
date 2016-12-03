@@ -122,7 +122,58 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				wechatuserService.delete(map);
 			}
 			break;
+
+		case MessageConstanct.EVENT_TYPE_CLICK:// 点击事件
+			respMessage = this.todoMenuClick(xmlEntity);
+			break;
 		}
+
+		return respMessage;
+	}
+
+	/**
+	 * 菜单点击事件
+	 * 
+	 * @param xmlEntity
+	 * @return
+	 */
+	private String todoMenuClick(ReceiveXmlVO xmlEntity) {
+		String respMessage = null;
+
+		switch (xmlEntity.getEventKey()) {
+		case MessageConstanct.MENU_CLICK_CONTACT:// 联系我们
+			respMessage = this.todoMenuClickMethod(xmlEntity, 2);
+			break;
+		case MessageConstanct.MENU_CLICK_SEARCH:// 搜索图片
+			respMessage = this.todoMenuClickMethod(xmlEntity, 3);
+			break;
+		}
+		return respMessage;
+	}
+
+	/**
+	 * 菜单点击方法
+	 * 
+	 * @param xmlEntity
+	 * @param type
+	 * @return
+	 */
+	private String todoMenuClickMethod(ReceiveXmlVO xmlEntity, int type) {
+		// 首次关注推送消息
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", type);// 类型（1-首次关注；2-联系我们；3-搜索图片）
+		WechatPubReplyT pubReply = replyService.selectEntity(map);
+		String content = pubReply.getContent();
+		switch (type) {
+		case 2:
+			content = StringUtils.isBlank(content) ? MessageConstanct.CONTACT_WELCOME_WORDS : content;
+			break;
+		case 3:
+			content = StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content;
+			break;
+		}
+		String respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(),
+				xmlEntity.getToUserName(), content);
 		return respMessage;
 	}
 
@@ -175,60 +226,6 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 			e.printStackTrace();
 		}
 		return user;
-	}
-
-	/**
-	 * 点击菜单跳转搜索图片
-	 */
-	@Override
-	public String searchRequest(HttpServletRequest request) throws IOException {
-		return todoTextTaskMethod(request, "3");
-	}
-
-	/**
-	 * 点击菜单跳转联系人
-	 */
-	@Override
-	public String contactRequest(HttpServletRequest request) throws IOException {
-		return todoTextTaskMethod(request, "2");
-	}
-
-	/**
-	 * 3和2公用的方法
-	 * 
-	 * @param request
-	 * @param type
-	 * @return
-	 * @throws IOException
-	 */
-	private String todoTextTaskMethod(HttpServletRequest request, String type) throws IOException {
-		String respMessage = null;
-		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
-		String xml = ReceiveXmlUtil.parseXml(request);
-		System.out.println("xml is:" + xml);
-
-		// 反射处理XML字符串型消息
-		ReceiveXmlVO xmlEntity = new ReceiveXmlVO();
-		xmlEntity = ReceiveXmlUtil.getReceiveXmlVO(xml, xmlEntity.getClass().getName());
-		String content = "";
-		if (xmlEntity != null && MessageConstanct.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
-			// 首次关注推送消息
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("type", type);// 类型（1-首次关注；2-联系我们；3-搜索图片）
-			WechatPubReplyT pubReply = replyService.selectEntity(map);
-			content = pubReply.getContent();
-			switch (type) {
-			case "2":
-				content = StringUtils.isBlank(content) ? MessageConstanct.CONTACT_WELCOME_WORDS : content;
-				break;
-			case "3":
-				content = StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content;
-				break;
-			}
-		}
-		respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
-				content);
-		return respMessage;
 	}
 
 	/**

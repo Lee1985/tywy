@@ -24,7 +24,7 @@ public class FormatXmlUtil {
 		sb.append("]]></FromUserName><CreateTime>");
 		sb.append(date.getTime());
 		sb.append("</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[");
-		sb.append(content);
+		sb.append(content.trim());
 		sb.append("]]></Content></xml>");
 		return sb.toString();
 	}
