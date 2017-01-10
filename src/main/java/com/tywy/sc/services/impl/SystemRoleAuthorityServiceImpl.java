@@ -17,7 +17,8 @@ import com.tywy.sc.services.SystemRoleAuthorityService;
 import com.tywy.utils.UUIDUtil;
 
 @Service
-public class SystemRoleAuthorityServiceImpl extends BaseServiceImpl<SystemRoleAuthority> implements SystemRoleAuthorityService {
+public class SystemRoleAuthorityServiceImpl extends BaseServiceImpl<SystemRoleAuthority>
+		implements SystemRoleAuthorityService {
 	@Autowired
 	private SystemRoleAuthorityDao dao;
 

@@ -38,7 +38,7 @@ public class AuthImgAction {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="back/getAuthImg" , method={RequestMethod.GET , RequestMethod.POST})
+	@RequestMapping(value="getAuthImg" , method={RequestMethod.GET , RequestMethod.POST})
 	public void  getAuthImg(HttpServletRequest request, HttpServletResponse response, Model model) {
         try {
             response.setContentType("image/jpeg");//设置相应类型,告诉浏览器输出的内容为图片

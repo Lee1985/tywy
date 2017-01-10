@@ -4,7 +4,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>		
-		<base href="<%=basePath%>">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<META HTTP-EQUIV="pragma" CONTENT="no-cache">
@@ -15,32 +14,33 @@
 		<script type="text/javascript" src="js/system/easy.js"></script>
 		<script type="text/javascript" src="js/system/sys.js"></script>
 		<style type="text/css">
-			#fm {
-				margin: 0;
-				padding: 10px 5px;
-			}
-			
-			.ftitle {
-				font-size: 12px;
-				font-weight: bold;
-				padding: 5px 0;
-				margin-bottom: 10px;
-				border-bottom: 1px solid #ccc;
-			}
-			
-			.fitem {
-				margin-bottom: 5px;
-			}
-			
-			.fitem label {
-				display: inline-block;
-				width: 80px;
-			}
-			
-			.fitem input {
-				width: 160px;
-			}
-		</style>
+#fm {
+	margin: 0;
+	padding: 10px 5px;
+}
+
+.ftitle {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 80px;
+}
+
+.fitem input {
+	width: 160px;
+}
+
+</style>
 		<style type="text/css">
 			.mytable td,a{
 				color: #ffffff;
@@ -67,7 +67,7 @@
 					${sessionScope.SESSION_BACK_USER.userName}
 					</td>
 					<td nowrap="nowrap"><a
-						href="back/logout.do"
+						href="./logout.do"
 						target="_parent">退出</a>
 					</td>
 				</tr>
