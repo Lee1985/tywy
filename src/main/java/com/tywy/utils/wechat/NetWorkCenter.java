@@ -90,7 +90,8 @@ public class NetWorkCenter {
      * @return 请求收到响应后回调函数，参数有2个，第一个为resultCode，即响应码，比如200为成功，404为不存在，
      * 500为服务器发生错误； 第二个为resultJson,即响应回来的数据报文
      */
-    private static String doRequest(String method, String url, String paramData,
+    @SuppressWarnings("finally")
+	private static String doRequest(String method, String url, String paramData,
                                     final List<File> fileList) {
         String resultJson = "";
 

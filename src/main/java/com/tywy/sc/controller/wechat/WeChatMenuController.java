@@ -18,43 +18,56 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class WeChatMenuController extends BaseController {
 
-    @Resource
-    private WeChatCoreService wechatService;
+	@Resource
+	private WeChatCoreService wechatService;
 
-    /**
-     * 跳转网站
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/toWechatWebsiteView")
-    public String toWechatWebsiteView(HttpServletRequest request, HttpServletResponse response) {
-        return "/wechat_official_website";
-    }
+	/**
+	 * 跳转网站
+	 */
+	@RequestMapping(value = "/toWechatWebsite")
+	public String toWechatWebsiteView() {
+		return "/wechat_official_website";
+	}
 
-    /**
-     * 跳转电子相册
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/toWechatAlbumView")
-    public String toWechatAlbumView(HttpServletRequest request, HttpServletResponse response) {
-        return "/wechat_album";
-    }
+	/**
+	 * 跳转电子相册欢迎页
+	 */
+	@RequestMapping(value = "/toWechatAlbum")
+	public String toWechatAlbum() {
+		return "/wechat/index";
+	}
 
-    /**
-     * 跳转联系我们
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/toWechatContactView")
-    public String toWechatContactView(HttpServletRequest request, HttpServletResponse response) {
-        return "/wechat_contact";
-    }
+	/**
+	 * 跳转电子相册
+	 */
+	@RequestMapping(value = "/welcomeIndex")
+	public String welcomeIndex() {
+		return "/wechat/pictures";
+	}
+
+	/**
+	 * 跳转专区
+	 */
+	@RequestMapping(value = "/toDiffArea")
+	public String toDiffArea() {
+		return "/wechat/differentArea";
+	}
+
+	/**
+	 * 跳转详情
+	 */
+	@RequestMapping(value = "/toGallery")
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, String id) {
+		request.setAttribute("id", id);
+		return "/wechat/gallery";
+	}
+
+	/**
+	 * 跳转联系我们
+	 */
+	@RequestMapping(value = "/toWechatContact")
+	public String toWechatContactView(HttpServletRequest request, HttpServletResponse response) {
+		return "/wechat/contact";
+	}
 
 }

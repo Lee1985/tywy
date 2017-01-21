@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 /**
  * 请求校验工具类
+ * 
+ * @author Liuheli
  */
 public class SignUtil {
 
