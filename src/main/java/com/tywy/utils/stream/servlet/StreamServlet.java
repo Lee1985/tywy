@@ -1,23 +1,16 @@
 package com.tywy.utils.stream.servlet;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.tywy.utils.stream.config.Configurations;
+import com.tywy.utils.stream.util.IoUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-import com.tywy.utils.stream.config.Configurations;
-import com.tywy.utils.stream.util.IoUtil;
+import java.io.*;
+import java.nio.file.Files;
 
 /**
  * File reserved servlet, mainly reading the request parameter and its file

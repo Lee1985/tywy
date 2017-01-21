@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tywy.sc.data.dao.WechatUserInfoTDao">
 
-	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WechatUserInfoT">
-		<id property="id" column="id" />
-		<result property="subscribe" column="subscribe" />
-		<result property="openid" column="openid" />
-		<result property="nickname" column="nickname" />
-		<result property="sex" column="sex" />
-		<result property="city" column="city" />
-		<result property="country" column="country" />
-		<result property="province" column="province" />
-		<result property="headimgurl" column="headimgurl" />
-		<result property="subscribe_time" column="subscribe_time" />
-		<result property="unionid" column="unionid" />
-		<result property="remark" column="remark" />
-		<result property="groupid" column="groupid" />
-		<result property="tagid_list" column="tagid_list" />
-		<result property="status" column="status" />
-	</resultMap>
-	<!-- 动态sql -->
-	<sql id="colomnResult">
-		<![CDATA[
+    <resultMap id="colomnResult" type="com.tywy.sc.data.model.WechatUserInfoT">
+        <id property="id" column="id"/>
+        <result property="subscribe" column="subscribe"/>
+        <result property="openid" column="openid"/>
+        <result property="nickname" column="nickname"/>
+        <result property="sex" column="sex"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="province" column="province"/>
+        <result property="headimgurl" column="headimgurl"/>
+        <result property="subscribe_time" column="subscribe_time"/>
+        <result property="unionid" column="unionid"/>
+        <result property="remark" column="remark"/>
+        <result property="groupid" column="groupid"/>
+        <result property="tagid_list" column="tagid_list"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
 	     id,
 	     subscribe,
 	     openid,
@@ -40,290 +40,290 @@
 	     tagid_list,
 	     status
 	 ]]>
-	</sql>
-	<insert id="insert">
-	   insert into wechat_user_info_t  
-	   <trim prefix="(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">id,</if>
-			     <if test="subscribe!=null">subscribe,</if>
-			     <if test="openid!=null">openid,</if>
-			     <if test="nickname!=null">nickname,</if>
-			     <if test="sex!=null">sex,</if>
-			     <if test="city!=null">city,</if>
-			     <if test="country!=null">country,</if>
-			     <if test="province!=null">province,</if>
-			     <if test="headimgurl!=null">headimgurl,</if>
-			     <if test="subscribe_time!=null">subscribe_time,</if>
-			     <if test="unionid!=null">unionid,</if>
-			     <if test="remark!=null">remark,</if>
-			     <if test="groupid!=null">groupid,</if>
-			     <if test="tagid_list!=null">tagid_list,</if>
-			     <if test="status!=null">status,</if>
-		</trim>
-	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">#{id},</if>
-			     <if test="subscribe!=null">#{subscribe},</if>
-			     <if test="openid!=null">#{openid},</if>
-			     <if test="nickname!=null">#{nickname},</if>
-			     <if test="sex!=null">#{sex},</if>
-			     <if test="city!=null">#{city},</if>
-			     <if test="country!=null">#{country},</if>
-			     <if test="province!=null">#{province},</if>
-			     <if test="headimgurl!=null">#{headimgurl},</if>
-			     <if test="subscribe_time!=null">#{subscribe_time},</if>
-			     <if test="unionid!=null">#{unionid},</if>
-			     <if test="remark!=null">#{remark},</if>
-			     <if test="groupid!=null">#{groupid},</if>
-			     <if test="tagid_list!=null">#{tagid_list},</if>
-			     <if test="status!=null">#{status},</if>
-		</trim>
-	</insert>
+    </sql>
+    <insert id="insert">
+        insert into wechat_user_info_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="subscribe!=null">subscribe,</if>
+            <if test="openid!=null">openid,</if>
+            <if test="nickname!=null">nickname,</if>
+            <if test="sex!=null">sex,</if>
+            <if test="city!=null">city,</if>
+            <if test="country!=null">country,</if>
+            <if test="province!=null">province,</if>
+            <if test="headimgurl!=null">headimgurl,</if>
+            <if test="subscribe_time!=null">subscribe_time,</if>
+            <if test="unionid!=null">unionid,</if>
+            <if test="remark!=null">remark,</if>
+            <if test="groupid!=null">groupid,</if>
+            <if test="tagid_list!=null">tagid_list,</if>
+            <if test="status!=null">status,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="subscribe!=null">#{subscribe},</if>
+            <if test="openid!=null">#{openid},</if>
+            <if test="nickname!=null">#{nickname},</if>
+            <if test="sex!=null">#{sex},</if>
+            <if test="city!=null">#{city},</if>
+            <if test="country!=null">#{country},</if>
+            <if test="province!=null">#{province},</if>
+            <if test="headimgurl!=null">#{headimgurl},</if>
+            <if test="subscribe_time!=null">#{subscribe_time},</if>
+            <if test="unionid!=null">#{unionid},</if>
+            <if test="remark!=null">#{remark},</if>
+            <if test="groupid!=null">#{groupid},</if>
+            <if test="tagid_list!=null">#{tagid_list},</if>
+            <if test="status!=null">#{status},</if>
+        </trim>
+    </insert>
 
-	<update id="update">
-	   update wechat_user_info_t 
-	   <set>
-			     <if test="id!=null">id=#{id},</if>
-			     <if test="subscribe!=null">subscribe=#{subscribe},</if>
-			     <if test="openid!=null">openid=#{openid},</if>
-			     <if test="nickname!=null">nickname=#{nickname},</if>
-			     <if test="sex!=null">sex=#{sex},</if>
-			     <if test="city!=null">city=#{city},</if>
-			     <if test="country!=null">country=#{country},</if>
-			     <if test="province!=null">province=#{province},</if>
-			     <if test="headimgurl!=null">headimgurl=#{headimgurl},</if>
-			     <if test="subscribe_time!=null">subscribe_time=#{subscribe_time},</if>
-			     <if test="unionid!=null">unionid=#{unionid},</if>
-			     <if test="remark!=null">remark=#{remark},</if>
-			     <if test="groupid!=null">groupid=#{groupid},</if>
-			     <if test="tagid_list!=null">tagid_list=#{tagid_list},</if>
-			     <if test="status!=null">status=#{status},</if>
-		</set>
-		where 
-	   		 id=#{id} 
-	</update>
+    <update id="update">
+        update wechat_user_info_t
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="subscribe!=null">subscribe=#{subscribe},</if>
+            <if test="openid!=null">openid=#{openid},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="country!=null">country=#{country},</if>
+            <if test="province!=null">province=#{province},</if>
+            <if test="headimgurl!=null">headimgurl=#{headimgurl},</if>
+            <if test="subscribe_time!=null">subscribe_time=#{subscribe_time},</if>
+            <if test="unionid!=null">unionid=#{unionid},</if>
+            <if test="remark!=null">remark=#{remark},</if>
+            <if test="groupid!=null">groupid=#{groupid},</if>
+            <if test="tagid_list!=null">tagid_list=#{tagid_list},</if>
+            <if test="status!=null">status=#{status},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
 
-	<delete id="delete">
-	   delete from
-	     wechat_user_info_t 
-	   where 
-	    openid=#{openid}
-	</delete>
+    <delete id="delete">
+        delete from
+        wechat_user_info_t
+        where
+        openid=#{openid}
+    </delete>
 
-	<select id="selectEntity" resultMap="colomnResult">
-	   select 
-	<include refid="colomnResult" /> 
-	   from wechat_user_info_t
-	  <where>
-			<if test=" id != null and id != '' ">
-				and id=#{id} 
-			</if>
-			<if test=" subscribe != null and subscribe != '' ">
-				and subscribe=#{subscribe} 
-			</if>
-			<if test=" openid != null and openid != '' ">
-				and openid=#{openid} 
-			</if>
-			<if test=" nickname != null and nickname != '' ">
-				and nickname=#{nickname} 
-			</if>
-			<if test=" sex != null and sex != '' ">
-				and sex=#{sex} 
-			</if>
-			<if test=" city != null and city != '' ">
-				and city=#{city} 
-			</if>
-			<if test=" country != null and country != '' ">
-				and country=#{country} 
-			</if>
-			<if test=" province != null and province != '' ">
-				and province=#{province} 
-			</if>
-			<if test=" headimgurl != null and headimgurl != '' ">
-				and headimgurl=#{headimgurl} 
-			</if>
-			<if test=" subscribe_time != null and subscribe_time != '' ">
-				and subscribe_time=#{subscribe_time} 
-			</if>
-			<if test=" unionid != null and unionid != '' ">
-				and unionid=#{unionid} 
-			</if>
-			<if test=" remark != null and remark != '' ">
-				and remark=#{remark} 
-			</if>
-			<if test=" groupid != null and groupid != '' ">
-				and groupid=#{groupid} 
-			</if>
-			<if test=" tagid_list != null and tagid_list != '' ">
-				and tagid_list=#{tagid_list} 
-			</if>
-			<if test=" status != null and status != '' ">
-				and status=#{status} 
-			</if>
-		</where>
-	</select>
-	
-	<!-- 根据条件信息 -->
-	<select id="selectAll"  resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <select id="selectEntity" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from wechat_user_info_t
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" subscribe != null and subscribe != '' ">
+                and subscribe=#{subscribe}
+            </if>
+            <if test=" openid != null and openid != '' ">
+                and openid=#{openid}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname=#{nickname}
+            </if>
+            <if test=" sex != null and sex != '' ">
+                and sex=#{sex}
+            </if>
+            <if test=" city != null and city != '' ">
+                and city=#{city}
+            </if>
+            <if test=" country != null and country != '' ">
+                and country=#{country}
+            </if>
+            <if test=" province != null and province != '' ">
+                and province=#{province}
+            </if>
+            <if test=" headimgurl != null and headimgurl != '' ">
+                and headimgurl=#{headimgurl}
+            </if>
+            <if test=" subscribe_time != null and subscribe_time != '' ">
+                and subscribe_time=#{subscribe_time}
+            </if>
+            <if test=" unionid != null and unionid != '' ">
+                and unionid=#{unionid}
+            </if>
+            <if test=" remark != null and remark != '' ">
+                and remark=#{remark}
+            </if>
+            <if test=" groupid != null and groupid != '' ">
+                and groupid=#{groupid}
+            </if>
+            <if test=" tagid_list != null and tagid_list != '' ">
+                and tagid_list=#{tagid_list}
+            </if>
+            <if test=" status != null and status != '' ">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from wechat_user_info_t
 		]]>
-		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" subscribe != null and subscribe != '' ">
-					and subscribe=#{subscribe} 
-				</if>
-				<if test=" openid != null and openid != '' ">
-					and openid=#{openid} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname like '%${nickname}%'
-				</if>
-				<if test=" sex != null ">
-					and sex=#{sex} 
-				</if>
-				<if test=" city != null and city != '' ">
-					and city=#{city} 
-				</if>
-				<if test=" country != null and country != '' ">
-					and country=#{country} 
-				</if>
-				<if test=" province != null and province != '' ">
-					and province=#{province} 
-				</if>
-				<if test=" headimgurl != null and headimgurl != '' ">
-					and headimgurl=#{headimgurl} 
-				</if>
-				<if test=" subscribe_time != null and subscribe_time != '' ">
-					and subscribe_time=#{subscribe_time} 
-				</if>
-				<if test=" unionid != null and unionid != '' ">
-					and unionid=#{unionid} 
-				</if>
-				<if test=" remark != null and remark != '' ">
-					and remark=#{remark} 
-				</if>
-				<if test=" groupid != null and groupid != '' ">
-					and groupid=#{groupid} 
-				</if>
-				<if test=" tagid_list != null and tagid_list != '' ">
-					and tagid_list=#{tagid_list} 
-				</if>
-				<if test=" status != null ">
-					and status=#{status} 
-				</if>
-		</where>
-		<if test="sort != null">
-				order by ${sort} ${order}
-		</if>
-	</select>
-	<!-- 根据条件查询数量 -->
-	<select id="selectCount"  resultType="int">
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" subscribe != null and subscribe != '' ">
+                and subscribe=#{subscribe}
+            </if>
+            <if test=" openid != null and openid != '' ">
+                and openid=#{openid}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname like '%${nickname}%'
+            </if>
+            <if test=" sex != null ">
+                and sex=#{sex}
+            </if>
+            <if test=" city != null and city != '' ">
+                and city=#{city}
+            </if>
+            <if test=" country != null and country != '' ">
+                and country=#{country}
+            </if>
+            <if test=" province != null and province != '' ">
+                and province=#{province}
+            </if>
+            <if test=" headimgurl != null and headimgurl != '' ">
+                and headimgurl=#{headimgurl}
+            </if>
+            <if test=" subscribe_time != null and subscribe_time != '' ">
+                and subscribe_time=#{subscribe_time}
+            </if>
+            <if test=" unionid != null and unionid != '' ">
+                and unionid=#{unionid}
+            </if>
+            <if test=" remark != null and remark != '' ">
+                and remark=#{remark}
+            </if>
+            <if test=" groupid != null and groupid != '' ">
+                and groupid=#{groupid}
+            </if>
+            <if test=" tagid_list != null and tagid_list != '' ">
+                and tagid_list=#{tagid_list}
+            </if>
+            <if test=" status != null ">
+                and status=#{status}
+            </if>
+        </where>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
 
-		select count(id) from wechat_user_info_t
-		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" subscribe != null and subscribe != '' ">
-					and subscribe=#{subscribe} 
-				</if>
-				<if test=" openid != null and openid != '' ">
-					and openid=#{openid} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
-				</if>
-				<if test=" sex != null and sex != '' ">
-					and sex=#{sex} 
-				</if>
-				<if test=" city != null and city != '' ">
-					and city=#{city} 
-				</if>
-				<if test=" country != null and country != '' ">
-					and country=#{country} 
-				</if>
-				<if test=" province != null and province != '' ">
-					and province=#{province} 
-				</if>
-				<if test=" headimgurl != null and headimgurl != '' ">
-					and headimgurl=#{headimgurl} 
-				</if>
-				<if test=" subscribe_time != null and subscribe_time != '' ">
-					and subscribe_time=#{subscribe_time} 
-				</if>
-				<if test=" unionid != null and unionid != '' ">
-					and unionid=#{unionid} 
-				</if>
-				<if test=" remark != null and remark != '' ">
-					and remark=#{remark} 
-				</if>
-				<if test=" groupid != null and groupid != '' ">
-					and groupid=#{groupid} 
-				</if>
-				<if test=" tagid_list != null and tagid_list != '' ">
-					and tagid_list=#{tagid_list} 
-				</if>
-				<if test=" status != null and status != '' ">
-					and status=#{status} 
-				</if>
-		</where>
-	</select>
-	<!-- 根据主键查询信息 -->
-	<select id="selectById"  resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+        select count(id) from wechat_user_info_t
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" subscribe != null and subscribe != '' ">
+                and subscribe=#{subscribe}
+            </if>
+            <if test=" openid != null and openid != '' ">
+                and openid=#{openid}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname=#{nickname}
+            </if>
+            <if test=" sex != null and sex != '' ">
+                and sex=#{sex}
+            </if>
+            <if test=" city != null and city != '' ">
+                and city=#{city}
+            </if>
+            <if test=" country != null and country != '' ">
+                and country=#{country}
+            </if>
+            <if test=" province != null and province != '' ">
+                and province=#{province}
+            </if>
+            <if test=" headimgurl != null and headimgurl != '' ">
+                and headimgurl=#{headimgurl}
+            </if>
+            <if test=" subscribe_time != null and subscribe_time != '' ">
+                and subscribe_time=#{subscribe_time}
+            </if>
+            <if test=" unionid != null and unionid != '' ">
+                and unionid=#{unionid}
+            </if>
+            <if test=" remark != null and remark != '' ">
+                and remark=#{remark}
+            </if>
+            <if test=" groupid != null and groupid != '' ">
+                and groupid=#{groupid}
+            </if>
+            <if test=" tagid_list != null and tagid_list != '' ">
+                and tagid_list=#{tagid_list}
+            </if>
+            <if test=" status != null and status != '' ">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from wechat_user_info_t where 
 			
 			   	 id=#{id} 
 		]]>
-		
-	</select>
-	
-	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		 from wechat_user_info_t where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</select>
-		
-	<!-- 批量删除 -->
-	<delete id="batchDelete" parameterType="java.util.List">
-		delete from wechat_user_info_t where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</delete>
-	
-	<!-- 批量修改 -->
-	<update id="batchUpdate" parameterType="java.util.HashMap">
-		update wechat_user_info_t
-		<set>
-			     <if test="id!=null">id=#{id},</if>
-			     <if test="subscribe!=null">subscribe=#{subscribe},</if>
-			     <if test="openid!=null">openid=#{openid},</if>
-			     <if test="nickname!=null">nickname=#{nickname},</if>
-			     <if test="sex!=null">sex=#{sex},</if>
-			     <if test="city!=null">city=#{city},</if>
-			     <if test="country!=null">country=#{country},</if>
-			     <if test="province!=null">province=#{province},</if>
-			     <if test="headimgurl!=null">headimgurl=#{headimgurl},</if>
-			     <if test="subscribe_time!=null">subscribe_time=#{subscribe_time},</if>
-			     <if test="unionid!=null">unionid=#{unionid},</if>
-			     <if test="remark!=null">remark=#{remark},</if>
-			     <if test="groupid!=null">groupid=#{groupid},</if>
-			     <if test="tagid_list!=null">tagid_list=#{tagid_list},</if>
-			     <if test="status!=null">status=#{status},</if>
-		</set>
-		where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</update>
+
+    </select>
+
+    <select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from wechat_user_info_t where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </select>
+
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from wechat_user_info_t where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </delete>
+
+    <!-- 批量修改 -->
+    <update id="batchUpdate" parameterType="java.util.HashMap">
+        update wechat_user_info_t
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="subscribe!=null">subscribe=#{subscribe},</if>
+            <if test="openid!=null">openid=#{openid},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="country!=null">country=#{country},</if>
+            <if test="province!=null">province=#{province},</if>
+            <if test="headimgurl!=null">headimgurl=#{headimgurl},</if>
+            <if test="subscribe_time!=null">subscribe_time=#{subscribe_time},</if>
+            <if test="unionid!=null">unionid=#{unionid},</if>
+            <if test="remark!=null">remark=#{remark},</if>
+            <if test="groupid!=null">groupid=#{groupid},</if>
+            <if test="tagid_list!=null">tagid_list=#{tagid_list},</if>
+            <if test="status!=null">status=#{status},</if>
+        </set>
+        where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </update>
 </mapper> 

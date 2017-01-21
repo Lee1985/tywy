@@ -1,17 +1,16 @@
 package com.tywy.utils.stream.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.tywy.utils.stream.config.Configurations;
+import com.tywy.utils.stream.util.TokenUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-import com.tywy.utils.stream.config.Configurations;
-import com.tywy.utils.stream.util.TokenUtil;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * According the file name and its size, generate a unique token. And this

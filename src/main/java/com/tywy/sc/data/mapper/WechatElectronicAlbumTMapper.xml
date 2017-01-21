@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tywy.sc.data.dao.WechatElectronicAlbumTDao">
 
-	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WechatElectronicAlbumT">
-		<id property="id" column="id" />
-		<result property="orderList" column="orderList" />
-		<result property="imgUuid" column="imgUuid" />
-		<result property="name" column="name" />
-		<result property="nickname" column="nickname" />
-		<result property="description" column="description" />
-		<result property="createDate" column="createDate" />
-		<result property="updateDate" column="updateDate" />
-		<result property="createUser" column="createUser" />
-		<result property="updateUser" column="updateUser" />
-		<result property="isDelete" column="isDelete" />
-	</resultMap>
-	<!-- 动态sql -->
-	<sql id="colomnResult">
-		<![CDATA[
+    <resultMap id="colomnResult" type="com.tywy.sc.data.model.WechatElectronicAlbumT">
+        <id property="id" column="id"/>
+        <result property="orderList" column="orderList"/>
+        <result property="imgUuid" column="imgUuid"/>
+        <result property="name" column="name"/>
+        <result property="nickname" column="nickname"/>
+        <result property="description" column="description"/>
+        <result property="createDate" column="createDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="createUser" column="createUser"/>
+        <result property="updateUser" column="updateUser"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
 	     id,
 	     orderList,
 	     imgUuid,
@@ -32,239 +32,239 @@
 	     updateUser,
 	     isDelete
 	 ]]>
-	</sql>
-	<insert id="insert">
-	   insert into wechat_electronic_album_t  
-	   <trim prefix="(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">id,</if>
-			     <if test="orderList!=null">orderList,</if>
-			     <if test="imgUuid!=null">imgUuid,</if>
-			     <if test="name!=null">name,</if>
-			     <if test="nickname!=null">nickname,</if>
-			     <if test="description!=null">description,</if>
-			     <if test="createDate!=null">createDate,</if>
-			     <if test="updateDate!=null">updateDate,</if>
-			     <if test="createUser!=null">createUser,</if>
-			     <if test="updateUser!=null">updateUser,</if>
-			     <if test="isDelete!=null">isDelete,</if>
-		</trim>
-	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">#{id},</if>
-			     <if test="orderList!=null">#{orderList},</if>
-			     <if test="imgUuid!=null">#{imgUuid},</if>
-			     <if test="name!=null">#{name},</if>
-			     <if test="nickname!=null">#{nickname},</if>
-			     <if test="description!=null">#{description},</if>
-			     <if test="createDate!=null">#{createDate},</if>
-			     <if test="updateDate!=null">#{updateDate},</if>
-			     <if test="createUser!=null">#{createUser},</if>
-			     <if test="updateUser!=null">#{updateUser},</if>
-			     <if test="isDelete!=null">#{isDelete},</if>
-		</trim>
-	</insert>
+    </sql>
+    <insert id="insert">
+        insert into wechat_electronic_album_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="orderList!=null">orderList,</if>
+            <if test="imgUuid!=null">imgUuid,</if>
+            <if test="name!=null">name,</if>
+            <if test="nickname!=null">nickname,</if>
+            <if test="description!=null">description,</if>
+            <if test="createDate!=null">createDate,</if>
+            <if test="updateDate!=null">updateDate,</if>
+            <if test="createUser!=null">createUser,</if>
+            <if test="updateUser!=null">updateUser,</if>
+            <if test="isDelete!=null">isDelete,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="orderList!=null">#{orderList},</if>
+            <if test="imgUuid!=null">#{imgUuid},</if>
+            <if test="name!=null">#{name},</if>
+            <if test="nickname!=null">#{nickname},</if>
+            <if test="description!=null">#{description},</if>
+            <if test="createDate!=null">#{createDate},</if>
+            <if test="updateDate!=null">#{updateDate},</if>
+            <if test="createUser!=null">#{createUser},</if>
+            <if test="updateUser!=null">#{updateUser},</if>
+            <if test="isDelete!=null">#{isDelete},</if>
+        </trim>
+    </insert>
 
-	<update id="update">
-	   update wechat_electronic_album_t 
-	   <set>
-			     <if test="id!=null">id=#{id},</if>
-			     <if test="orderList!=null">orderList=#{orderList},</if>
-			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-			     <if test="name!=null">name=#{name},</if>
-			     <if test="nickname!=null">nickname=#{nickname},</if>
-			     <if test="description!=null">description=#{description},</if>
-			     <if test="createDate!=null">createDate=#{createDate},</if>
-			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
-			     <if test="createUser!=null">createUser=#{createUser},</if>
-			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
-			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
-		</set>
-		where 
-	   		 id=#{id} 
-	</update>
+    <update id="update">
+        update wechat_electronic_album_t
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="orderList!=null">orderList=#{orderList},</if>
+            <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="createDate!=null">createDate=#{createDate},</if>
+            <if test="updateDate!=null">updateDate=#{updateDate},</if>
+            <if test="createUser!=null">createUser=#{createUser},</if>
+            <if test="updateUser!=null">updateUser=#{updateUser},</if>
+            <if test="isDelete!=null">isDelete=#{isDelete},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
 
-	<delete id="delete">
-	   delete from
-	     wechat_electronic_album_t 
-	   where 
-	    id=#{id} 
-	</delete>
+    <delete id="delete">
+        delete from
+        wechat_electronic_album_t
+        where
+        id=#{id}
+    </delete>
 
-	<select id="selectEntity" resultMap="colomnResult">
-	   select 
-	<include refid="colomnResult" /> 
-	   from wechat_electronic_album_t
-	  <where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" orderList != null and orderList != '' ">
-					and orderList=#{orderList} 
-				</if>
-				<if test=" imgUuid != null and imgUuid != '' ">
-					and imgUuid=#{imgUuid} 
-				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
-				</if>
-				<if test=" description != null and description != '' ">
-					and description=#{description} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
-				<if test=" updateDate != null and updateDate != '' ">
-					and updateDate=#{updateDate} 
-				</if>
-				<if test=" createUser != null and createUser != '' ">
-					and createUser=#{createUser} 
-				</if>
-				<if test=" updateUser != null and updateUser != '' ">
-					and updateUser=#{updateUser} 
-				</if>
-				<if test=" isDelete != null and isDelete != '' ">
-					and isDelete=#{isDelete} 
-				</if>
-		</where>
-	</select>
-	
-	<!-- 根据条件信息 -->
-	<select id="selectAll"  resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <select id="selectEntity" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from wechat_electronic_album_t
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" orderList != null and orderList != '' ">
+                and orderList=#{orderList}
+            </if>
+            <if test=" imgUuid != null and imgUuid != '' ">
+                and imgUuid=#{imgUuid}
+            </if>
+            <if test=" name != null and name != '' ">
+                and name=#{name}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname=#{nickname}
+            </if>
+            <if test=" description != null and description != '' ">
+                and description=#{description}
+            </if>
+            <if test=" createDate != null and createDate != '' ">
+                and createDate=#{createDate}
+            </if>
+            <if test=" updateDate != null and updateDate != '' ">
+                and updateDate=#{updateDate}
+            </if>
+            <if test=" createUser != null and createUser != '' ">
+                and createUser=#{createUser}
+            </if>
+            <if test=" updateUser != null and updateUser != '' ">
+                and updateUser=#{updateUser}
+            </if>
+            <if test=" isDelete != null and isDelete != '' ">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from wechat_electronic_album_t
 		]]>
-		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" orderList != null and orderList != '' ">
-					and orderList=#{orderList} 
-				</if>
-				<if test=" imgUuid != null and imgUuid != '' ">
-					and imgUuid=#{imgUuid} 
-				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
-				</if>
-				<if test=" description != null and description != '' ">
-					and description=#{description} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
-				<if test=" updateDate != null and updateDate != '' ">
-					and updateDate=#{updateDate} 
-				</if>
-				<if test=" createUser != null and createUser != '' ">
-					and createUser=#{createUser} 
-				</if>
-				<if test=" updateUser != null and updateUser != '' ">
-					and updateUser=#{updateUser} 
-				</if>
-				<if test=" isDelete != null and isDelete != '' ">
-					and isDelete=#{isDelete} 
-				</if>
-		</where>
-		<if test="sort != null">
-				order by ${sort} ${order}
-		</if>
-	</select>
-	<!-- 根据条件查询数量 -->
-	<select id="selectCount"  resultType="int">
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" orderList != null and orderList != '' ">
+                and orderList=#{orderList}
+            </if>
+            <if test=" imgUuid != null and imgUuid != '' ">
+                and imgUuid=#{imgUuid}
+            </if>
+            <if test=" name != null and name != '' ">
+                and name=#{name}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname=#{nickname}
+            </if>
+            <if test=" description != null and description != '' ">
+                and description=#{description}
+            </if>
+            <if test=" createDate != null and createDate != '' ">
+                and createDate=#{createDate}
+            </if>
+            <if test=" updateDate != null and updateDate != '' ">
+                and updateDate=#{updateDate}
+            </if>
+            <if test=" createUser != null and createUser != '' ">
+                and createUser=#{createUser}
+            </if>
+            <if test=" updateUser != null and updateUser != '' ">
+                and updateUser=#{updateUser}
+            </if>
+            <if test=" isDelete != null and isDelete != '' ">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
 
-		select count(id) from wechat_electronic_album_t
-		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" orderList != null and orderList != '' ">
-					and orderList=#{orderList} 
-				</if>
-				<if test=" imgUuid != null and imgUuid != '' ">
-					and imgUuid=#{imgUuid} 
-				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
-				</if>
-				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
-				</if>
-				<if test=" description != null and description != '' ">
-					and description=#{description} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
-				<if test=" updateDate != null and updateDate != '' ">
-					and updateDate=#{updateDate} 
-				</if>
-				<if test=" createUser != null and createUser != '' ">
-					and createUser=#{createUser} 
-				</if>
-				<if test=" updateUser != null and updateUser != '' ">
-					and updateUser=#{updateUser} 
-				</if>
-				<if test=" isDelete != null and isDelete != '' ">
-					and isDelete=#{isDelete} 
-				</if>
-		</where>
-	</select>
-	<!-- 根据主键查询信息 -->
-	<select id="selectById"  resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+        select count(id) from wechat_electronic_album_t
+        <where>
+            <if test=" id != null and id != '' ">
+                and id=#{id}
+            </if>
+            <if test=" orderList != null and orderList != '' ">
+                and orderList=#{orderList}
+            </if>
+            <if test=" imgUuid != null and imgUuid != '' ">
+                and imgUuid=#{imgUuid}
+            </if>
+            <if test=" name != null and name != '' ">
+                and name=#{name}
+            </if>
+            <if test=" nickname != null and nickname != '' ">
+                and nickname=#{nickname}
+            </if>
+            <if test=" description != null and description != '' ">
+                and description=#{description}
+            </if>
+            <if test=" createDate != null and createDate != '' ">
+                and createDate=#{createDate}
+            </if>
+            <if test=" updateDate != null and updateDate != '' ">
+                and updateDate=#{updateDate}
+            </if>
+            <if test=" createUser != null and createUser != '' ">
+                and createUser=#{createUser}
+            </if>
+            <if test=" updateUser != null and updateUser != '' ">
+                and updateUser=#{updateUser}
+            </if>
+            <if test=" isDelete != null and isDelete != '' ">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from wechat_electronic_album_t where 
 			
 			   	 id=#{id} 
 		]]>
-		
-	</select>
-	
-	<!-- 批量删除 -->
-	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
-		select
-		<include refid="colomnResult" /> 
-		 from wechat_electronic_album_t where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</select>
-		
-	<!-- 批量删除 -->
-	<delete id="batchDelete" parameterType="java.util.List">
-		delete from wechat_electronic_album_t where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</delete>
-	
-	<!-- 批量修改 -->
-	<update id="batchUpdate" parameterType="java.util.HashMap">
-		update wechat_electronic_album_t
-		<set>
-			     <if test="id!=null">id=#{id},</if>
-			     <if test="orderList!=null">orderList=#{orderList},</if>
-			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-			     <if test="name!=null">name=#{name},</if>
-			     <if test="nickname!=null">nickname=#{nickname},</if>
-			     <if test="description!=null">description=#{description},</if>
-			     <if test="createDate!=null">createDate=#{createDate},</if>
-			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
-			     <if test="createUser!=null">createUser=#{createUser},</if>
-			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
-			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
-		</set>
-		where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
-	</update>
+
+    </select>
+
+    <!-- 批量删除 -->
+    <select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from wechat_electronic_album_t where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </select>
+
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from wechat_electronic_album_t where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </delete>
+
+    <!-- 批量修改 -->
+    <update id="batchUpdate" parameterType="java.util.HashMap">
+        update wechat_electronic_album_t
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="orderList!=null">orderList=#{orderList},</if>
+            <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="createDate!=null">createDate=#{createDate},</if>
+            <if test="updateDate!=null">updateDate=#{updateDate},</if>
+            <if test="createUser!=null">createUser=#{createUser},</if>
+            <if test="updateUser!=null">updateUser=#{updateUser},</if>
+            <if test="isDelete!=null">isDelete=#{isDelete},</if>
+        </set>
+        where id in
+        <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </update>
 </mapper> 
