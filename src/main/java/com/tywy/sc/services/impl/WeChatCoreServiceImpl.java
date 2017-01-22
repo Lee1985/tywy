@@ -219,11 +219,10 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
                 openid);
         WechatUserInfoT user = null;
         try {
-            Map<String,String> map = new HashMap<String, String>();
-            String result = NetWorkCenter.doGet(requestUrl,map);
+            String result = NetWorkCenter.doGet(requestUrl,null);
             if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
-                logger.info("-----------------requestUrl:{}-----------------", requestUrl);
-                logger.info("-----------------获取用户信息失败:{}-----------------", result);
+                logger.error("-----------------requestUrl:{}-----------------", requestUrl);
+                logger.error("-----------------获取用户信息失败:{}-----------------", result);
             } else {
                 user = JSONUtil.toBean(result, WechatUserInfoT.class);
 //              user = JSON.parseObject(result, WechatUserInfoT.class);
@@ -244,11 +243,10 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
                 CfgConstant.APPSECRET);
         String token = "";
         try {
-            Map<String,String> map = new HashMap<String, String>();
-            String result = NetWorkCenter.doGet(requestUrl,map);
+            String result = NetWorkCenter.doGet(requestUrl,null);
             if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
-                System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
-                System.out.println("----【getAccessToken Fail】----" + result);
+            	logger.error("getAccessToken requestUrl:{}", requestUrl);
+            	logger.error("getAccessToken Fail:{}", result);
             } else {
                 AccessTokenVO accessTokenVO = JSON.parseObject(result, AccessTokenVO.class);
                 token = accessTokenVO.getAccess_token();

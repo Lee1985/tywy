@@ -70,4 +70,12 @@ public class WeChatMenuController extends BaseController {
 		return "/wechat/contact";
 	}
 
+	/**
+	 * 跳转联系我们
+	 */
+	@RequestMapping(value = "/toCollection")
+	public String toCollection(HttpServletRequest request, HttpServletResponse response) {
+		return "/wechat/shoucang";
+	}
+
 }

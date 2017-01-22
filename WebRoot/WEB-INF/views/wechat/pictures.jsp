@@ -38,7 +38,7 @@
 				    	<p class="chinese">天雅地毯  印花地毯引领者</p>
 				    	<p class="english">TIANYA CARPETS  CARPET PRINGTING LEADER</p>
 				    </div>
-				    <a class="sc_btn" href="shoucang.jsp"></a>
+				    <a class="sc_btn" href="javaScript:void(0)" onclick="toCollection()"></a>
 				</div>
 				<!--焦点图-->
 			</div>
@@ -113,6 +113,9 @@
 		}
 		function toWechatWebsite() {
 			window.location.href="./toWechatWebsite.do";
+		}
+		function toCollection() {
+			window.location.href="./toCollection.do";
 		}
 // 		function toWelcomeIndex() {
 // 			window.location.href="./toWelcomeIndex.do";
