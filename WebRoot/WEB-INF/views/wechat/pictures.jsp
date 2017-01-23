@@ -19,11 +19,6 @@
 		<title>电子图册</title>
 	</head>
 	<body class="gray_bg">
-		<!--header-->
-		<!--<header>
-			<h1 class="title"><a href="javascript:history.go(-1);" class="back">返回</a>天雅地毯-电子图册<a href="javasript:;" class="more"></a></h1>
-		</header>-->
-		<!--header-->
 		<!--main-->
 		<main>
 			<div class="banner">
@@ -74,7 +69,7 @@
 		<footer>
 			<div class="footer">
 				<a href="javaScript:void(0)" onclick="toWechatWebsite()"><span class="gray"></span>官网</a>
-				<a href="javaScript:void(0)" ><span class="gray"></span>电子图册</a>
+				<a href="javaScript:void(0)" onclick="toWelcomeIndex()"><span class="gray"></span>电子图册</a>
 				<a href="javaScript:void(0)" onclick="toWechatContact()"><span class="gray"></span>联系我们</a>
 			</div>
 		</footer>
@@ -82,10 +77,12 @@
 	</body>
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/wechat/footer.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery.bxslider.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function(){
+			$("#footer a").click(function() {
+				$(this).addClass("gray").siblings().removeClass("gray");
+			})
 			// 焦点图
 			$('.slider').bxSlider({
 				auto: true,
@@ -114,11 +111,11 @@
 		function toWechatWebsite() {
 			window.location.href="./toWechatWebsite.do";
 		}
+		function toWelcomeIndex() {
+			window.location.href="./welcomeIndex.do";
+		}
 		function toCollection() {
 			window.location.href="./toCollection.do";
 		}
-// 		function toWelcomeIndex() {
-// 			window.location.href="./toWelcomeIndex.do";
-// 		}
 	</script>	
 </html>

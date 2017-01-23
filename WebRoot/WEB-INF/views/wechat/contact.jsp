@@ -51,15 +51,32 @@
 		</main>
 		<!--main-->
 		<!--footer-->
-		<footer></footer>
+		<footer>
+			<div class="footer">
+				<a href="javaScript:void(0)" onclick="toWechatWebsite()"><span class="gray"></span>官网</a>
+				<a href="javaScript:void(0)" onclick="toWelcomeIndex()"><span class="gray"></span>电子图册</a>
+				<a href="javaScript:void(0)" onclick="toWechatContact()"><span class="gray"></span>联系我们</a>
+			</div>
+		</footer>
 		<!--footer-->
 	</body>
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/wechat/footer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(function(){
-			$("footer").load("footer.jsp");
+		$(function() {
+			$("#footer a").click(function() {
+				$(this).addClass("gray").siblings().removeClass("gray");
+			})
 		});
+		
+		function toWechatContact() {
+			window.location.href="./toWechatContact.do";
+		}
+		function toWechatWebsite() {
+			window.location.href="./toWechatWebsite.do";
+		}
+		function toWelcomeIndex() {
+			window.location.href="./welcomeIndex.do";
+		}
 	</script>
 </html>

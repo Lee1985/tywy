@@ -1,17 +1,24 @@
 package com.tywy.sc.base.controller;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import com.tywy.constant.SessionConstants;
+import com.tywy.sc.data.model.SystemUser;
+import com.tywy.utils.FileTool;
+
 
 @Controller
 public class BaseController {
@@ -71,5 +78,43 @@ public class BaseController {
         }
         return param;
     }
+    
+    public SystemUser getSessionUser(HttpServletRequest request) {
+		SystemUser systemUser = null;
+		try {
+			systemUser = (SystemUser) request.getSession().getAttribute(
+					SessionConstants.SESSION_USER);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return systemUser;
+	}
 
+    protected boolean deleteFile(String path) {
+		boolean flag = false;
+		FileTool.deleteFile(path);
+		path = path.substring(0, path.lastIndexOf("/"));
+		File dirFile = new File(path);
+		// 删除日文件夹
+		if (dirFile.listFiles() != null && dirFile.listFiles().length == 0) {
+			flag = FileTool.deleteDirectory(path);
+		}
+		// 删除月文件夹
+		if (flag) {
+			path = path.substring(0, path.lastIndexOf("/"));
+			dirFile = new File(path);
+			if (dirFile.listFiles().length == 0) {
+				flag = FileTool.deleteDirectory(path);
+			}
+		}
+		// 删除年文件夹
+		if (flag) {
+			path = path.substring(0, path.lastIndexOf("/"));
+			dirFile = new File(path);
+			if (dirFile.listFiles().length == 0) {
+				flag = FileTool.deleteDirectory(path);
+			}
+		}
+		return flag;
+	}
 }

@@ -8,6 +8,7 @@ $(document).ready(function () {
         index = $(dom).index();//获取当前页面要显示的第一张图片的下标
     }
 
+
     var len = $(".swiper-slide").length;
     _initGalleryInfo(index, len, dom);
 
@@ -18,6 +19,7 @@ $(document).ready(function () {
     window.onresize = function () {
         initSwiperHeight();
     };
+
 
 
     //初始化滑动

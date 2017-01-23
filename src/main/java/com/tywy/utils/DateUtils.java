@@ -335,4 +335,20 @@ public class DateUtils {
 		c.add(Calendar.MONTH, -monty);
 		return c.getTime();
 	}
+
+	/**
+	 * 根据给定的格式化参数，将日期转换为字符串
+	 * 
+	 * @param date
+	 * @param dateFormat
+	 * @return String
+	 */
+	public static String toString(java.util.Date date, String dateFormat) {
+		if ("".equals(date) || date == null) {
+			return "bug: date is null";
+		}
+		DateFormat sdf = new SimpleDateFormat(dateFormat);
+		String str = sdf.format(date);
+		return str;
+	}
 }

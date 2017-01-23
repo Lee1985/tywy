@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author William
+ * @author Liuheli
  * @ClassName: WechatMenuController
  * @Description: 菜单控制层
  * @date 2016-11-27 16:56:19
@@ -71,7 +71,7 @@ public class WeChatMenuController extends BaseController {
 	}
 
 	/**
-	 * 跳转联系我们
+	 * 跳转我的收藏
 	 */
 	@RequestMapping(value = "/toCollection")
 	public String toCollection(HttpServletRequest request, HttpServletResponse response) {
