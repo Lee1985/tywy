@@ -1,6 +1,5 @@
 package com.tywy.utils;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -58,7 +57,7 @@ public class FileTool {
 	 * 
 	 * @param file
 	 *            上传的文件
-	 * @param FilePath
+	 * @param filePath
 	 *            文件路径
 	 * @param targetW
 	 *            目标宽
@@ -66,7 +65,7 @@ public class FileTool {
 	 *            目标高
 	 * @return 文件名
 	 */
-	public static FileInfo saveFile(MultipartFile file, String FilePath, int targetW, int targetH) {
+	public static FileInfo saveFile(MultipartFile file, String filePath, int targetW, int targetH) {
 		FileInfo result = new FileInfo();
 		try {
 			String fileName = file.getOriginalFilename();// yyyyMMddHHmmssSSS
@@ -75,8 +74,8 @@ public class FileTool {
 					+ fileName.substring(fileName.lastIndexOf("."));
 			InputStream in = file.getInputStream();// 把文件读入
 
-			promptMkdir(FilePath);
-			String path = FilePath + "/" + realName;
+			promptMkdir(filePath);
+			String path = filePath + "/" + realName;
 			BufferedImage image = ImageIO.read(in);
 			if (targetW > 0 && targetH > 0) {
 				image = resize(image, targetW, targetH);

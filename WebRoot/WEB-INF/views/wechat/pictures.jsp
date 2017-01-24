@@ -25,9 +25,12 @@
 				<!--焦点图-->
 				<div class="js-box">
 					<div class="slider">
-						<div class="slide"><img src="images/wechat/js0.png"></div>
+						<c:forEach items="${albums}" var="item">
+							<div class="slide"><img src="${item.urlPath}"></div>
+						</c:forEach>
+						<!-- <div class="slide"><img src="images/wechat/js0.png"></div>
 						<div class="slide"><img src="images/wechat/js1.png"></div>
-						<div class="slide"><img src="images/wechat/js0.png"></div>
+						<div class="slide"><img src="images/wechat/js0.png"></div> -->
 				    </div>
 				    <div class="js_word">
 				    	<p class="chinese">天雅地毯  印花地毯引领者</p>

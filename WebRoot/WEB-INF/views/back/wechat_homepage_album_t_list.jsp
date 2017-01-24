@@ -3,8 +3,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" 
-			+ request.getServerPort() + path + "/";
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -50,7 +51,7 @@
 
 <script type="text/javascript">
 	function formatImg(value, row) {
-		return "<img src=tywy"+ row.urlPath +" style=\"height:50px;background-color:#434343\"/>";
+		return "<img src="+ row.urlPath +" style=\"height:50px;background-color:#434343\"/>";
 	}
 	function save() {
 		var src = $("#headImgs").attr('src');

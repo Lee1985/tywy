@@ -50,6 +50,8 @@ public class WechatHomepageAlbumTController extends BaseController {
 	@ResponseBody
 	public PageInfo<WechatHomepageAlbumT> wechatHomepageAlbumTAjaxPage(HttpServletRequest request,
 			HttpServletResponse response, WechatHomepageAlbumT info, Integer page, Integer rows) {
+		info.setOrder("asc");
+		info.setSort("orderList");
 		PageInfo<WechatHomepageAlbumT> pageInfo = new PageInfo<WechatHomepageAlbumT>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
@@ -71,23 +73,25 @@ public class WechatHomepageAlbumTController extends BaseController {
 			WechatHomepageAlbumT info) {
 		int result = 0;
 		String msg = "";
+		
 		SystemUser systemUser = getSessionUser(request);
-
 		if (systemUser == null) {
 			return getJsonResult(result, "操作成功", "session过期请登录");
 		}
+		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		String root = request.getSession().getServletContext().getRealPath("/");
+		String root = request.getSession().getServletContext().getRealPath("/") +"\\";
 		// 上传图片
-		String headImgUuid = UUIDUtil.getUUID();
-		MultipartFile headImg = multipartRequest.getFile("headImg");
-		if (headImg != null && headImg.getSize() > 0) {
+		String imgUuid = UUIDUtil.getUUID();
+		MultipartFile picture = multipartRequest.getFile("headImg");
+		if (picture != null && picture.getSize() > 0) {
 			// 删除旧图片
 			deleteImg(info.getId(), root);
 			// 新图片处理
-			saveImg(root, headImgUuid, headImg);
-			info.setImgUuid(headImgUuid);
+			saveImg(root, imgUuid, picture);
+			info.setImgUuid(imgUuid);
 		}
+		
 		String now = DateUtils.getDateTimeFormat(new Date());
 		info.setUpdateDate(now);
 		info.setUpdateUser(systemUser.getId());
