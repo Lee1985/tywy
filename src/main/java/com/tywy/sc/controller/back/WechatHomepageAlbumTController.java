@@ -73,14 +73,14 @@ public class WechatHomepageAlbumTController extends BaseController {
 			WechatHomepageAlbumT info) {
 		int result = 0;
 		String msg = "";
-		
+
 		SystemUser systemUser = getSessionUser(request);
 		if (systemUser == null) {
 			return getJsonResult(result, "操作成功", "session过期请登录");
 		}
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		String root = request.getSession().getServletContext().getRealPath("/") +"\\";
+		String root = request.getSession().getServletContext().getRealPath("/") + "\\";
 		// 上传图片
 		String imgUuid = UUIDUtil.getUUID();
 		MultipartFile picture = multipartRequest.getFile("headImg");
@@ -91,7 +91,7 @@ public class WechatHomepageAlbumTController extends BaseController {
 			saveImg(root, imgUuid, picture);
 			info.setImgUuid(imgUuid);
 		}
-		
+
 		String now = DateUtils.getDateTimeFormat(new Date());
 		info.setUpdateDate(now);
 		info.setUpdateUser(systemUser.getId());
@@ -113,9 +113,21 @@ public class WechatHomepageAlbumTController extends BaseController {
 	public Map<String, Object> wechatHomepageAlbumTAjaxDelete(HttpServletRequest request, HttpServletResponse response,
 			WechatHomepageAlbumT info) {
 		int result = 0;
+
+		SystemUser systemUser = getSessionUser(request);
+		if (systemUser == null) {
+			return getJsonResult(result, "操作成功", "session过期请登录");
+		}
+
 		try {
-			result = service.delete(info);
+			WechatHomepageAlbumT uinfo = new WechatHomepageAlbumT();
+			uinfo.setId(info.getId());
+			uinfo.setIsDelete(1);
+			uinfo.setUpdateDate(DateUtils.getDateTimeFormat(new Date()));
+			uinfo.setUpdateUser(systemUser.getId());
+			result = service.update(uinfo);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return getJsonResult(result, "操作成功", "删除失败！");
 	}

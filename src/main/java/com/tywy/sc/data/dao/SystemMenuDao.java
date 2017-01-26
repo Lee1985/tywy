@@ -1,10 +1,10 @@
 package com.tywy.sc.data.dao;
 
-import com.tywy.sc.base.BaseDao;
-import com.tywy.sc.data.model.SystemMenu;
-
 import java.util.List;
 import java.util.Map;
+
+import com.tywy.sc.base.BaseDao;
+import com.tywy.sc.data.model.SystemMenu;
 
 public interface SystemMenuDao extends BaseDao<SystemMenu> {
     public String sqlNameSpace = SystemMenuDao.class.getName();

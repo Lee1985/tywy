@@ -1,18 +1,20 @@
 package com.tywy.sc.controller.back;
 
-import com.tywy.sc.base.controller.BaseController;
-import com.tywy.sc.base.page.PageInfo;
-import com.tywy.sc.data.model.WechatPubReplyT;
-import com.tywy.sc.services.WechatPubReplyTService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.base.page.PageInfo;
+import com.tywy.sc.data.model.WechatPubReplyT;
+import com.tywy.sc.services.WechatPubReplyTService;
 
 /**
  * @author William

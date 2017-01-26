@@ -1,19 +1,21 @@
 package com.tywy.sc.controller.back;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.SystemMenuInfo;
 import com.tywy.sc.services.SystemMenuInfoService;
 import com.tywy.utils.UUIDUtil;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author lipeng

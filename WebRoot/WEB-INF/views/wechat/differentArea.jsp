@@ -26,11 +26,29 @@
 		<!--main-->
 		<main>
            <ul class="piclist_box">
-           	<li><a href="javaScript:void(0)" onclick="toDetail('gallery_1')"><img class="lazy"  alt="" width="10" height="10"  data-original="images/wechat/pic01.png" alt="" /><p>1009001</p>
-           		<div class="single_select">
-           			<input type="checkbox" name="single" id="single01" value="01"/><label for="single01"></label>
-           		</div>
-           	</a></li>
+           	<c:forEach items="${albums}" var="item">
+           		<li>
+	           		<a href="javaScript:void(0)" onclick="toDetail('${item.id}')">
+	           			<img class="lazy"  alt="" width="10" height="10"  data-original="${item.urlPath}" alt="" />
+	           			<p>${item.serialNumber}</p>
+		           		<div class="single_select">
+		           			<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/>
+		           			<label for="${item.id}"></label>
+		           		</div>
+	           		</a>
+	           	</li>
+				<div class="slide"><img src="${item.urlPath}"></div>
+			</c:forEach>
+           <!-- 	<li>
+           		<a href="javaScript:void(0)" onclick="toDetail('gallery_1')">
+           			<img class="lazy"  alt="" width="10" height="10"  data-original="images/wechat/pic01.png" alt="" />
+           			<p>1009001</p>
+	           		<div class="single_select">
+	           			<input type="checkbox" name="single" id="single01" value="01"/>
+	           			<label for="single01"></label>
+	           		</div>
+           		</a>
+           	</li>
            	<li><a href="javaScript:void(0)" onclick="toDetail('gallery_2')"><img class="lazy" alt="" width="10" height="10"  data-original="images/wechat/pic02.png" alt="" /><p>1009001</p>
            		<div class="single_select">
            			<input type="checkbox" name="single" id="single02" value="02"/><label for="single02"></label>
@@ -65,7 +83,7 @@
            		<div class="single_select">
            			<input type="checkbox" name="single" id="single08" value="08"/><label for="single08"></label>
            		</div>
-           	</a></li>
+           	</a></li> -->
            </ul>			
 		</main>
 		<!--main-->

@@ -1,6 +1,7 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**

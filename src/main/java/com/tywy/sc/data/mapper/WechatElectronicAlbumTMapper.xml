@@ -9,13 +9,13 @@
         <result property="orderList" column="orderList"/>
         <result property="imgUuid" column="imgUuid"/>
         <result property="name" column="name"/>
-        <result property="nickname" column="nickname"/>
         <result property="description" column="description"/>
         <result property="createDate" column="createDate"/>
         <result property="updateDate" column="updateDate"/>
         <result property="createUser" column="createUser"/>
         <result property="updateUser" column="updateUser"/>
         <result property="isDelete" column="isDelete"/>
+        <result property="urlPath" column="urlPath" />
     </resultMap>
     <!-- 动态sql -->
     <sql id="colomnResult">
@@ -24,7 +24,7 @@
 	     orderList,
 	     imgUuid,
 	     name,
-	     nickname,
+	     (select urlPath from system_picture_info where uuid=imgUuid ) urlPath,
 	     description,
 	     createDate,
 	     updateDate,
@@ -40,7 +40,6 @@
             <if test="orderList!=null">orderList,</if>
             <if test="imgUuid!=null">imgUuid,</if>
             <if test="name!=null">name,</if>
-            <if test="nickname!=null">nickname,</if>
             <if test="description!=null">description,</if>
             <if test="createDate!=null">createDate,</if>
             <if test="updateDate!=null">updateDate,</if>
@@ -53,7 +52,6 @@
             <if test="orderList!=null">#{orderList},</if>
             <if test="imgUuid!=null">#{imgUuid},</if>
             <if test="name!=null">#{name},</if>
-            <if test="nickname!=null">#{nickname},</if>
             <if test="description!=null">#{description},</if>
             <if test="createDate!=null">#{createDate},</if>
             <if test="updateDate!=null">#{updateDate},</if>
@@ -70,7 +68,6 @@
             <if test="orderList!=null">orderList=#{orderList},</if>
             <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
             <if test="name!=null">name=#{name},</if>
-            <if test="nickname!=null">nickname=#{nickname},</if>
             <if test="description!=null">description=#{description},</if>
             <if test="createDate!=null">createDate=#{createDate},</if>
             <if test="updateDate!=null">updateDate=#{updateDate},</if>
@@ -104,10 +101,7 @@
                 and imgUuid=#{imgUuid}
             </if>
             <if test=" name != null and name != '' ">
-                and name=#{name}
-            </if>
-            <if test=" nickname != null and nickname != '' ">
-                and nickname=#{nickname}
+                and name like '%${name}%'
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -124,7 +118,7 @@
             <if test=" updateUser != null and updateUser != '' ">
                 and updateUser=#{updateUser}
             </if>
-            <if test=" isDelete != null and isDelete != '' ">
+            <if test=" isDelete != null ">
                 and isDelete=#{isDelete}
             </if>
         </where>
@@ -148,10 +142,7 @@
                 and imgUuid=#{imgUuid}
             </if>
             <if test=" name != null and name != '' ">
-                and name=#{name}
-            </if>
-            <if test=" nickname != null and nickname != '' ">
-                and nickname=#{nickname}
+                and name like '%${name}%'
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -168,7 +159,7 @@
             <if test=" updateUser != null and updateUser != '' ">
                 and updateUser=#{updateUser}
             </if>
-            <if test=" isDelete != null and isDelete != '' ">
+            <if test=" isDelete != null ">
                 and isDelete=#{isDelete}
             </if>
         </where>
@@ -192,9 +183,6 @@
             </if>
             <if test=" name != null and name != '' ">
                 and name=#{name}
-            </if>
-            <if test=" nickname != null and nickname != '' ">
-                and nickname=#{nickname}
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -254,7 +242,6 @@
             <if test="orderList!=null">orderList=#{orderList},</if>
             <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
             <if test="name!=null">name=#{name},</if>
-            <if test="nickname!=null">nickname=#{nickname},</if>
             <if test="description!=null">description=#{description},</if>
             <if test="createDate!=null">createDate=#{createDate},</if>
             <if test="updateDate!=null">updateDate=#{updateDate},</if>

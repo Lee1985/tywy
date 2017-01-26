@@ -25,18 +25,21 @@
 		</header>-->
 		<!--header-->
 		<!--main-->
-		<input type="hidden" id="id" name="id" value="${id}">
+		<input type="hidden" id="id" name="id" value="${album.id}">
 		<main>
            	<div class="gallery-mask" id="gallery_mask">
 			    <div class="swiper-container" id="swiper_wrapper">
 			        <div class="swiper-wrapper">
-			            <div class="swiper-slide" id="gallery_1">
-			                <div class="swiper-pic"><img alt="" id="1" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="01享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受舒适惬意的慢生活 9款小清新阳光餐厅">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_2">
+				        <c:forEach items="${albums}" var="item">
+				            <div class="swiper-slide" id="${item.orderList}">
+				                <div class="swiper-pic">
+				                	<img alt="" id="1" data-src="${item.urlPath}" class="swiper-lazy" 
+				                		 data-desc="${item.description}">
+				                    <div class="swiper-lazy-preloader"></div>
+				                </div>
+				            </div>
+						</c:forEach>
+			            <!-- <div class="swiper-slide" id="gallery_2">
 			                <div class="swiper-pic"><img alt="" id="2" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="02享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
 			                    和家网1">
 			                    <div class="swiper-lazy-preloader"></div>
@@ -76,14 +79,14 @@
 			                <div class="swiper-pic"><img alt="" id="9" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="08享受舒适惬意的慢生活 7">
 			                    <div class="swiper-lazy-preloader"></div>
 			                </div>
-			            </div>
+			            </div> -->
 			            <div class="clearfix"></div>
 			        </div>
 			    </div>
 
 			    <div class="gallery-bottom">
 			        <div class="gallery-bottom-info-wrap">
-			            <div class="gallery-bottom-page"><span  id="page"></span><span id="img_desc"></span></div>
+			            <div class="gallery-bottom-page"><span id="page"></span><span id="img_desc"></span></div>
 			        </div>
 			    </div>
 		</div>

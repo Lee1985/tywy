@@ -1,9 +1,9 @@
 package com.tywy.sc.data.dao;
 
+import java.util.Map;
+
 import com.tywy.sc.base.BaseDao;
 import com.tywy.sc.data.model.SystemUser;
-
-import java.util.Map;
 
 public interface SystemUserDao extends BaseDao<SystemUser> {
 

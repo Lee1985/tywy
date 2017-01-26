@@ -1,9 +1,9 @@
 package com.tywy.sc.data.model;
 
-import com.tywy.sc.base.entity.BaseEntity;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.tywy.sc.base.entity.BaseEntity;
 
 /**
  * system_menu_act实体表()

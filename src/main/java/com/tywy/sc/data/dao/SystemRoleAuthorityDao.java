@@ -1,11 +1,11 @@
 package com.tywy.sc.data.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.tywy.sc.base.BaseDao;
 import com.tywy.sc.data.model.SystemRoleAuthority;
 import com.tywy.sc.data.model.SystemUser;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 数据访问接口

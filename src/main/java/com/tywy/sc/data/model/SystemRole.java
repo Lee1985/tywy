@@ -1,8 +1,8 @@
 package com.tywy.sc.data.model;
 
-import com.tywy.sc.base.entity.BaseEntity;
-
 import java.io.Serializable;
+
+import com.tywy.sc.base.entity.BaseEntity;
 
 /**
  * SystemRole实体表()

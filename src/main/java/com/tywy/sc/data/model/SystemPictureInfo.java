@@ -1,8 +1,8 @@
 package com.tywy.sc.data.model;
 
-import com.tywy.sc.base.entity.BaseEntity;
-
 import java.io.Serializable;
+
+import com.tywy.sc.base.entity.BaseEntity;
 
 /**
  * system_picture_info实体表()

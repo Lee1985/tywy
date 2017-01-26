@@ -1,16 +1,17 @@
 package com.tywy.sc.controller.back;
 
-import com.tywy.sc.base.controller.BaseController;
-import com.tywy.sc.data.model.SystemFullText;
-import com.tywy.sc.services.SystemFullTextService;
-import com.tywy.utils.UUIDUtil;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.data.model.SystemFullText;
+import com.tywy.sc.services.SystemFullTextService;
+import com.tywy.utils.UUIDUtil;
 
 @Controller
 public class SystemFullTextController extends BaseController {

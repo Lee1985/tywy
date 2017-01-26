@@ -1,18 +1,19 @@
 package com.tywy.sc.controller.back;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSONObject;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.SystemUser;
 import com.tywy.sc.services.SystemUserService;
 import com.tywy.utils.UUIDUtil;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class SystemUserController extends BaseController {

@@ -25,7 +25,7 @@
 				<!--焦点图-->
 				<div class="js-box">
 					<div class="slider">
-						<c:forEach items="${albums}" var="item">
+						<c:forEach items="${carousels}" var="item">
 							<div class="slide"><img src="${item.urlPath}"></div>
 						</c:forEach>
 						<!-- <div class="slide"><img src="images/wechat/js0.png"></div>
@@ -41,7 +41,13 @@
 				<!--焦点图-->
 			</div>
 			<div class="picture_box">
-				<a href="javaScript:void(0)" onclick="toZone()">
+				<c:forEach items="${albums}" var="item">
+					<a href="javaScript:void(0)" onclick="toZone('${item.id}')">
+						<img src="${item.urlPath}" alt="${item.name}" />
+						<p>${item.name}</p>
+					</a>
+				</c:forEach>
+				<!-- <a href="javaScript:void(0)" onclick="toZone()">
 					<img src="images/wechat/icon_kf.png" alt="客房区域" />
 					<p>客房区域</p>
 				</a>
@@ -64,7 +70,7 @@
 				<a href="javaScript:void(0)" onclick="toZone()">
 					<img src="images/wechat/icon_bg.png" alt="办公区域" />
 					<p>办公区域</p>
-				</a>
+				</a> -->
 			</div>
 		</main>
 		<!--main-->
@@ -105,8 +111,8 @@
 		});
 	</script>
 	<script type="text/javascript">
-		function toZone() {
-			window.location.href="./toDiffArea.do";
+		function toZone(id) {
+			window.location.href="./toDiffArea.do?parentid=" + id;
 		}
 		function toWechatContact() {
 			window.location.href="./toWechatContact.do";
@@ -118,7 +124,7 @@
 			window.location.href="./welcomeIndex.do";
 		}
 		function toCollection() {
-			window.location.href="./toCollection.do";
+			window.location.href="./toCollection.do?userid=" ;
 		}
 	</script>	
 </html>

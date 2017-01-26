@@ -1,10 +1,12 @@
 package com.tywy.sc.controller.back;
 
-import com.tywy.constant.SessionConstants;
-import com.tywy.sc.data.model.SystemUser;
-import com.tywy.sc.services.SystemRoleAuthorityService;
-import com.tywy.sc.services.SystemUserService;
-import com.tywy.utils.CipherUtil;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -13,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import com.tywy.constant.SessionConstants;
+import com.tywy.sc.data.model.SystemUser;
+import com.tywy.sc.services.SystemRoleAuthorityService;
+import com.tywy.sc.services.SystemUserService;
+import com.tywy.utils.CipherUtil;
 
 @Controller
 public class LoginController {
