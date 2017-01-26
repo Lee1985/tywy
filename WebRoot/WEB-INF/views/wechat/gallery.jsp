@@ -96,6 +96,22 @@
 			<div class="scang"></div>
 			<div class="share"></div>
 		</div>
+		
+		<div id="div_share_notice" style="display: none; 
+			    right: 0;
+			    bottom: 0;
+			    z-index: 904;
+			    background: rgba(0, 0, 0, 0.8);    
+			    position: absolute;
+			    left: 50%;
+			    top: 50% !important;
+			    transform: translateY(-95%);
+			    color: #fff;">
+            <h3>立刻分享吧！</h3>
+            <div>
+                <p>分享此给您的朋友吧~！</p>
+            </div>
+		</div>
 	</body>
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
@@ -110,6 +126,12 @@
 			//点击收藏按钮
 			$(".scang").on("click",function(){
 				$(this).toggleClass("selected");
+			});
+			$(".share").on("click",function(){
+				$("#div_share_notice").css('display','block');
+			});
+			$("#div_share_notice").on("click",function(){
+				$("#div_share_notice").css('display','none');
 			});
 		});
 	</script>
