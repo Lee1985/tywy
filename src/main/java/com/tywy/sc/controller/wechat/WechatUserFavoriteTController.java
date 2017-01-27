@@ -1,9 +1,11 @@
 package com.tywy.sc.controller.wechat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.WechatUserFavoriteT;
 import com.tywy.sc.services.WechatUserFavoriteTService;
+import com.tywy.utils.DateUtils;
+import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.wechat.CommonUtils;
 
 /**
  * 
@@ -31,40 +36,59 @@ public class WechatUserFavoriteTController extends BaseController {
 
 	/**
 	 * 跳转我的收藏
-	 */
-	@RequestMapping(value = "/toCollection")
-	public String toCollection(HttpServletRequest request, HttpServletResponse response, Model model, String userid) {
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("userid", userid);
-		List<WechatUserFavoriteT> favoriteTs = service.selectAll(map);
-		model.addAttribute("list", favoriteTs);
-		return "wechat/shoucang";
-	}
-
-	/**
-	 * 我的收藏
-	 * 
 	 * @param request
 	 * @param response
-	 * @param userid
+	 * @param model
+	 * @param info
+	 * @return
 	 */
-	@RequestMapping(value = "/myFavourite")
-	public void myFavourite(HttpServletRequest request, HttpServletResponse response, String userid) {
-		int result = -1;
-		String msg = "";
-		if (userid == null) {
-			writeJsonObject(response, result, "用户", null);
-		}
-		try {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("userid", userid);
-			List<WechatUserFavoriteT> list = service.selectAll(map);
+	@RequestMapping(value = "/toCollection")
+	public String toCollection(HttpServletRequest request, HttpServletResponse response, Model model,
+			WechatUserFavoriteT info) {
 
-			writeJsonObject(response, result, msg, list);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (info == null || info.getUserid() == null) {
+			model.addAttribute("list", null);
+			model.addAttribute("flag", "-1");
+			return "wechat/shoucang";
 		}
+
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		Map<String, Object> resultMap = new HashMap<>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userid", info.getUserid());
+		map.put("sort", "createDate");
+		if (info.getSort() == null) {
+			map.put("order", "desc");
+		} else {
+			map.put("order", "asc");
+		}
+		List<WechatUserFavoriteT> favouriteList = service.selectAll(map);
+		if (favouriteList != null && favouriteList.size() > 0) {
+
+			// 根据日期分组生成resultMap
+			for (WechatUserFavoriteT favoriteT : favouriteList) {
+				String key = favoriteT.getCreateDate();
+				List<WechatUserFavoriteT> favoriteTs = new ArrayList<>();
+				if (resultMap.containsKey(key)) {
+					// 如果包含这个key值,获取value
+					favoriteTs = (List<WechatUserFavoriteT>) resultMap.get(key);
+				}
+				favoriteTs.add(favoriteT);
+				resultMap.put(key, favoriteTs);
+			}
+
+			// 将resultMap放入resultList
+			for (Entry<String, Object> entry : resultMap.entrySet()) {
+				Map<String, Object> mapNew = new HashMap<>();
+				mapNew.put("createdate", entry.getKey());
+				mapNew.put("entity", entry.getValue());
+				resultList.add(mapNew);
+			}
+		}
+
+		model.addAttribute("resultList", resultList);
+		return "wechat/shoucang";
 	}
 
 	/**
@@ -72,7 +96,7 @@ public class WechatUserFavoriteTController extends BaseController {
 	 * 
 	 * @param request
 	 * @param response
-	 * @param info
+	 * @param info-idList图片主键
 	 * @return
 	 */
 	@RequestMapping(value = "/batchAddFavourite")
@@ -80,20 +104,40 @@ public class WechatUserFavoriteTController extends BaseController {
 			WechatUserFavoriteT favorite) {
 		int result = -1;
 		String msg = "";
-		if (favorite == null) {
+		if (CommonUtils.isNull(favorite)) {
 			writeJsonObject(response, result, "请求参数为空", null);
 		}
 		if (favorite.getIdList() == null || favorite.getIdList().size() <= 0) {
 			writeJsonObject(response, result, "无可收藏的产品", null);
 		}
+
+		List<String> idListNew = new ArrayList<>();
+		List<String> idListOld = favorite.getIdList();
+
 		try {
-			List<String> idList = new ArrayList<>();
 			List<WechatUserFavoriteT> favoriteTs = service.selectAll(favorite);
-			if (favoriteTs != null && favoriteTs.size() > 0) {
+			if (CommonUtils.isCollectionNotEmpty(favoriteTs)) {
+
 				for (WechatUserFavoriteT wechatUserFavoriteT : favoriteTs) {
-					idList.add(wechatUserFavoriteT.getId());
+					idListNew.add(wechatUserFavoriteT.getImgUid());
 				}
-				result = service.batchDelete(idList);
+
+				boolean flag = false;
+				// 去掉已经收收藏的图片
+				if (CommonUtils.isCollectionNotEmpty(idListNew)) {
+					flag = idListOld.removeAll(idListNew);
+				}
+
+				if (CommonUtils.isCollectionNotEmpty(idListOld) && flag) {
+					Map<String, Object> map = new HashMap<>();
+					map.put("userid", favorite.getUserid());
+					for (String imgUid : idListOld) {
+						map.put("id", UUIDUtil.getUUID());
+						map.put("imgUid", imgUid);
+						map.put("createDate", DateUtils.toString(new Date(), "yyyy-MM-dd HH:mm:ss"));
+						result = service.insert(map);
+					}
+				}
 				if (result > 0) {
 					msg = "操作成功";
 				} else {
@@ -111,7 +155,7 @@ public class WechatUserFavoriteTController extends BaseController {
 	 * 
 	 * @param request
 	 * @param response
-	 * @param info
+	 * @param idList收藏主键
 	 * @return
 	 */
 	@RequestMapping(value = "/batchDeleteFavourite")

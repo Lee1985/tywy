@@ -23,14 +23,35 @@
 			<h1 class="title"><a href="javascript:history.go(-1);" class="back">返回</a>我的收藏<a href="javasript:;" class="more"></a></h1>
 		</header>-->
 		<div class="edit_box">
-				<div class="edit_rank"><span>时间正序</span></div>
-				<div class="edit_text">编辑</div>
+			<div class="edit_rank"><span>时间正序</span></div>
+			<div class="edit_text">编辑</div>
 		</div>
 		<!--header-->
 		<!--main-->
 		<main class="ts">
-			<div class="day_box">
-			   <h1 class="time">2016/10/10<p class="single_all"><input type="checkbox" name="single" id="single" value=""/><label for="single"></label></p></h1>
+			<c:forEach items="${resultList}" var="item">
+				<div class="day_box">
+					<h1 class="time">${item.createdate}
+						<p class="single_all"><input type="checkbox" name="single" id="single" value=""/>
+							<label for="single"></label>
+						</p>
+					</h1>
+					<ul class="piclist_box1">
+						<c:forEach items="${item.entity}" var="entity">
+							<li>
+								<a href="javascript:;">
+									<img class="lazy"  alt="" width="10" height="10"  data-original="${entity.urlPath}" alt="" />
+									<p>${entity.album.serialNumber}</p>
+									<div class="single_select">
+										<input type="checkbox" name="single" id="${entity.id}" value="${entity.album.orderList}"/><label for="${entity.id}"></label>
+									</div>
+								</a>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:forEach>
+			   <!-- <h1 class="time">2016/10/10<p class="single_all"><input type="checkbox" name="single" id="single" value=""/><label for="single"></label></p></h1>
 	           <ul class="piclist_box1">
 	           	<li><a href="javascript:;"><img class="lazy"  alt="" width="10" height="10"  data-original="images/wechat/pic01.png" alt="" /><p>1009001</p>
 	           		<div class="single_select">
@@ -78,7 +99,7 @@
            		</div>
            	</a></li>
            </ul>
-        </div>
+        </div> -->
 		</main>
 		<!--main-->
 		<!--footer-->
