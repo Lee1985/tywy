@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="security" uri="http://www.bluemobi.com"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -114,19 +113,13 @@
 					class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 			</div>
 			<div style="margin-bottom:5px">
-				<security:act optCode="add">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-add" plain="true" onclick="doAdd()">新建</a>
-				</security:act>
-				<security:act optCode="edit">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-edit" plain="true" onclick="doEdit()">修改</a>
-				</security:act>
-				<security:act optCode="delete">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-remove" plain="true"
-						onclick="doDelete('system/systemRoleAjaxDelete.do')">删除</a>
-				</security:act>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-add" plain="true" onclick="doAdd()">新建</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-edit" plain="true" onclick="doEdit()">修改</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-remove" plain="true"
+					onclick="doDelete('system/systemRoleAjaxDelete.do')">删除</a>
 			</div>
 		</div>
 		<div id="dlg" class="easyui-dialog"

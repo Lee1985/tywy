@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="security" uri="http://www.bluemobi.com"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -241,8 +240,6 @@
 						data-options="field:'description',width:80,align:'center',sortable:true">备注</th>
 					<th
 						data-options="field:'status',width:80,align:'center',formatter:formatStatus,sortable:true">状态</th>
-					<th
-						data-options="field:'isDelete',width:80,align:'center',formatter:formatIsDelete,sortable:true,styler:isDeleteStyler">是否删除</th>
 				</tr>
 			</thead>
 		</table>
@@ -254,29 +251,19 @@
 					iconCls="icon-search">搜索</a>
 			</div>
 			<div style="margin-bottom:5px">
-				<security:act optCode="add">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-add" plain="true" onclick="doAdd()">新建</a>
-				</security:act>
-				<security:act optCode="edit">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-edit" plain="true" onclick="doEdit()">修改</a>
-				</security:act>
-				<security:act optCode="delete">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-remove" plain="true"
-						onclick="doDelete('system/systemUserAjaxDelete.do')">删除</a>
-				</security:act>
-				<security:act optCode="isYes">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-lock_open" plain="true"
-						onclick="doUpdateStatus('system/systemUserAjaxUpdate.do',1)">启用</a>
-				</security:act>
-				<security:act optCode="isNo">
-					<a href="javascript:void(0)" class="easyui-linkbutton"
-						iconCls="icon-lock" plain="true"
-						onclick="doUpdateStatus('system/systemUserAjaxUpdate.do',0)">禁用</a>
-				</security:act>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-add" plain="true" onclick="doAdd()">新建</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-edit" plain="true" onclick="doEdit()">修改</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-remove" plain="true"
+					onclick="doDelete('system/systemUserAjaxDelete.do')">删除</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-lock_open" plain="true"
+					onclick="doUpdateStatus('system/systemUserAjaxUpdate.do',1)">启用</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					iconCls="icon-lock" plain="true"
+					onclick="doUpdateStatus('system/systemUserAjaxUpdate.do',0)">禁用</a>
 			</div>
 		</div>
 		<div id="dlg" class="easyui-dialog"
