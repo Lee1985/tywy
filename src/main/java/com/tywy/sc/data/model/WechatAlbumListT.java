@@ -120,7 +120,7 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	/**
 	 * 获取编号属性
 	 *
-	 * @return serial_number
+	 * @return serialNumber
 	 */
 	public java.lang.String getSerialNumber() {
 		return serialNumber;
