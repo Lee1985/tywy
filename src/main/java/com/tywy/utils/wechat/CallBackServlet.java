@@ -3,6 +3,7 @@ package com.tywy.utils.wechat;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +13,12 @@ import com.tywy.sc.data.model.wechat.Oauth2TokenVO;
 
 /**
  * @author Liuheli
- * @ClassName: OAuthServlet
+ * @ClassName: CallBackServlet
  * @Description: 授权后的回调请求处理类
  * @date 2016-11-17 16:48:35
  */
-public class OAuthServlet extends HttpServlet {
+@WebServlet("/callback")
+public class CallBackServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1847238807216447030L;
 
@@ -40,6 +42,7 @@ public class OAuthServlet extends HttpServlet {
 
 			// 设置要传递的参数
 			request.setAttribute("openid", openid);
+			System.out.println("openid=" + openid);
 			// request.setAttribute("state", state);
 		}
 		// 跳转到index.jsp

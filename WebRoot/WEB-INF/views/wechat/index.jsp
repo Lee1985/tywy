@@ -24,7 +24,7 @@
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		function toIndex() {
-			window.location.href="./welcomeIndex.do";
+			window.location.href="./wxlogin";
 		}
 	</script>	
 </html>
