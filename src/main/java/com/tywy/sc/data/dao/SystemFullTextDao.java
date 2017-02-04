@@ -7,5 +7,5 @@ import com.tywy.sc.data.model.SystemFullText;
  * 数据访问接口
  */
 public interface SystemFullTextDao extends BaseDao<SystemFullText> {
-	public String sqlNameSpace = SystemFullTextDao.class.getName();
+    public String sqlNameSpace = SystemFullTextDao.class.getName();
 }

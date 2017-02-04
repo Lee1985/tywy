@@ -18,12 +18,11 @@ import com.tywy.constant.SessionConstants;
 import com.tywy.sc.data.model.SystemUser;
 
 /**
+ * @author yangml
  * @ClassName: CurrentContextFilter
  * @Description: CurrentContextFilter用于缓存用户请求过程中的HttpServletRequest和HttpServletResponse对象
  *               .
- * @author yangml
  * @date 2014-12-3 上午9:51:02
- * 
  */
 public class SystemFilter implements Filter {
 
@@ -43,11 +42,12 @@ public class SystemFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 		HttpSession session = httpRequest.getSession(true);
 
-		SystemUser customUser = null;
-		if (session.getAttribute(SessionConstants.SESSION_BACK_USER_FLAG) != null) {
-			Object object = session.getAttribute(SessionConstants.SESSION_BACK_USER);
-			customUser = object == null ? null : (SystemUser) object;
-		}
+		// SystemUser customUser = null;
+		Object object = session.getAttribute(SessionConstants.SESSION_USER);
+		SystemUser customUser = object == null ? null : (SystemUser) object;
+		// if (session.getAttribute(SessionConstants.SESSION_BACK_USER_FLAG) !=
+		// null) {
+		// }
 
 		String url = httpRequest.getRequestURI();
 		// 如果是后台访问
@@ -85,7 +85,7 @@ public class SystemFilter implements Filter {
 
 	/**
 	 * 判断是否为Ajax请求
-	 * 
+	 *
 	 * @param request
 	 *            HttpServletRequest
 	 * @return 是true, 否false

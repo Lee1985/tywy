@@ -6,8 +6,7 @@ import com.tywy.sc.data.dao.WechatAlbumListTDao;
 import com.tywy.sc.data.model.WechatAlbumListT;
 /**
  * 
- * @author mew
- *
+ * @author William
  */
 @Component
 public class WechatAlbumListTDaoImpl extends BaseDaoImpl<WechatAlbumListT> implements WechatAlbumListTDao{

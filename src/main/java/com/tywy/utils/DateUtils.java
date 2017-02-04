@@ -1,15 +1,11 @@
 package com.tywy.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.*;
 
 /**
  * 日期工具类
@@ -338,5 +334,21 @@ public class DateUtils {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONTH, -monty);
 		return c.getTime();
+	}
+
+	/**
+	 * 根据给定的格式化参数，将日期转换为字符串
+	 * 
+	 * @param date
+	 * @param dateFormat
+	 * @return String
+	 */
+	public static String toString(java.util.Date date, String dateFormat) {
+		if ("".equals(date) || date == null) {
+			return "bug: date is null";
+		}
+		DateFormat sdf = new SimpleDateFormat(dateFormat);
+		String str = sdf.format(date);
+		return str;
 	}
 }

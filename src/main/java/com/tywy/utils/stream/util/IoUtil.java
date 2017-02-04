@@ -1,20 +1,14 @@
 package com.tywy.utils.stream.util;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.tywy.utils.stream.config.Configurations;
 import com.tywy.utils.stream.servlet.FormDataServlet;
 import com.tywy.utils.stream.servlet.Range;
 import com.tywy.utils.stream.servlet.StreamServlet;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * IO--closing, getting file name ... main function method

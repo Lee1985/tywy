@@ -9,10 +9,15 @@
 		<result property="parentid" column="parentid" />
 		<result property="orderList" column="orderList" />
 		<result property="imgUuid" column="imgUuid" />
-		<result property="serial_number" column="serial_number" />
+		<result property="mediaId" column="mediaId" />
+		<result property="serialNumber" column="serialNumber" />
 		<result property="description" column="description" />
 		<result property="createDate" column="createDate" />
 		<result property="createUser" column="createUser" />
+		<result property="updateDate" column="updateDate" />
+		<result property="updateUser" column="updateUser" />
+		<result property="isDelete" column="isDelete" />
+		<result property="urlPath" column="urlPath" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -21,10 +26,15 @@
 	     parentid,
 	     orderList,
 	     imgUuid,
-	     serial_number,
+	     mediaId,
+	     serialNumber,
+	     (select urlPath from system_picture_info where uuid=imgUuid ) urlPath,
 	     description,
 	     createDate,
-	     createUser
+	     createUser,
+	     updateDate,
+	     updateUser,
+	     isDelete
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -34,20 +44,28 @@
 			     <if test="parentid!=null">parentid,</if>
 			     <if test="orderList!=null">orderList,</if>
 			     <if test="imgUuid!=null">imgUuid,</if>
-			     <if test="serial_number!=null">serial_number,</if>
+			     <if test="mediaId!=null">mediaId,</if>
+			     <if test="serialNumber!=null">serialNumber,</if>
 			     <if test="description!=null">description,</if>
 			     <if test="createDate!=null">createDate,</if>
 			     <if test="createUser!=null">createUser,</if>
+			     <if test="updateDate!=null">updateDate,</if>
+			     <if test="updateUser!=null">updateUser,</if>
+			     <if test="isDelete!=null">isDelete,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
 			     <if test="parentid!=null">#{parentid},</if>
 			     <if test="orderList!=null">#{orderList},</if>
 			     <if test="imgUuid!=null">#{imgUuid},</if>
-			     <if test="serial_number!=null">#{serial_number},</if>
+			     <if test="mediaId!=null">#{mediaId},</if>
+			     <if test="serialNumber!=null">#{serialNumber},</if>
 			     <if test="description!=null">#{description},</if>
 			     <if test="createDate!=null">#{createDate},</if>
 			     <if test="createUser!=null">#{createUser},</if>
+			     <if test="updateDate!=null">#{updateDate},</if>
+			     <if test="updateUser!=null">#{updateUser},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
 		</trim>
 	</insert>
 
@@ -58,10 +76,14 @@
 			     <if test="parentid!=null">parentid=#{parentid},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
 			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-			     <if test="serial_number!=null">serial_number=#{serial_number},</if>
+			     <if test="mediaId!=null">mediaId=#{mediaId},</if>
+			     <if test="serialNumber!=null">serialNumber=#{serialNumber},</if>
 			     <if test="description!=null">description=#{description},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -91,8 +113,11 @@
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
 				</if>
-				<if test=" serial_number != null and serial_number != '' ">
-					and serial_number=#{serial_number} 
+				<if test=" mediaId != null and mediaId != '' ">
+					and mediaId=#{mediaId} 
+				</if>
+				<if test=" serialNumber != null and serialNumber != '' ">
+					and serialNumber=#{serialNumber} 
 				</if>
 				<if test=" description != null and description != '' ">
 					and description=#{description} 
@@ -102,6 +127,15 @@
 				</if>
 				<if test=" createUser != null and createUser != '' ">
 					and createUser=#{createUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
 				</if>
 		</where>
 	</select>
@@ -126,8 +160,11 @@
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
 				</if>
-				<if test=" serial_number != null and serial_number != '' ">
-					and serial_number=#{serial_number} 
+				<if test=" mediaId != null and mediaId != '' ">
+					and mediaId=#{mediaId} 
+				</if>
+				<if test=" serialNumber != null and serialNumber != '' ">
+					and serialNumber=#{serialNumber} 
 				</if>
 				<if test=" description != null and description != '' ">
 					and description=#{description} 
@@ -137,6 +174,15 @@
 				</if>
 				<if test=" createUser != null and createUser != '' ">
 					and createUser=#{createUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" isDelete != null ">
+					and isDelete=#{isDelete} 
 				</if>
 		</where>
 		<if test="sort != null">
@@ -160,8 +206,11 @@
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
 				</if>
-				<if test=" serial_number != null and serial_number != '' ">
-					and serial_number=#{serial_number} 
+				<if test=" mediaId != null and mediaId != '' ">
+					and mediaId=#{mediaId} 
+				</if>
+				<if test=" serialNumber != null and serialNumber != '' ">
+					and serialNumber=#{serialNumber} 
 				</if>
 				<if test=" description != null and description != '' ">
 					and description=#{description} 
@@ -171,6 +220,15 @@
 				</if>
 				<if test=" createUser != null and createUser != '' ">
 					and createUser=#{createUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
 				</if>
 		</where>
 	</select>
@@ -212,10 +270,14 @@
 			     <if test="parentid!=null">parentid=#{parentid},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
 			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-			     <if test="serial_number!=null">serial_number=#{serial_number},</if>
+			     <if test="mediaId!=null">mediaId=#{mediaId},</if>
+			     <if test="serialNumber!=null">serialNumber=#{serialNumber},</if>
 			     <if test="description!=null">description=#{description},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

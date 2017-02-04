@@ -32,6 +32,19 @@
 		}
 	}
 	
+	function isimg(src){
+		var ext = ['.gif', '.jpg', '.jpeg', '.png'];
+		var s = src.toLowerCase();
+		var r = false;
+		for(var i = 0; i < ext.length; i++){
+			if (s.indexOf(ext[i]) > 0){
+				r = true;
+				break;
+			}
+		}	
+		return r;
+	}
+	
 	function isValid(obj){
 		if(obj != null && typeof(obj) != 'undefined'){
 			return true;

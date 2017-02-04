@@ -12,7 +12,7 @@ import com.tywy.sc.data.model.SystemUser;
  */
 public interface SystemRoleAuthorityDao extends BaseDao<SystemRoleAuthority> {
 
-	public String sqlNameSpace = SystemRoleAuthorityDao.class.getName();
+    public String sqlNameSpace = SystemRoleAuthorityDao.class.getName();
 
-	public List<Map<String, Object>> selectPermissUrl(SystemUser info);
+    public List<Map<String, Object>> selectPermissUrl(SystemUser info);
 }

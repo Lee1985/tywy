@@ -8,7 +8,7 @@ import java.util.Date;
 public class FormatXmlUtil {
 	/**
 	 * 封装文字类的返回消息
-	 * 
+	 *
 	 * @param toUser
 	 * @param fromUser
 	 * @param content
@@ -30,8 +30,28 @@ public class FormatXmlUtil {
 	}
 
 	/**
+	 * 封装转发客服类的返回消息
+	 *
+	 * @param toUser
+	 * @param fromUser
+	 * @return
+	 */
+	public String formatCustomerAnswer(String toUser, String fromUser) {
+		StringBuffer sb = new StringBuffer();
+		Date date = new Date();
+		sb.append("<xml><ToUserName><![CDATA[");
+		sb.append(toUser);
+		sb.append("]]></ToUserName><FromUserName><![CDATA[");
+		sb.append(fromUser);
+		sb.append("]]></FromUserName><CreateTime>");
+		sb.append(date.getTime());
+		sb.append("</CreateTime><MsgType><![CDATA[transfer_customer_service]]></MsgType></xml>");
+		return sb.toString();
+	}
+
+	/**
 	 * 封装图片类的返回消息
-	 * 
+	 *
 	 * @param toUser
 	 * @param fromUser
 	 * @param mediaId

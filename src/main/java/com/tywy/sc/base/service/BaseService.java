@@ -1,77 +1,77 @@
 package com.tywy.sc.base.service;
 
+import com.tywy.sc.base.page.PageInfo;
+
 import java.util.List;
 import java.util.Map;
 
-import com.tywy.sc.base.page.PageInfo;
-
 public interface BaseService<T> {
-	public List<T> selectAll();
+    List<T> selectAll();
 
-	public List<T> selectAll(T info);
-	
-	public List<T> selectAll(T info,String statementName);
-	
-	public List<T> selectAll(Map<String, Object> info,String statementName);
+    List<T> selectAll(T info);
 
-	public List<T> selectAll(Map<String, Object> info);
+    List<T> selectAll(T info, String statementName);
 
-	public List<T> selectAll(T info,int page,int pageSize);
-	
-	/**
-	 * 根据条件查询分页数据
-	 * 
-	 * @param info条件参数
-	 * @param page页码
-	 * @param pageSize条数
-	 * @param statementName SqlMapperId
-	 * @return
-	 */
-	public List<T> selectAll(T info, int page, int pageSize, String statementName);
+    List<T> selectAll(Map<String, Object> info, String statementName);
 
-	public List<T> selectAll(Map<String, Object> info,int page,int pageSize);
-	
-	public PageInfo<T> selectAll(T info, PageInfo<T> pageInfo);
-	
-	/**
-	 * 根据条件查询分页数据
-	 * 
-	 * @param info条件参数
-	 * @param pageInfo分页对象
-	 * @param statementName SqlMapperId
-	 * @return
-	 */
-	public PageInfo<T> selectAll(T info, PageInfo<T> pageInfo, String statementName);
+    List<T> selectAll(Map<String, Object> info);
 
-	public PageInfo<T> selectAll(Map<String, Object> info, PageInfo<T> pageInfo);
+    List<T> selectAll(T info, int page, int pageSize);
 
-	public int selectCount(T info);
-	
-	public int selectCount(Map<String, Object> info);
+    /**
+     * 根据条件查询分页数据
+     *
+     * @param info          条件参数
+     * @param page          页码
+     * @param pageSize      条数
+     * @param statementName SqlMapperId
+     * @return
+     */
+    List<T> selectAll(T info, int page, int pageSize, String statementName);
 
-	public T selectById(String id);
+    List<T> selectAll(Map<String, Object> info, int page, int pageSize);
 
-	public T selectById(Integer id);
+    PageInfo<T> selectAll(T info, PageInfo<T> pageInfo);
 
-	public int insert(T info);
+    /**
+     * 根据条件查询分页数据
+     *
+     * @param info          条件参数
+     * @param pageInfo      分页对象
+     * @param statementName SqlMapperId
+     * @return
+     */
+    PageInfo<T> selectAll(T info, PageInfo<T> pageInfo, String statementName);
 
-	public int insert(Map<String, Object> info);
+    PageInfo<T> selectAll(Map<String, Object> info, PageInfo<T> pageInfo);
 
-	public int update(T info);
+    int selectCount(T info);
 
-	public int update(Map<String, Object> info);
-	
-	public int batchUpdate(Map<String, Object> info);
+    int selectCount(Map<String, Object> info);
 
-	public int delete(T info);
+    T selectById(String id);
 
-	public int delete(Map<String, Object> info);
-	
-	public int batchDelete(List<String> idList);
-	
-	public T selectEntity(T info);
+    T selectById(Integer id);
 
-	public T selectEntity(Map<String, Object> info);
-	
-	public List<T> selectByIds(List<String> idList);
+    int insert(T info);
+
+    int insert(Map<String, Object> info);
+
+    int update(T info);
+
+    int update(Map<String, Object> info);
+
+    int batchUpdate(Map<String, Object> info);
+
+    int delete(T info);
+
+    int delete(Map<String, Object> info);
+
+    int batchDelete(List<String> idList);
+
+    T selectEntity(T info);
+
+    T selectEntity(Map<String, Object> info);
+
+    List<T> selectByIds(List<String> idList);
 }

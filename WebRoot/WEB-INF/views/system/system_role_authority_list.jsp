@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="security" uri="http://www.bluemobi.com"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -158,10 +157,8 @@
 	</form>
 	<div id="toolbar">
 		<div style="margin-bottom:5px">
-			<security:act optCode="save">
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					iconCls="icon-save" plain="true" onclick="doSave()">保存</a>
-			</security:act>
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-save" plain="true" onclick="doSave()">保存</a>
 		</div>
 		<div>
 			角色名称: <input id="roleId" class="easyui-combobox" name="roleId"

@@ -1,13 +1,14 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
  * wechat_album_list_t实体表()
  * 
  * @author William
- * @date 2016-11-27 16:56:19
+ * @date 2017-01-25 10:23:05
  * @project
  */
 @SuppressWarnings("serial")
@@ -17,10 +18,14 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	private java.lang.Integer orderList; // 排序
 	private java.lang.String imgUuid; // 照片
 	private java.lang.String mediaId; // 微信素材id
-	private java.lang.String serial_number; // 编号
+	private java.lang.String serialNumber; // 编号
 	private java.lang.String description; // 相册描述
-	private java.util.Date createDate; // 创建时间
+	private String createDate; // 创建时间
 	private java.lang.String createUser; // 创建者
+	private String updateDate; // 修改时间
+	private java.lang.String updateUser; // 修改者
+	private java.lang.Integer isDelete; // 是否删除(1-是，0-否）
+	private java.lang.String urlPath; // 图片路径
 
 	/**
 	 * 获取属性
@@ -95,21 +100,39 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	}
 
 	/**
+	 * 获取微信素材id属性
+	 *
+	 * @return mediaId
+	 */
+	public java.lang.String getMediaId() {
+		return mediaId;
+	}
+
+	/**
+	 * 设置微信素材id属性
+	 *
+	 * @param mediaId
+	 */
+	public void setMediaId(java.lang.String mediaId) {
+		this.mediaId = mediaId;
+	}
+
+	/**
 	 * 获取编号属性
 	 *
-	 * @return serial_number
+	 * @return serialNumber
 	 */
 	public java.lang.String getSerialNumber() {
-		return serial_number;
+		return serialNumber;
 	}
 
 	/**
 	 * 设置编号属性
 	 *
-	 * @param serial_number
+	 * @param serialNumber
 	 */
-	public void setSerialNumber(java.lang.String serial_number) {
-		this.serial_number = serial_number;
+	public void setSerialNumber(java.lang.String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	/**
@@ -135,7 +158,7 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	 *
 	 * @return createDate
 	 */
-	public java.util.Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
@@ -144,7 +167,7 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	 *
 	 * @param createDate
 	 */
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
@@ -166,20 +189,66 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 		this.createUser = createUser;
 	}
 
-	public java.lang.String getMediaId() {
-		return mediaId;
+	/**
+	 * 获取修改时间属性
+	 *
+	 * @return updateDate
+	 */
+	public String getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setMediaId(java.lang.String mediaId) {
-		this.mediaId = mediaId;
+	/**
+	 * 设置修改时间属性
+	 *
+	 * @param updateDate
+	 */
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	@Override
-	public String toString() {
-		return "WechatAlbumListT [id=" + id + ", parentid=" + parentid + ", orderList=" + orderList + ", imgUuid="
-				+ imgUuid + ", mediaId=" + mediaId + ", serial_number=" + serial_number + ", description=" + description
-				+ ", createDate=" + createDate + ", createUser=" + createUser + "]";
+	/**
+	 * 获取修改者属性
+	 *
+	 * @return updateUser
+	 */
+	public java.lang.String getUpdateUser() {
+		return updateUser;
 	}
-	
+
+	/**
+	 * 设置修改者属性
+	 *
+	 * @param updateUser
+	 */
+	public void setUpdateUser(java.lang.String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	/**
+	 * 获取是否删除(1-是，0-否）属性
+	 *
+	 * @return isDelete
+	 */
+	public java.lang.Integer getIsDelete() {
+		return isDelete;
+	}
+
+	/**
+	 * 设置是否删除(1-是，0-否）属性
+	 *
+	 * @param isDelete
+	 */
+	public void setIsDelete(java.lang.Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public java.lang.String getUrlPath() {
+		return urlPath;
+	}
+
+	public void setUrlPath(java.lang.String urlPath) {
+		this.urlPath = urlPath;
+	}
 
 }

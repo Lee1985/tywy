@@ -11,6 +11,10 @@ public class CfgConstant {
 	 */
 	public static String APPSECRET = "";
 	/**
+	 * 获取GET_AUTHORIZE_URL接口
+	 */
+	public static String GET_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=_APPID&redirect_uri=_REDIRECT_URI&response_type=_code&scope=_SCOPE&state=STATE#wechat_redirect";
+	/**
 	 * 获取ACCESS_TOKEN接口
 	 */
 	public static String GET_ACCESSTOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=_APPID&secret=_APPSECRET";

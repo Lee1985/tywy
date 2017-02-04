@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tywy.sc.data.dao.SystemFileInfoDao">
 
-	<resultMap id="commonResult"
-		type="com.tywy.sc.data.model.SystemFileInfo">
-		<id property="id" column="id" />
-		<result property="uuid" column="uuid" />
-		<result property="urlPath" column="urlPath" />
-		<result property="fsize" column="fsize" />
-		<result property="ftype" column="ftype" />
-		<result property="suffix" column="suffix" />
-		<result property="name" column="name" />
-		<result property="cdate" column="cdate" />
-		<result property="params" column="params" />
-	</resultMap>
-	<resultMap id="commonResultMap" type="java.util.HashMap">
-		<id property="id" column="id" />
-		<result property="uuid" column="uuid" />
-		<result property="urlPath" column="urlPath" />
-		<result property="fsize" column="fsize" />
-		<result property="ftype" column="ftype" />
-		<result property="suffix" column="suffix" />
-		<result property="name" column="name" />
-		<result property="cdate" column="cdate" />
-		<result property="params" column="params" />
-	</resultMap>
-	<!-- 动态sql -->
-	<sql id="colomnResult">
-		<![CDATA[
+    <resultMap id="commonResult"
+               type="com.tywy.sc.data.model.SystemFileInfo">
+        <id property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
+        <result property="urlPath" column="urlPath"/>
+        <result property="fsize" column="fsize"/>
+        <result property="ftype" column="ftype"/>
+        <result property="suffix" column="suffix"/>
+        <result property="name" column="name"/>
+        <result property="cdate" column="cdate"/>
+        <result property="params" column="params"/>
+    </resultMap>
+    <resultMap id="commonResultMap" type="java.util.HashMap">
+        <id property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
+        <result property="urlPath" column="urlPath"/>
+        <result property="fsize" column="fsize"/>
+        <result property="ftype" column="ftype"/>
+        <result property="suffix" column="suffix"/>
+        <result property="name" column="name"/>
+        <result property="cdate" column="cdate"/>
+        <result property="params" column="params"/>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
 	     id,
 	     uuid,
 	     urlPath,
@@ -40,160 +40,160 @@
 	     cdate,
 	     params
 	 ]]>
-	</sql>
-	<sql id="commonWhere">
-		<where>
-			<if test=" id != null and id != ''">
-				and id=#{id}
-			</if>
-			<if test=" uuid != null and uuid != ''">
-				and uuid=#{uuid}
-			</if>
-			<if test=" urlPath != null and urlPath != ''">
-				and urlPath=#{urlPath}
-			</if>
-			<if test=" fsize != null and fsize != ''">
-				and fsize=#{fsize}
-			</if>
-			<if test=" ftype != null and ftype != ''">
-				and ftype=#{ftype}
-			</if>
-			<if test=" suffix != null and suffix != ''">
-				and suffix=#{suffix}
-			</if>
-			<if test=" name != null and name != ''">
-				and name=#{name}
-			</if>
-			<if test=" cdate != null and cdate != ''">
-				and cdate=#{cdate}
-			</if>
-			<if test=" params != null and params != ''">
-				and params=#{params}
-			</if>
-		</where>
-	</sql>
+    </sql>
+    <sql id="commonWhere">
+        <where>
+            <if test=" id != null and id != ''">
+                and id=#{id}
+            </if>
+            <if test=" uuid != null and uuid != ''">
+                and uuid=#{uuid}
+            </if>
+            <if test=" urlPath != null and urlPath != ''">
+                and urlPath=#{urlPath}
+            </if>
+            <if test=" fsize != null and fsize != ''">
+                and fsize=#{fsize}
+            </if>
+            <if test=" ftype != null and ftype != ''">
+                and ftype=#{ftype}
+            </if>
+            <if test=" suffix != null and suffix != ''">
+                and suffix=#{suffix}
+            </if>
+            <if test=" name != null and name != ''">
+                and name=#{name}
+            </if>
+            <if test=" cdate != null and cdate != ''">
+                and cdate=#{cdate}
+            </if>
+            <if test=" params != null and params != ''">
+                and params=#{params}
+            </if>
+        </where>
+    </sql>
 
-	<insert id="insert">
-		insert into system_file_info
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id!=null">id,</if>
-			<if test="uuid!=null">uuid,</if>
-			<if test="urlPath!=null">urlPath,</if>
-			<if test="fsize!=null">fsize,</if>
-			<if test="ftype!=null">ftype,</if>
-			<if test="suffix!=null">suffix,</if>
-			<if test="name!=null">name,</if>
-			<if test="cdate!=null">cdate,</if>
-			<if test="params!=null">params,</if>
-		</trim>
-		<trim prefix="values(" suffix=")" suffixOverrides=",">
-			<if test="id!=null">#{id},</if>
-			<if test="uuid!=null">#{uuid},</if>
-			<if test="urlPath!=null">#{urlPath},</if>
-			<if test="fsize!=null">#{fsize},</if>
-			<if test="ftype!=null">#{ftype},</if>
-			<if test="suffix!=null">#{suffix},</if>
-			<if test="name!=null">#{name},</if>
-			<if test="cdate!=null">#{cdate},</if>
-			<if test="params!=null">#{params},</if>
-		</trim>
-	</insert>
+    <insert id="insert">
+        insert into system_file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="uuid!=null">uuid,</if>
+            <if test="urlPath!=null">urlPath,</if>
+            <if test="fsize!=null">fsize,</if>
+            <if test="ftype!=null">ftype,</if>
+            <if test="suffix!=null">suffix,</if>
+            <if test="name!=null">name,</if>
+            <if test="cdate!=null">cdate,</if>
+            <if test="params!=null">params,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="uuid!=null">#{uuid},</if>
+            <if test="urlPath!=null">#{urlPath},</if>
+            <if test="fsize!=null">#{fsize},</if>
+            <if test="ftype!=null">#{ftype},</if>
+            <if test="suffix!=null">#{suffix},</if>
+            <if test="name!=null">#{name},</if>
+            <if test="cdate!=null">#{cdate},</if>
+            <if test="params!=null">#{params},</if>
+        </trim>
+    </insert>
 
-	<update id="update">
-		update system_file_info
-		<set>
-			<if test="uuid!=null">uuid=#{uuid},</if>
-			<if test="urlPath!=null">urlPath=#{urlPath},</if>
-			<if test="fsize!=null">fsize=#{fsize},</if>
-			<if test="ftype!=null">ftype=#{ftype},</if>
-			<if test="suffix!=null">suffix=#{suffix},</if>
-			<if test="name!=null">name=#{name},</if>
-			<if test="cdate!=null">cdate=#{cdate},</if>
-			<if test="params!=null">params=#{params},</if>
-		</set>
-		where
-		id=#{id}
-	</update>
+    <update id="update">
+        update system_file_info
+        <set>
+            <if test="uuid!=null">uuid=#{uuid},</if>
+            <if test="urlPath!=null">urlPath=#{urlPath},</if>
+            <if test="fsize!=null">fsize=#{fsize},</if>
+            <if test="ftype!=null">ftype=#{ftype},</if>
+            <if test="suffix!=null">suffix=#{suffix},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="cdate!=null">cdate=#{cdate},</if>
+            <if test="params!=null">params=#{params},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
 
-	<delete id="delete">
-		delete from system_file_info
-		<include refid="commonWhere" />
-	</delete>
+    <delete id="delete">
+        delete from system_file_info
+        <include refid="commonWhere"/>
+    </delete>
 
-	<select id="selectEntity" resultMap="commonResult">
-		select
-		<include refid="colomnResult" />
-		from system_file_info
-		<include refid="commonWhere" />
-	</select>
+    <select id="selectEntity" resultMap="commonResult">
+        select
+        <include refid="colomnResult"/>
+        from system_file_info
+        <include refid="commonWhere"/>
+    </select>
 
-	<!-- 根据条件信息 -->
-	<select id="selectAll" resultMap="commonResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="commonResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from system_file_info
 		]]>
-		<include refid="commonWhere" />
-		<if test="sort != null">
-			order by ${sort} ${order}
-		</if>
-	</select>
-	<!-- 根据条件查询数量 -->
-	<select id="selectCount" resultType="int">
-		select count(id) from system_file_info
-		<include refid="commonWhere" />
-	</select>
-	<!-- 根据主键查询信息 -->
-	<select id="selectById" resultMap="commonResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+        <include refid="commonWhere"/>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
+        select count(id) from system_file_info
+        <include refid="commonWhere"/>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="commonResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from system_file_info where 
 			   	 id=#{id} 
 		]]>
 
-	</select>
+    </select>
 
-	<!-- 根据主键查询信息 -->
-	<select id="selectEntityByUuid" resultMap="commonResult">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <!-- 根据主键查询信息 -->
+    <select id="selectEntityByUuid" resultMap="commonResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from system_file_info where 
 			   	 uuid=#{uuid} 
 		]]>
 
-	</select>
+    </select>
 
-	<select id="selectEntityMap" resultMap="commonResultMap">
-		select
-		<include refid="colomnResult" />
-		from system_file_info
-		<include refid="commonWhere" />
-	</select>
+    <select id="selectEntityMap" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        from system_file_info
+        <include refid="commonWhere"/>
+    </select>
 
-	<!-- 根据条件信息 -->
-	<select id="selectAllMap" resultMap="commonResultMap">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <!-- 根据条件信息 -->
+    <select id="selectAllMap" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from system_file_info
 		]]>
-		<include refid="commonWhere" />
-		<if test="sort != null">
-			order by ${sort} ${order}
-		</if>
-	</select>
+        <include refid="commonWhere"/>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
 
-	<!-- 根据主键查询信息 -->
-	<select id="selectByIdMap" resultMap="commonResultMap">
-		select
-		<include refid="colomnResult" /> 
-		<![CDATA[
+    <!-- 根据主键查询信息 -->
+    <select id="selectByIdMap" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
 			from system_file_info where 
 			   	 id=#{id} 
 		]]>
 
-	</select>
+    </select>
 </mapper> 

@@ -19,46 +19,46 @@ import com.tywy.utils.UUIDUtil;
 
 @Controller
 public class SystemMenuActController extends BaseController {
-	@Resource
-	private SystemMenuActService service;
+    @Resource
+    private SystemMenuActService service;
 
-	@RequestMapping(value = "/system/systemMenuActAjaxAll")
-	@ResponseBody
-	public JSONArray systemMenuActAjaxAll(HttpServletRequest request, HttpServletResponse response,
-			SystemMenuAct info) {
-		info.setOrder("asc");
-		info.setSort("orderList");
-		List<SystemMenuAct> list = service.selectAll(info);
-		return (JSONArray) JSON.toJSON(list);
-	}
+    @RequestMapping(value = "/system/systemMenuActAjaxAll")
+    @ResponseBody
+    public JSONArray systemMenuActAjaxAll(HttpServletRequest request, HttpServletResponse response,
+                                          SystemMenuAct info) {
+        info.setOrder("asc");
+        info.setSort("orderList");
+        List<SystemMenuAct> list = service.selectAll(info);
+        return (JSONArray) JSON.toJSON(list);
+    }
 
-	@RequestMapping(value = "/system/systemMenuActAjaxSave")
-	@ResponseBody
-	public Object systemMenuActAjaxSave(HttpServletRequest request, HttpServletResponse response, SystemMenuAct info) {
-		int result = 0;
-		String msg = "";
-		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
-			result = service.insert(info);
-			msg = "保存失败！";
-		} else {
-			result = service.update(info);
-			msg = "修改失败！";
-		}
-		return getJsonResult(result, "操作成功", msg);
-	}
+    @RequestMapping(value = "/system/systemMenuActAjaxSave")
+    @ResponseBody
+    public Object systemMenuActAjaxSave(HttpServletRequest request, HttpServletResponse response, SystemMenuAct info) {
+        int result = 0;
+        String msg = "";
+        if (info.getId() == null || info.getId().equals("")) {
+            info.setId(UUIDUtil.getUUID());
+            result = service.insert(info);
+            msg = "保存失败！";
+        } else {
+            result = service.update(info);
+            msg = "修改失败！";
+        }
+        return getJsonResult(result, "操作成功", msg);
+    }
 
-	@RequestMapping(value = "/system/systemMenuActAjaxDelete")
-	@ResponseBody
-	public Object systemMenuActAjaxDelete(HttpServletRequest request, HttpServletResponse response,
-			SystemMenuAct info) {
-		int result = 0;
-		try {
-			result = service.delete(info);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+    @RequestMapping(value = "/system/systemMenuActAjaxDelete")
+    @ResponseBody
+    public Object systemMenuActAjaxDelete(HttpServletRequest request, HttpServletResponse response,
+                                          SystemMenuAct info) {
+        int result = 0;
+        try {
+            result = service.delete(info);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
-		return getJsonResult(result, "操作成功", "删除失败！");
-	}
+        return getJsonResult(result, "操作成功", "删除失败！");
+    }
 }

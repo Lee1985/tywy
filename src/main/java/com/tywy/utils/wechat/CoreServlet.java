@@ -14,10 +14,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.tywy.sc.services.WeChatCoreService;
 
 /**
- * 
+ * @author Liuheli
  * @ClassName: CoreServlet
  * @Description: 核心请求处理类
- * @author william
  * @date 2016-11-17 16:48:35
  */
 public class CoreServlet extends HttpServlet {
@@ -29,13 +28,17 @@ public class CoreServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		wechatService = (WeChatCoreService) wac.getBean(WeChatCoreService.class);
+		wechatService = wac.getBean(WeChatCoreService.class);
 	}
 
 	/**
 	 * 校验请求是否来自微信服务器
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+
 		// 微信加密签名
 		String signature = request.getParameter("signature");
 		// 时间戳

@@ -1,11 +1,12 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
  * wechat_electronic_album_t实体表()
- * 
+ *
  * @author William
  * @date 2016-11-27 16:56:19
  * @project
@@ -16,13 +17,14 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	private java.lang.Integer orderList; // 排序
 	private java.lang.String imgUuid; // 相册封面
 	private java.lang.String name; // 相册名称
-	private java.lang.String nickname; // 用户的昵称
 	private java.lang.String description; // 相册描述
-	private java.util.Date createDate; // 创建时间
-	private java.util.Date updateDate; // 修改时间
+	private String createDate; // 创建时间
+	private String updateDate; // 修改时间
 	private java.lang.String createUser; // 创建者
 	private java.lang.String updateUser; // 修改者
 	private java.lang.Integer isDelete; // 是否删除(1-是，0-否）
+	private java.lang.String urlPath; // 图片地址
+	private int count; // 照片数量
 
 	/**
 	 * 获取属性
@@ -97,24 +99,6 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * 获取用户的昵称属性
-	 *
-	 * @return nickname
-	 */
-	public java.lang.String getNickname() {
-		return nickname;
-	}
-
-	/**
-	 * 设置用户的昵称属性
-	 *
-	 * @param nickname
-	 */
-	public void setNickname(java.lang.String nickname) {
-		this.nickname = nickname;
-	}
-
-	/**
 	 * 获取相册描述属性
 	 *
 	 * @return description
@@ -137,7 +121,7 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	 *
 	 * @return createDate
 	 */
-	public java.util.Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
@@ -146,7 +130,7 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	 *
 	 * @param createDate
 	 */
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
@@ -155,7 +139,7 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	 *
 	 * @return updateDate
 	 */
-	public java.util.Date getUpdateDate() {
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
@@ -164,7 +148,7 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 	 *
 	 * @param updateDate
 	 */
-	public void setUpdateDate(java.util.Date updateDate) {
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
@@ -230,7 +214,6 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 		sb.append(", orderList=").append(orderList);
 		sb.append(", imgUuid=").append(imgUuid);
 		sb.append(", name=").append(name);
-		sb.append(", nickname=").append(nickname);
 		sb.append(", description=").append(description);
 		sb.append(", createDate=").append(createDate);
 		sb.append(", updateDate=").append(updateDate);
@@ -239,6 +222,22 @@ public class WechatElectronicAlbumT extends BaseEntity implements Serializable {
 		sb.append(", isDelete=").append(isDelete);
 		sb.append('}');
 		return sb.toString();
+	}
+
+	public java.lang.String getUrlPath() {
+		return urlPath;
+	}
+
+	public void setUrlPath(java.lang.String urlPath) {
+		this.urlPath = urlPath;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 }

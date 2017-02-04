@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,8 @@ import com.tywy.sc.services.WechatUserInfoTService;
 import com.tywy.utils.DateUtils;
 import com.tywy.utils.UUIDUtil;
 import com.tywy.utils.wechat.FormatXmlUtil;
-import com.tywy.utils.wechat.HttpUtil;
+import com.tywy.utils.wechat.JSONUtil;
+import com.tywy.utils.wechat.NetWorkCenter;
 import com.tywy.utils.wechat.ReceiveXmlUtil;
 
 @Service
@@ -41,6 +44,8 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	@Autowired
 	private WechatAlbumListTService albumService;
 
+	private static final Logger logger = LoggerFactory.getLogger(WeChatCoreServiceImpl.class);
+
 	/**
 	 * 处理微信请求信息
 	 */
@@ -50,7 +55,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 		// 调用消息工具类ReceiveXmlUtil解析微信发来的xml格式的消息
 		String xml = ReceiveXmlUtil.parseXml(request);
-		System.out.println("------xml is:" + xml);
+		logger.debug("-----------------xml:{}-----------------", xml);
 
 		// 反射处理XML字符串型消息
 		ReceiveXmlVO xmlEntity = new ReceiveXmlVO();
@@ -70,7 +75,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 	/**
 	 * 推送事件
-	 * 
+	 *
 	 * @param xmlEntity
 	 * @return
 	 */
@@ -101,19 +106,20 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 					// 获取微信端用户的信息
 					userInfo = getUserInfo(openid, access_token);
 					if (userInfo != null) {
-						System.out.println("----userInfo=" + userInfo.toString());
+						logger.debug("-----------------userInfo:{}-----------------", userInfo.toString());
+
 						// 保存用户的信息
 						userInfo.setId(UUIDUtil.getUUID());
 						userInfo.setSubscribeTime(DateUtils.getDateTimeFormat(new Date()));
 						wechatuserService.insert(userInfo);
 					} else {
-						System.out.println("----获取微信端用户的信息失败----");
+						logger.warn("-----------------获取微信端用户的信息失败-----------------");
 					}
 				}
 			}
 			respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
 					content);
-			System.out.println("关注--回复文本消息---->" + respMessage);
+			logger.debug("-----------------关注--回复文本消息:{}-----------------", respMessage);
 			break;
 
 		case MessageConstanct.EVENT_TYPE_UNSUBSCRIBE:// 取消关注
@@ -133,7 +139,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 	/**
 	 * 菜单点击事件
-	 * 
+	 *
 	 * @param xmlEntity
 	 * @return
 	 */
@@ -153,7 +159,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 	/**
 	 * 菜单点击方法
-	 * 
+	 *
 	 * @param xmlEntity
 	 * @param type
 	 * @return
@@ -164,34 +170,36 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		map.put("type", type);// 类型（1-首次关注；2-联系我们；3-搜索图片）
 		WechatPubReplyT pubReply = replyService.selectEntity(map);
 		String content = pubReply.getContent();
+		String respMessage = null;
 		switch (type) {
 		case 2:
-			content = StringUtils.isBlank(content) ? MessageConstanct.CONTACT_WELCOME_WORDS : content;
+			respMessage = new FormatXmlUtil().formatCustomerAnswer(xmlEntity.getFromUserName(),
+					xmlEntity.getToUserName());
 			break;
 		case 3:
 			content = StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content;
+			respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
+					content);
 			break;
 		}
-		String respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(),
-				xmlEntity.getToUserName(), content);
 		return respMessage;
 	}
 
 	/**
 	 * 回复文本消息-搜索图片功能
-	 * 
+	 *
 	 * @param xmlEntity
 	 * @return
 	 */
 	private String todoTextTask(ReceiveXmlVO xmlEntity) {
 		String respMessage = null;
-		String serial_number = xmlEntity.getContent();
+		String serialNumber = xmlEntity.getContent();
 		String from = xmlEntity.getFromUserName();
 		String to = xmlEntity.getToUserName();
 
-		// 根据serial_number精确查找
+		// 根据serialNumber精确查找
 		Map<String, Object> map = new HashMap<>();
-		map.put("serial_number", serial_number);
+		map.put("serialNumber", serialNumber);
 		List<WechatAlbumListT> list = albumService.selectAll(map);
 		if (list != null && list.size() > 0) {
 			WechatAlbumListT album = list.get(0);
@@ -199,13 +207,13 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		} else {
 			respMessage = new FormatXmlUtil().formatTextAnswer(from, to, MessageConstanct.SEARCH_IMG_NONE_WORDS);
 		}
-		System.out.println("搜索图片--回复文本消息---->" + respMessage);
+		logger.debug("-----------------搜索图片--回复文本消息:{}-----------------", respMessage);
 		return respMessage;
 	}
 
 	/**
 	 * 获取用户基本信息
-	 * 
+	 *
 	 * @param openid
 	 * @param access_token
 	 * @return
@@ -215,12 +223,12 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				openid);
 		WechatUserInfoT user = null;
 		try {
-			String result = HttpUtil.doGet(requestUrl);
+			String result = NetWorkCenter.doGet(requestUrl, null);
 			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
-				System.out.println("-----requestUrl----" + requestUrl);
-				System.out.println("----获取用户信息失败----" + result);
+				logger.error("-----------------requestUrl:{}-----------------", requestUrl);
+				logger.error("-----------------获取用户信息失败:{}-----------------", result);
 			} else {
-				user = JSON.parseObject(result, WechatUserInfoT.class);
+				user = JSONUtil.toBean(result, WechatUserInfoT.class);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -230,7 +238,7 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 	/**
 	 * 获取access token
-	 * 
+	 *
 	 * @return
 	 */
 	private String getAccessToken() {
@@ -238,10 +246,10 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				CfgConstant.APPSECRET);
 		String token = "";
 		try {
-			String result = HttpUtil.doGet(requestUrl);
+			String result = NetWorkCenter.doGet(requestUrl, null);
 			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
-				System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
-				System.out.println("----【getAccessToken Fail】----" + result);
+				logger.error("getAccessToken requestUrl:{}", requestUrl);
+				logger.error("getAccessToken Fail:{}", result);
 			} else {
 				AccessTokenVO accessTokenVO = JSON.parseObject(result, AccessTokenVO.class);
 				token = accessTokenVO.getAccess_token();

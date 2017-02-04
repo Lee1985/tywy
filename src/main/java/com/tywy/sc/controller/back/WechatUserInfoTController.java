@@ -21,13 +21,12 @@ import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.WechatUserInfoT;
 import com.tywy.sc.data.model.wechat.AccessTokenVO;
 import com.tywy.sc.services.WechatUserInfoTService;
-import com.tywy.utils.wechat.HttpUtil;
+import com.tywy.utils.wechat.NetWorkCenter;
 
 /**
- * 
+ * @author Liuheli
  * @ClassName: WechatUserInfoTController
- * @Description: 控制层
- * @author William
+ * @Description: 用户控制层
  * @date 2016-11-23 21:46:22
  */
 @Controller
@@ -70,7 +69,7 @@ public class WechatUserInfoTController extends BaseController {
 		try {
 			token = getAccessToken();
 			if (StringUtils.isNotBlank(token)) {
-				
+
 				switch (info.getStatus()) {
 				case 0:// 拉黑
 					url = CfgConstant.BATCHBLACKLIST.replace("_ACCESS_TOKEN", token);
@@ -79,14 +78,14 @@ public class WechatUserInfoTController extends BaseController {
 					url = CfgConstant.BATCHUNBLACKLIST.replace("_ACCESS_TOKEN", token);
 					break;
 				}
-				
+
 				Map<String, List<String>> map = new HashMap<>();
 				List<String> list = new ArrayList<>();
 				list.add(info.getOpenid());
 				map.put("openid_list", list);
-				
-				resp = HttpUtil.doPost(url, JSON.toJSONString(map));
-				
+
+				resp = NetWorkCenter.doPost(url, JSON.toJSONString(map));
+
 				map = JSON.parseObject(resp, Map.class);
 				if (map != null && "ok".equals(map.get("errmsg"))) {
 					result = service.update(info);
@@ -97,10 +96,10 @@ public class WechatUserInfoTController extends BaseController {
 		}
 		return getJsonResult(result, "操作成功", "更新失败！");
 	}
-	
+
 	/**
 	 * 获取access token
-	 * 
+	 *
 	 * @return
 	 */
 	private String getAccessToken() {
@@ -108,7 +107,7 @@ public class WechatUserInfoTController extends BaseController {
 				CfgConstant.APPSECRET);
 		String token = "";
 		try {
-			String result = HttpUtil.doGet(requestUrl);
+			String result = NetWorkCenter.doGet(requestUrl, null);
 			if (StringUtils.isBlank(result) || StringUtils.contains(result, "errcode")) {
 				System.out.println("-----【getAccessToken requestUrl】----" + requestUrl);
 				System.out.println("----【getAccessToken Fail】----" + result);

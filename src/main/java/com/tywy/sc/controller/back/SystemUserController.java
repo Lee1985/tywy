@@ -29,7 +29,7 @@ public class SystemUserController extends BaseController {
 	@ResponseBody
 	public Object systemUserAjaxAll(HttpServletRequest request, HttpServletResponse response, SystemUser info,
 			Integer page, Integer rows) {
-		PageInfo pageInfo = new PageInfo();
+		PageInfo<SystemUser> pageInfo = new PageInfo<SystemUser>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		service.selectAll(info, pageInfo);
@@ -59,7 +59,7 @@ public class SystemUserController extends BaseController {
 
 		} else {
 			if (info.getStatus() == 1) {
-				//info.setIsDelete(0);
+				// info.setIsDelete(0);
 			}
 			result = service.update(info);
 			msg = "修改失败！";
@@ -72,15 +72,10 @@ public class SystemUserController extends BaseController {
 	public Object systemUserAjaxDelete(HttpServletRequest request, HttpServletResponse response, SystemUser info) {
 		int result = 0;
 		try {
-			SystemUser uinfo = new SystemUser();
-			uinfo.setId(info.getId());
-			uinfo.setStatus(0);
-			//uinfo.setIsDelete(1);
-			result = service.update(uinfo);
+			result = service.delete(info);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-
 		return getJsonResult(result, "操作成功", "删除失败！");
 	}
 
@@ -90,7 +85,7 @@ public class SystemUserController extends BaseController {
 		int result = 0;
 		try {
 			if (info.getStatus() == 1) {
-				//info.setIsDelete(0);
+				// info.setIsDelete(0);
 			}
 			result = service.update(info);
 		} catch (Exception e) {

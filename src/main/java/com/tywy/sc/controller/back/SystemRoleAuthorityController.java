@@ -18,10 +18,9 @@ import com.tywy.sc.data.model.SystemRoleAuthority;
 import com.tywy.sc.services.SystemRoleAuthorityService;
 
 /**
- * 
+ * @author 郭冲
  * @ClassName: SystemRoleAuthorityController
  * @Description: 系统角色权限控制层
- * @author 郭冲
  * @date 2015-03-30 13:30:06
  * @Copyright：上海科匠信息科技有限公司 2015
  */
