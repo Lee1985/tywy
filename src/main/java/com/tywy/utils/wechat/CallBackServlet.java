@@ -23,8 +23,8 @@ public class CallBackServlet extends HttpServlet {
 	private static final long serialVersionUID = -1847238807216447030L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
+		// request.setCharacterEncoding("utf-8");
+		// response.setCharacterEncoding("utf-8");
 
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
@@ -46,6 +46,6 @@ public class CallBackServlet extends HttpServlet {
 			// request.setAttribute("state", state);
 		}
 		// 跳转到index.jsp
-		request.getRequestDispatcher("/welcomeIndex.do").forward(request, response);
+		// request.getRequestDispatcher("/welcomeIndex.do").forward(request, response);
 	}
 }

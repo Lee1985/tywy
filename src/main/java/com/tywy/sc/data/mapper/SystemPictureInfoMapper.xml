@@ -4,7 +4,7 @@
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tywy.sc.data.dao.SystemPictureInfoDao">
 
-    <resultMap id="colomnResult" type="com.tywy.sc.data.model.SystemPictureInfo">
+    <resultMap id="commonResult" type="com.tywy.sc.data.model.SystemPictureInfo">
         <id property="id" column="id"/>
         <result property="uuid" column="uuid"/>
         <result property="urlPath" column="urlPath"/>
@@ -17,8 +17,7 @@
         <result property="cdate" column="cdate"/>
         <result property="params" column="params"/>
     </resultMap>
-    
-    <resultMap id="colomnResultMap" type="java.util.HashMap">
+    <resultMap id="commonResultMap" type="java.util.HashMap">
         <id property="id" column="id"/>
         <result property="uuid" column="uuid"/>
         <result property="urlPath" column="urlPath"/>
@@ -31,7 +30,6 @@
         <result property="cdate" column="cdate"/>
         <result property="params" column="params"/>
     </resultMap>
-    
     <!-- 动态sql -->
     <sql id="colomnResult">
         <![CDATA[
@@ -139,21 +137,21 @@
         <include refid="commonWhere"/>
     </delete>
 
-    <select id="selectEntity" resultMap="colomnResult">
+    <select id="selectEntity" resultMap="commonResult">
         select
         <include refid="colomnResult"/>
         from system_picture_info
         <include refid="commonWhere"/>
     </select>
 
-    <select id="selectEntityByUuid" resultMap="colomnResult">
+    <select id="selectEntityByUuid" resultMap="commonResult">
         select
         <include refid="colomnResult"/>
         from system_picture_info where uuid=#{uuid}
     </select>
 
     <!-- 根据条件信息 -->
-    <select id="selectAll" resultMap="colomnResult">
+    <select id="selectAll" resultMap="commonResult">
         select
         <include refid="colomnResult"/>
         <![CDATA[
@@ -170,7 +168,7 @@
         <include refid="commonWhere"/>
     </select>
     <!-- 根据主键查询信息 -->
-    <select id="selectById" resultMap="colomnResult">
+    <select id="selectById" resultMap="commonResult">
         select
         <include refid="colomnResult"/>
         <![CDATA[
@@ -179,7 +177,7 @@
 		]]>
     </select>
 
-    <select id="selectEntityMap" resultMap="colomnResultMap">
+    <select id="selectEntityMap" resultMap="commonResultMap">
         select
         <include refid="colomnResult"/>
         from system_picture_info
@@ -187,7 +185,7 @@
     </select>
 
     <!-- 根据条件信息 -->
-    <select id="selectAllMap" resultMap="colomnResultMap">
+    <select id="selectAllMap" resultMap="commonResultMap">
         select
         <include refid="colomnResult"/>
         <![CDATA[
@@ -199,7 +197,7 @@
     </select>
 
     <!-- 根据主键查询信息 -->
-    <select id="selectByIdMap" resultMap="colomnResultMap">
+    <select id="selectByIdMap" resultMap="commonResultMap">
         select
         <include refid="colomnResult"/>
         <![CDATA[
@@ -209,7 +207,7 @@
     </select>
     
     <!-- 根据主键查询信息 -->
-    <select id="selectByIdUuidMap" resultMap="colomnResultMap">
+    <select id="selectByIdUuidMap" resultMap="commonResultMap">
         select
         <include refid="colomnResult"/>
         <![CDATA[
@@ -219,7 +217,7 @@
 	</select>
 	
 	<!-- 批量查询文件列表 -->
-	<select id="selectByUuids" parameterType="java.util.List" resultMap="colomnResult">
+	<select id="selectByUuids" parameterType="java.util.List" resultMap="commonResult">
 		select
 		<include refid="colomnResult" /> 
 		 from system_picture_info where uuid in

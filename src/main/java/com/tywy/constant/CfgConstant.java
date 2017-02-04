@@ -11,9 +11,17 @@ public class CfgConstant {
 	 */
 	public static String APPSECRET = "";
 	/**
+	 * 静默授权并自动跳转到回调页snsapi_base
+	 */
+	public static String _SCOPE = "snsapi_userinfo";
+	/**
 	 * 获取GET_AUTHORIZE_URL接口
 	 */
 	public static String GET_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=_APPID&redirect_uri=_REDIRECT_URI&response_type=_code&scope=_SCOPE&state=STATE#wechat_redirect";
+	/**
+	 * 获取GET_CALLBACK_URL接口
+	 */
+	public static String GET_CALLBACK_URL = "http://mywechatpublhl.tunnel.2bdata.com/tywy/callback";
 	/**
 	 * 获取ACCESS_TOKEN接口
 	 */
