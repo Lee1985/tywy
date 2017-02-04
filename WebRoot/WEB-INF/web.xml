@@ -91,16 +91,6 @@
 		<url-pattern>/coreServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 微信公众号网页授权类 -->
-	<servlet>
-        <servlet-name>oauthServlet</servlet-name>
-        <servlet-class>com.tywy.utils.wechat.OAuthServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>oauthServlet</servlet-name>
-        <url-pattern>/oauthServlet</url-pattern>
-    </servlet-mapping>
-
 	<servlet>
 		<description>spring mvc servlet</description>
 		<servlet-name>springMvc</servlet-name>
