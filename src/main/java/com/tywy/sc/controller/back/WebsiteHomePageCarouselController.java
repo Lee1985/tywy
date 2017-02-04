@@ -1,0 +1,121 @@
+package com.tywy.sc.controller.back;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.base.page.PageInfo;
+import com.tywy.sc.data.model.SystemPictureInfo;
+import com.tywy.sc.data.model.WebsiteCarouselT;
+import com.tywy.sc.services.SystemPictureInfoService;
+import com.tywy.sc.services.WebsiteCarouselTService;
+import com.tywy.utils.UUIDUtil;
+
+/**
+ * 
+* @ClassName: WebsiteHomePageCarouselController 
+* @Description: 网站首页轮播图控制层 
+* @author lipeng 
+* @date 2017-01-18 00:44:40 
+* @Copyright：
+ */
+@Controller
+public class WebsiteHomePageCarouselController extends BaseController {
+	
+	@Resource
+	private WebsiteCarouselTService websiteHomePageCarouselService;
+	
+	@Resource
+	private SystemPictureInfoService systemPictureInfoService;
+
+	@RequestMapping(value = "system/websiteHomePageCarouselList")
+	public String websiteCarouselTList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/website_homepage_carousel_list";
+	}
+
+	@RequestMapping(value = "system/websiteHomePageCarouselAjaxPage")
+	@ResponseBody
+	public PageInfo<WebsiteCarouselT> websiteCarouselTAjaxPage(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCarouselT info, Integer page,
+			Integer rows) {
+		PageInfo<WebsiteCarouselT> pageInfo = new PageInfo<WebsiteCarouselT>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(rows);
+		info.setType(1);
+		info.setIsDelete(0);
+		websiteHomePageCarouselService.selectAll(info, pageInfo);
+		List<WebsiteCarouselT> carouselList = pageInfo.getRows();
+		if(carouselList == null || carouselList.isEmpty()){
+			return pageInfo;
+		}
+		List<String> imageUuidList = new ArrayList<String>();
+		for(WebsiteCarouselT websiteCarousel : carouselList){			
+			imageUuidList.add(websiteCarousel.getImgUuid());
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if(picList == null || picList.isEmpty()){
+			return pageInfo;
+		}
+		Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
+		for(SystemPictureInfo pictureInfo : picList){
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for(WebsiteCarouselT websiteCarousel : carouselList){			
+			SystemPictureInfo pic = picMap.get(websiteCarousel.getImgUuid());
+			websiteCarousel.setSystemPictureInfo(pic);
+		}
+		
+		return pageInfo;
+	}
+
+	@RequestMapping(value = "/websiteCarouselTAjaxAll")
+	@ResponseBody
+	public List<WebsiteCarouselT> websiteCarouselTAjaxAll(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCarouselT info, Integer page,
+			Integer rows) {
+		List<WebsiteCarouselT> results= websiteHomePageCarouselService.selectAll(info);
+		return results; 
+	}
+	
+	@RequestMapping(value = "system/websiteHomePageCarouselAjaxSave")
+	@ResponseBody
+	public Map<String,Object> websiteCarouselTAjaxSave(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCarouselT info) {
+		int result = 0;
+		String msg = "";
+		if (info.getId() == null || info.getId().equals("")) {
+			info.setId(UUIDUtil.getUUID());
+			result = websiteHomePageCarouselService.insert(info);
+			msg = "保存失败！";
+		} else {
+			result = websiteHomePageCarouselService.update(info);
+			msg = "修改失败！";
+		}
+		return getJsonResult(result, "操作成功",msg);
+	}
+
+	@RequestMapping(value = "system/websiteHomePageCarouselAjaxDelete")
+	@ResponseBody
+	public Map<String,Object> websiteCarouselTAjaxDelete(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCarouselT info) {
+		int result = 0;
+		try {
+			result = websiteHomePageCarouselService.delete(info);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return getJsonResult(result,"操作成功", "删除失败！");
+	}
+}

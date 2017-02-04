@@ -4,8 +4,7 @@
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tywy.sc.data.dao.SystemPictureInfoDao">
 
-	<resultMap id="commonResult"
-		type="com.tywy.sc.data.model.SystemPictureInfo">
+	<resultMap id="commonResult" type="com.tywy.sc.data.model.SystemPictureInfo">
 		<id property="id" column="id" />
 		<result property="uuid" column="uuid" />
 		<result property="urlPath" column="urlPath" />
@@ -18,7 +17,7 @@
 		<result property="cdate" column="cdate" />
 		<result property="params" column="params" />
 	</resultMap>
-	<resultMap id="commonResultMap" type="java.util.HashMap">
+	<resultMap id="colomnResultMap" type="java.util.HashMap">
 		<id property="id" column="id" />
 		<result property="uuid" column="uuid" />
 		<result property="urlPath" column="urlPath" />
@@ -50,44 +49,44 @@
 	<sql id="commonWhere">
 		<where>
 			<if test=" id != null and id != ''">
-				and id=#{id}
+				and id=#{id} 
 			</if>
 			<if test=" uuid != null and uuid != ''">
-				and uuid=#{uuid}
+				and uuid=#{uuid} 
 			</if>
 			<if test=" urlPath != null and urlPath != ''">
-				and urlPath=#{urlPath}
+				and urlPath=#{urlPath} 
 			</if>
 			<if test=" fwidth != null and fwidth != ''">
-				and fwidth=#{fwidth}
+				and fwidth=#{fwidth} 
 			</if>
 			<if test=" fheight != null and fheight != ''">
-				and fheight=#{fheight}
+				and fheight=#{fheight} 
 			</if>
 			<if test=" fsize != null and fsize != ''">
-				and fsize=#{fsize}
+				and fsize=#{fsize} 
 			</if>
 			<if test=" ftype != null and ftype != ''">
-				and ftype=#{ftype}
+				and ftype=#{ftype} 
 			</if>
 			<if test=" suffix != null and suffix != ''">
-				and suffix=#{suffix}
+				and suffix=#{suffix} 
 			</if>
 			<if test=" name != null and name != ''">
-				and name=#{name}
+				and name=#{name} 
 			</if>
 			<if test=" cdate != null and cdate != ''">
-				and cdate=#{cdate}
+				and cdate=#{cdate} 
 			</if>
 			<if test=" params != null and params != ''">
-				and params=#{params}
+				and params=#{params} 
 			</if>
 		</where>
 	</sql>
-
+	
 	<insert id="insert">
-		insert into system_picture_info
-		<trim prefix="(" suffix=")" suffixOverrides=",">
+	   insert into system_picture_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id!=null">id,</if>
 			<if test="uuid!=null">uuid,</if>
 			<if test="urlPath!=null">urlPath,</if>
@@ -100,7 +99,7 @@
 			<if test="cdate!=null">cdate,</if>
 			<if test="params!=null">params,</if>
 		</trim>
-		<trim prefix="values(" suffix=")" suffixOverrides=",">
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="id!=null">#{id},</if>
 			<if test="uuid!=null">#{uuid},</if>
 			<if test="urlPath!=null">#{urlPath},</if>
@@ -116,8 +115,8 @@
 	</insert>
 
 	<update id="update">
-		update system_picture_info
-		<set>
+	   update system_picture_info 
+	   <set>
 			<if test="uuid!=null">uuid=#{uuid},</if>
 			<if test="urlPath!=null">urlPath=#{urlPath},</if>
 			<if test="fwidth!=null">fwidth=#{fwidth},</if>
@@ -129,94 +128,104 @@
 			<if test="cdate!=null">cdate=#{cdate},</if>
 			<if test="params!=null">params=#{params},</if>
 		</set>
-		where
-		id=#{id}
+		where 
+	   		 id=#{id} 
 	</update>
 
 	<delete id="delete">
-		delete from system_picture_info
-		<include refid="commonWhere" />
+	   delete from system_picture_info 
+	   <include refid="commonWhere" /> 
 	</delete>
 
-	<select id="selectEntity" resultMap="commonResult">
-		select
-		<include refid="colomnResult" />
-		from system_picture_info
-		<include refid="commonWhere" />
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from system_picture_info
+	  <include refid="commonWhere" /> 
 	</select>
-
-	<select id="selectEntityByUuid" resultMap="commonResult">
-		select
-		<include refid="colomnResult" />
-		from system_picture_info where uuid=#{uuid}
+	
+	<select id="selectEntityByUuid" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from system_picture_info where uuid=#{uuid}
 	</select>
-
+	
 	<!-- 根据条件信息 -->
-	<select id="selectAll" resultMap="commonResult">
+	<select id="selectAll"  resultMap="colomnResult">
 		select
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from system_picture_info
 		]]>
-		<include refid="commonWhere" />
+		<include refid="commonWhere" /> 
 		<if test="sort != null">
-			order by ${sort} ${order}
+				order by ${sort} ${order}
 		</if>
 	</select>
 	<!-- 根据条件查询数量 -->
-	<select id="selectCount" resultType="int">
+	<select id="selectCount"  resultType="int">
 		select count(id) from system_picture_info
-		<include refid="commonWhere" />
+		<include refid="commonWhere" /> 
 	</select>
 	<!-- 根据主键查询信息 -->
-	<select id="selectById" resultMap="commonResult">
+	<select id="selectById"  resultMap="colomnResult">
 		select
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from system_picture_info where 
 			   	 id=#{id} 
 		]]>
-
+		
 	</select>
-
-	<select id="selectEntityMap" resultMap="commonResultMap">
-		select
-		<include refid="colomnResult" />
-		from system_picture_info
-		<include refid="commonWhere" />
+	
+	<select id="selectEntityMap" resultMap="colomnResultMap">
+	   select 
+	<include refid="colomnResult" /> 
+	   from system_picture_info
+	  <include refid="commonWhere" /> 
 	</select>
-
+	
 	<!-- 根据条件信息 -->
-	<select id="selectAllMap" resultMap="commonResultMap">
+	<select id="selectAllMap"  resultMap="colomnResultMap">
 		select
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from system_picture_info
 		]]>
-		<include refid="commonWhere" />
+		<include refid="commonWhere" /> 
 		<if test="sort != null">
-			order by ${sort} ${order}
+				order by ${sort} ${order}
 		</if>
 	</select>
-
+	
 	<!-- 根据主键查询信息 -->
-	<select id="selectByIdMap" resultMap="commonResultMap">
+	<select id="selectByIdMap"  resultMap="colomnResultMap">
 		select
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from system_picture_info where 
 			   	 id=#{id} 
 		]]>
-
+		
 	</select>
 	<!-- 根据主键查询信息 -->
-	<select id="selectByIdUuidMap" resultMap="commonResultMap">
+	<select id="selectByIdUuidMap"  resultMap="colomnResultMap">
 		select
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from system_picture_info where 
 			   	 uuid=#{uuid} 
 		]]>
-
+		
+	</select>
+	
+	<!-- 批量查询文件列表 -->
+	<select id="selectByUuids" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from system_picture_info where uuid in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
 	</select>
 </mapper> 

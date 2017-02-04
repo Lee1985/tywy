@@ -96,6 +96,6 @@ public class LoginController extends BaseController{
 		request.getSession().removeAttribute(SessionConstants.SESSION_PERMISSURL);
 		request.getSession().removeAttribute(SessionConstants.SESSION_BACK_USER);
 		request.getSession().removeAttribute(SessionConstants.SESSION_BACK_USER_FLAG);
-		return "redirect:back/welcome.do";
+		return "redirect:welcome.do";
 	}		
 }
