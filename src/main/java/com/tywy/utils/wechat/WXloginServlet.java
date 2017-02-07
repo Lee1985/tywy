@@ -20,7 +20,7 @@ import com.tywy.constant.CfgConstant;
 @WebServlet("/wxlogin")
 public class WXloginServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6688395005435952973L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +32,6 @@ public class WXloginServlet extends HttpServlet {
 
 		System.out.println("微信授权请求requestUrl:" + requestUrl);
 		resp.sendRedirect(requestUrl);
-		super.doGet(req, resp);
 	}
 
 }

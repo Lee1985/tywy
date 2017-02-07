@@ -20,18 +20,16 @@ import com.tywy.sc.data.model.wechat.Oauth2TokenVO;
 @WebServlet("/callback")
 public class CallBackServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -1847238807216447030L;
+	private static final long serialVersionUID = 2320264725920889283L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// request.setCharacterEncoding("utf-8");
-		// response.setCharacterEncoding("utf-8");
-
+		
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
 		// String state = request.getParameter("state");
 
 		// 用户同意授权
-		if (!"authdeny".equals(code)) {
+		if (CommonUtils.nonNull(code) && !"authdeny".equals(code)) {
 			// 获取网页授权access_token
 			Oauth2TokenVO weixinOauth2Token = AdvancedUtil.getOauth2AccessToken(CfgConstant.APPID,
 					CfgConstant.APPSECRET, code);
@@ -46,6 +44,7 @@ public class CallBackServlet extends HttpServlet {
 			// request.setAttribute("state", state);
 		}
 		// 跳转到index.jsp
-		// request.getRequestDispatcher("/welcomeIndex.do").forward(request, response);
+		// request.getRequestDispatcher("/welcomeIndex.do").forward(request,
+		// response);
 	}
 }

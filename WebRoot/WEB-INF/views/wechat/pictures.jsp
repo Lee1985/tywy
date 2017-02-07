@@ -124,7 +124,7 @@
 			window.location.href="./welcomeIndex.do";
 		}
 		function toCollection() {
-			window.location.href="./toCollection.do?userid=" ;
+			window.location.href="./toCollection.do?userid="+${openid} ;
 		}
 	</script>	
 </html>

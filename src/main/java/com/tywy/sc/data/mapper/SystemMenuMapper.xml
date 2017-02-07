@@ -34,10 +34,11 @@
                     select="com.tywy.sc.data.dao.SystemMenuDao.selectAllByPidRole"
                     column="{roleId=roleId,id=id}" ofType="SystemMenu">
         </collection>
-        <collection property="systemMenuActs"
+        <!-- 删除按钮权限查询 -->
+        <!-- <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByRole"
                     column="{roleId=roleId,id=id}">
-        </collection>
+        </collection> -->
     </resultMap>
 
     <resultMap id="roleMenuLoginResultMap" type="com.tywy.sc.data.model.SystemMenu">
@@ -53,10 +54,11 @@
                     select="com.tywy.sc.data.dao.SystemMenuDao.selectAllByPidRoleLogin"
                     column="{roleId=roleId,id=id}" ofType="SystemMenu">
         </collection>
-        <collection property="systemMenuActs"
+        <!-- 删除按钮权限查询 -->
+        <!-- <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByRoleLogin"
                     column="{roleId=roleId,id=id}">
-        </collection>
+        </collection> -->
     </resultMap>
     <!-- 动态sql -->
     <sql id="colomnResult">

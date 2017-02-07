@@ -59,6 +59,9 @@ public class WeChatAlbumController extends BaseController {
 		List<WechatElectronicAlbumT> albums = electronicService.selectAll(map);
 		model.addAttribute("albums", albums);
 
+		// 当前登陆用户的id
+		model.addAttribute("openid", "o_rsSv19Shjb9U71kWm8QmWdfh_E");
+
 		return "wechat/pictures";
 	}
 
