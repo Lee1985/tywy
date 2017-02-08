@@ -69,7 +69,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<mvc:interceptors>
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/system/*" /><!-- 如果不配置或/*,将拦截所有的Controller -->
+			<mvc:mapping path="/aaa/*" /><!-- 如果不配置或/*,将拦截所有的Controller -->
 			<bean class="com.tywy.web.CommonInterceptor"></bean>
 		</mvc:interceptor>		
 	</mvc:interceptors>

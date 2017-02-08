@@ -1,6 +1,8 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
@@ -20,6 +22,7 @@ public class WebsiteCarouselT extends BaseEntity implements Serializable {
 	private java.util.Date createDate; // 上传时间
 	private java.lang.Integer status; // 状态1启用0禁用
 	private java.lang.Integer isDelete; // 是否删除0否1是
+	private String createDateStr;
 	
 	private SystemPictureInfo systemPictureInfo;
 	
@@ -191,6 +194,15 @@ public class WebsiteCarouselT extends BaseEntity implements Serializable {
 
 	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
 		this.systemPictureInfo = systemPictureInfo;
+	}
+
+	public String getCreateDateStr() {
+		createDateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(createDate);
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +20,7 @@ import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WebsiteCarouselT;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCarouselTService;
-import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.stream.util.StreamVO;
 
 /**
  * 
@@ -54,6 +55,8 @@ public class WebsiteHomePageCarouselController extends BaseController {
 		pageInfo.setPageSize(rows);
 		info.setType(1);
 		info.setIsDelete(0);
+		info.setSort("orderList");
+		info.setOrder("asc");
 		websiteHomePageCarouselService.selectAll(info, pageInfo);
 		List<WebsiteCarouselT> carouselList = pageInfo.getRows();
 		if(carouselList == null || carouselList.isEmpty()){
@@ -75,7 +78,7 @@ public class WebsiteHomePageCarouselController extends BaseController {
 			SystemPictureInfo pic = picMap.get(websiteCarousel.getImgUuid());
 			websiteCarousel.setSystemPictureInfo(pic);
 		}
-		
+		pageInfo.setRows(carouselList);
 		return pageInfo;
 	}
 
@@ -91,15 +94,20 @@ public class WebsiteHomePageCarouselController extends BaseController {
 	@RequestMapping(value = "system/websiteHomePageCarouselAjaxSave")
 	@ResponseBody
 	public Map<String,Object> websiteCarouselTAjaxSave(HttpServletRequest request,
-			HttpServletResponse response, WebsiteCarouselT info) {
+			HttpServletResponse response, WebsiteCarouselT info,StreamVO streamVO,String operType) {
 		int result = 0;
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
-			result = websiteHomePageCarouselService.insert(info);
+			info.setCreateUser(getSessionUser(request).getId());
+			result = websiteHomePageCarouselService.insertWithImage(info,streamVO);
 			msg = "保存失败！";
 		} else {
-			result = websiteHomePageCarouselService.update(info);
+			//根据opertyp判断是否需要上传
+			if(StringUtils.isBlank(operType)){
+				result = websiteHomePageCarouselService.update(info);
+			}else{
+				result = websiteHomePageCarouselService.updateWithImage(info,streamVO);
+			}
 			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功",msg);
@@ -111,11 +119,24 @@ public class WebsiteHomePageCarouselController extends BaseController {
 			HttpServletResponse response, WebsiteCarouselT info) {
 		int result = 0;
 		try {
-			result = websiteHomePageCarouselService.delete(info);
+			info.setIsDelete(1);
+			result = websiteHomePageCarouselService.update(info);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
 		return getJsonResult(result,"操作成功", "删除失败！");
 	}
+	
+	@RequestMapping(value = "system/websiteHomePageCarouselAjaxUpdate")
+	@ResponseBody
+	public Map<String,Object> websiteCarouselTAjaxUpdate(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCarouselT info) {
+		int result = 0;
+		try {
+			result = websiteHomePageCarouselService.update(info);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return getJsonResult(result,"操作成功", "删除失败！");
+	}	
 }

@@ -1,12 +1,18 @@
-	function doAdd() {
+	function doAdd(callback) {
 		$('#dlg').dialog('open').dialog('setTitle', '新建');
 		$('#fm').form('clear');
+		if(callback && typeof(callback)=="function"){
+			callback();
+		}
 	}
-	function doEdit() {
+	function doEdit(callback) {
 		var row = $('#dg').datagrid('getSelected');
 		if (row) {
 			$('#dlg').dialog('open').dialog('setTitle', '修改');
 			$('#fm').form('load', row);
+			if(callback && typeof(callback)=="function"){
+				callback(row);
+			}
 		}
 	}
 	
@@ -17,6 +23,50 @@
 				if (r) {
 					$.post(url, {
 						id : row.id
+					}, function(result) {
+						if (result.success) {
+							$('#dg').datagrid('reload'); // reload the user data
+						} else {
+							$.messager.show({ // show error message
+								title : '提示',
+								msg : result.msg
+							});
+						}
+					}, 'json');
+				}
+			});
+		}
+	}
+	
+	function doUpdateStatus(url,status) {
+		var row = $('#dg').datagrid('getSelected');
+		var msg="";
+		if (row) {
+			if (status==1) {
+				msg="启用";
+				if (row.status==1) {
+					$.messager.show({ // show error message
+						title : '提示',
+						msg : '已启用！'
+					});
+					return;
+				}
+			}
+			if (status==0) {
+				msg="禁用";
+				if (row.status==0) {
+					$.messager.show({ // show error message
+						title : '提示',
+						msg : '已禁用！'
+					});
+					return;
+				}
+			}
+			$.messager.confirm('确认操作', '你确定要'+msg+'吗?', function(r) {
+				if (r) {
+					$.post(url, {
+						id : row.id,
+						status : status
 					}, function(result) {
 						if (result.success) {
 							$('#dg').datagrid('reload'); // reload the user data

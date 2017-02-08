@@ -108,7 +108,7 @@
 				<if test=" status != null and status != '' ">
 					and status=#{status} 
 				</if>
-				<if test=" isDelete != null and isDelete != '' ">
+				<if test=" isDelete != null ">
 					and isDelete=#{isDelete} 
 				</if>
 		</where>
@@ -146,7 +146,7 @@
 				<if test=" status != null and status != '' ">
 					and status=#{status} 
 				</if>
-				<if test=" isDelete != null and isDelete != '' ">
+				<if test=" isDelete != null ">
 					and isDelete=#{isDelete} 
 				</if>
 		</where>
@@ -183,7 +183,7 @@
 				<if test=" status != null and status != '' ">
 					and status=#{status} 
 				</if>
-				<if test=" isDelete != null and isDelete != '' ">
+				<if test=" isDelete != null ">
 					and isDelete=#{isDelete} 
 				</if>
 		</where>
@@ -237,4 +237,9 @@
   			#{idList}
  		</foreach>
 	</update>
+	
+	<!-- 查询最大序号  -->
+	<select id="selectMaxOrderList" resultType="int">
+		select max(orderList) from website_carousel_t
+	</select>
 </mapper> 

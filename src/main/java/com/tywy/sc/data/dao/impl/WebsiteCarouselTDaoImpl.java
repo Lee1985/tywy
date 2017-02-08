@@ -14,4 +14,9 @@ public class WebsiteCarouselTDaoImpl extends BaseDaoImpl<WebsiteCarouselT> imple
 	public WebsiteCarouselTDaoImpl(){
 		setSql_name_space(sqlNameSpace);
 	}
+
+	@Override
+	public Integer selectMaxOrderList() {		
+		return dao.getSqlSessionTemplate().selectOne(sql_name_space + ".selectMaxOrderList");
+	}
 }

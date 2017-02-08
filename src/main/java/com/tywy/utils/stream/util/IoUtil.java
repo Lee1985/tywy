@@ -1,14 +1,22 @@
 package com.tywy.utils.stream.util;
 
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.tywy.utils.stream.config.Configurations;
 import com.tywy.utils.stream.servlet.FormDataServlet;
 import com.tywy.utils.stream.servlet.Range;
 import com.tywy.utils.stream.servlet.StreamServlet;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * IO--closing, getting file name ... main function method
@@ -136,4 +144,39 @@ public class IoUtil {
 
         return length;
     }
+    
+    
+    public static File getTokenedFile(String model,String key) throws IOException{
+        if (model == null || model.isEmpty() || key == null || key.isEmpty())
+            return null;
+        File f = new File(Configurations.getFileRepository() + File.separator + model + File.separator + getCurrentTimestampStr() + File.separator + key);
+        if (!f.getParentFile().exists())
+            f.getParentFile().mkdirs();
+        if (!f.exists())
+            f.createNewFile();
+        return f;
+    }
+    
+    private static String getCurrentTimestampStr(){
+    	return new SimpleDateFormat("yyyyMMdd").format(new Date());
+    }
+    
+    public static String getBusinessFileName(){
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS"); 
+    	String filename =  formatter.format(new Date());
+    	return filename;
+    }
+    
+    public static void main(String[] args) {
+    	String sourceFileName = getBusinessFileName() + ".jpeg";
+    	try {
+			File file = getTokenedFile("homepage","2222.jpg");
+			System.out.println(getBusinessFileName());
+			System.out.println(file.getAbsolutePath());
+			sourceFileName = sourceFileName.substring(sourceFileName.lastIndexOf('.'),sourceFileName.length());
+			System.out.println(sourceFileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

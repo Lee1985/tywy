@@ -75,7 +75,7 @@ var uploadPreview = function(setting) {
         Height: _self.IsNull(setting.Height) ? _self.DefautlSetting.Height : setting.Height,
         ImgType: _self.IsNull(setting.ImgType) ? _self.DefautlSetting.ImgType : setting.ImgType,
         ErrMsg: _self.IsNull(setting.ErrMsg) ? _self.DefautlSetting.ErrMsg : setting.ErrMsg,
-        callback: _self.IsNull(setting.callback) ? _self.DefautlSetting.callback : setting.callback
+        callback: !(setting.callback && typeof(setting.callback) == "function") ? _self.DefautlSetting.callback : setting.callback
     };
     /*
     *author:周祥

@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Component
 public class SystemUserDaoImpl extends BaseDaoImpl<SystemUser> implements SystemUserDao {
+	
     public SystemUserDaoImpl() {
         setSql_name_space(sqlNameSpace);
     }

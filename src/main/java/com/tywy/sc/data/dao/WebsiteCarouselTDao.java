@@ -7,5 +7,8 @@ import com.tywy.sc.data.model.WebsiteCarouselT;
  *
  */
 public interface WebsiteCarouselTDao extends BaseDao<WebsiteCarouselT>{
+	
 	public String sqlNameSpace=WebsiteCarouselTDao.class.getName();
+
+	public Integer selectMaxOrderList();
 }

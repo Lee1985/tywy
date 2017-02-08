@@ -22,6 +22,7 @@ public class TokenServlet extends HttpServlet {
 	static final String FILE_SIZE_FIELD = "size";
 	static final String TOKEN_FIELD = "token";
 	static final String SERVER_FIELD = "server";
+	static final String MODEL_NAME = "model";
 	static final String SUCCESS = "success";
 	static final String MESSAGE = "message";
 	

@@ -106,7 +106,7 @@
 					enabled: true, /** 是否启用文件选择，默认是true */
 					customered: true,
 					multipleFiles: true, /** 是否允许同时选择多个文件，默认是false */	
-					autoUploading: true, /** 当选择完文件是否自动上传，默认是true */
+					autoUploading: false, /** 当选择完文件是否自动上传，默认是true */
 					fileFieldName: "FileData", /** 相当于指定<input type="file" name="FileData">，默认是FileData */
 					maxSize: 2147483648, /** 当_t.bStreaming = false 时（也就是Flash上传时），2G就是最大的文件上传大小！所以一般需要 */
 					simLimit: 10000, /** 允许同时选择文件上传的个数（包含已经上传过的） */
@@ -154,6 +154,7 @@
 						$module.find(".dz-error-message span").text("<strong>"+info.name+"</strong>文件类型不匹配[<strong>"+info.filters.toString() + "</strong>]");
 					},
 					onAddTask: function(file, dat) {
+						console.log(dat.file);
 						// 图片回显
 						if (dat && dat.file && dat.file.type && dat.file.type.indexOf('image') == 0) {
 							var $module = $("#"+ file.id);

@@ -26,9 +26,9 @@ public class CommonInterceptor implements HandlerInterceptor {
         // }
     }
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-                             Object arg2) throws Exception {
+    @SuppressWarnings("unchecked")
+	@Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object arg2) throws Exception {
         Object obj = request.getSession().getAttribute(SessionConstants.SESSION_PERMISSURL);
         Object objectu = request.getSession().getAttribute(SessionConstants.SESSION_USER);
         SystemUser user = objectu == null ? null : (SystemUser) objectu;

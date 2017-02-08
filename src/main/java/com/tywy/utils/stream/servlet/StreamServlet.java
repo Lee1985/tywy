@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * File reserved servlet, mainly reading the request parameter and its file
@@ -21,7 +22,9 @@ public class StreamServlet extends HttpServlet {
 	/** when the has increased to 10kb, then flush it to the hard-disk. */
 	static final int BUFFER_LENGTH = 10240;
 	static final String START_FIELD = "start";
+	static final String URL_PATH = "urlPath";
 	public static final String CONTENT_RANGE_HEADER = "content-range";
+	
 
 	@Override
 	public void init() throws ServletException {
@@ -73,7 +76,12 @@ public class StreamServlet extends HttpServlet {
 		doOptions(req, resp);
 		
 		final String token = req.getParameter(TokenServlet.TOKEN_FIELD);
-		final String fileName = req.getParameter(TokenServlet.FILE_NAME_FIELD);
+		final String sourceFileName = req.getParameter(TokenServlet.FILE_NAME_FIELD);
+		sourceFileName.substring(sourceFileName.lastIndexOf('.'),sourceFileName.length());
+		final String fileExtName = sourceFileName.substring(sourceFileName.lastIndexOf('.'),sourceFileName.length());
+		final String fileName = IoUtil.getBusinessFileName() + fileExtName;
+		final String model = req.getParameter(TokenServlet.MODEL_NAME);
+		
 		Range range = IoUtil.parseRange(req);
 		
 		OutputStream out = null;
@@ -86,7 +94,7 @@ public class StreamServlet extends HttpServlet {
 		long start = 0;
 		boolean success = true;
 		String message = "";
-		File f = IoUtil.getTokenedFile(token);
+		File f = IoUtil.getTokenedFile(model,token);
 		try {
 			if (f.length() != range.getFrom()) {
 				/** drop this uploaded data */
@@ -99,7 +107,6 @@ public class StreamServlet extends HttpServlet {
 			final byte[] bytes = new byte[BUFFER_LENGTH];
 			while ((read = content.read(bytes)) != -1)
 				out.write(bytes, 0, read);
-
 			start = f.length();
 		} catch (StreamException se) {
 			success = StreamException.ERROR_FILE_RANGE_START == se.getCode();
@@ -113,18 +120,20 @@ public class StreamServlet extends HttpServlet {
 		} finally {
 			IoUtil.close(out);
 			IoUtil.close(content);
-
+			Path path = null;
 			/** rename the file */
 			if (range.getSize() == start) {
 				/** fix the `renameTo` bug */
 //				File dst = IoUtil.getFile(fileName);
 //				dst.delete();
 				// TODO: f.renameTo(dst); 重命名在Windows平台下可能会失败，stackoverflow建议使用下面这句
+				
 				try {
 					// 先删除
 					IoUtil.getFile(fileName).delete();
 					
-					Files.move(f.toPath(), f.toPath().resolveSibling(fileName));
+					path = Files.move(f.toPath(), f.toPath().resolveSibling(fileName));
+					
 					System.out.println("TK: `" + token + "`, NE: `" + fileName + "`");
 					
 					/** if `STREAM_DELETE_FINISH`, then delete it. */
@@ -138,8 +147,13 @@ public class StreamServlet extends HttpServlet {
 				
 			}
 			try {
-				if (success)
+				if (success){
 					json.put(START_FIELD, start);
+					//String path = f.getPath();
+					String urlPath = path.toString().substring(Configurations.getFileRepository().length() + 1, path.toString().length());
+					urlPath = urlPath.replaceAll("\\\\", "/");	
+					json.put(URL_PATH, urlPath);
+				}
 				json.put(TokenServlet.SUCCESS, success);
 				json.put(TokenServlet.MESSAGE, message);
 			} catch (JSONException e) {}

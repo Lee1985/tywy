@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tywy.sc.data.dao.WebsiteHomepageBrandTDao">
+
+	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WebsiteHomepageBrandT">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="iconUrl" column="iconUrl" />
+		<result property="imageUuid" column="imageUuid" />
+		<result property="engText" column="engText" />
+		<result property="description" column="description" />
+		<result property="orderList" column="orderList" />
+		<result property="status" column="status" />
+		<result property="isDelete" column="isDelete" />
+		<result property="targetUrl" column="targetUrl" />
+		<result property="createUser" column="createUser" />
+		<result property="createDate" column="createDate" />
+		<result property="updateUser" column="updateUser" />
+		<result property="updateDate" column="updateDate" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     name,
+	     iconUrl,
+	     imageUuid,
+	     engText,
+	     description,
+	     orderList,
+	     status,
+	     isDelete,
+	     targetUrl,
+	     createUser,
+	     createDate,
+	     updateUser,
+	     updateDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into website_homepage_brand_t  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="name!=null">name,</if>
+			     <if test="iconUrl!=null">iconUrl,</if>
+			     <if test="imageUuid!=null">imageUuid,</if>
+			     <if test="engText!=null">engText,</if>
+			     <if test="description!=null">description,</if>
+			     <if test="orderList!=null">orderList,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="targetUrl!=null">targetUrl,</if>
+			     <if test="createUser!=null">createUser,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="updateUser!=null">updateUser,</if>
+			     <if test="updateDate!=null">updateDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="name!=null">#{name},</if>
+			     <if test="iconUrl!=null">#{iconUrl},</if>
+			     <if test="imageUuid!=null">#{imageUuid},</if>
+			     <if test="engText!=null">#{engText},</if>
+			     <if test="description!=null">#{description},</if>
+			     <if test="orderList!=null">#{orderList},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="targetUrl!=null">#{targetUrl},</if>
+			     <if test="createUser!=null">#{createUser},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="updateUser!=null">#{updateUser},</if>
+			     <if test="updateDate!=null">#{updateDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update website_homepage_brand_t 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
+			     <if test="imageUuid!=null">imageUuid=#{imageUuid},</if>
+			     <if test="engText!=null">engText=#{engText},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="targetUrl!=null">targetUrl=#{targetUrl},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     website_homepage_brand_t 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from website_homepage_brand_t
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
+				<if test=" imageUuid != null and imageUuid != '' ">
+					and imageUuid=#{imageUuid} 
+				</if>
+				<if test=" engText != null and engText != '' ">
+					and engText=#{engText} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" targetUrl != null and targetUrl != '' ">
+					and targetUrl=#{targetUrl} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_homepage_brand_t
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
+				<if test=" imageUuid != null and imageUuid != '' ">
+					and imageUuid=#{imageUuid} 
+				</if>
+				<if test=" engText != null and engText != '' ">
+					and engText=#{engText} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" targetUrl != null and targetUrl != '' ">
+					and targetUrl=#{targetUrl} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from website_homepage_brand_t
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
+				<if test=" imageUuid != null and imageUuid != '' ">
+					and imageUuid=#{imageUuid} 
+				</if>
+				<if test=" engText != null and engText != '' ">
+					and engText=#{engText} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" targetUrl != null and targetUrl != '' ">
+					and targetUrl=#{targetUrl} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateUser != null and updateUser != '' ">
+					and updateUser=#{updateUser} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_homepage_brand_t where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from website_homepage_brand_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from website_homepage_brand_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update website_homepage_brand_t
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
+			     <if test="imageUuid!=null">imageUuid=#{imageUuid},</if>
+			     <if test="engText!=null">engText=#{engText},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="targetUrl!=null">targetUrl=#{targetUrl},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 
