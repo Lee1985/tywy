@@ -7,5 +7,8 @@ import com.tywy.sc.data.model.WebsiteHomepageBrandT;
  *
  */
 public interface WebsiteHomepageBrandTDao extends BaseDao<WebsiteHomepageBrandT>{
+	
 	public String sqlNameSpace=WebsiteHomepageBrandTDao.class.getName();
+
+	public Integer selectMaxOrderList();
 }

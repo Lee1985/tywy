@@ -6,9 +6,9 @@
 
 	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WebsiteHomepageBrandT">
 		<id property="id" column="id" />
-		<result property="name" column="name" />
+		<result property="brandName" column="brandName" />
 		<result property="iconUrl" column="iconUrl" />
-		<result property="imageUuid" column="imageUuid" />
+		<result property="imgUuid" column="imgUuid" />
 		<result property="engText" column="engText" />
 		<result property="description" column="description" />
 		<result property="orderList" column="orderList" />
@@ -24,9 +24,9 @@
 	<sql id="colomnResult">
 		<![CDATA[
 	     id,
-	     name,
+	     brandName,
 	     iconUrl,
-	     imageUuid,
+	     imgUuid,
 	     engText,
 	     description,
 	     orderList,
@@ -43,9 +43,9 @@
 	   insert into website_homepage_brand_t  
 	   <trim prefix="(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">id,</if>
-			     <if test="name!=null">name,</if>
+			     <if test="brandName!=null">brandName,</if>
 			     <if test="iconUrl!=null">iconUrl,</if>
-			     <if test="imageUuid!=null">imageUuid,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
 			     <if test="engText!=null">engText,</if>
 			     <if test="description!=null">description,</if>
 			     <if test="orderList!=null">orderList,</if>
@@ -59,9 +59,9 @@
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
-			     <if test="name!=null">#{name},</if>
+			     <if test="brandName!=null">#{brandName},</if>
 			     <if test="iconUrl!=null">#{iconUrl},</if>
-			     <if test="imageUuid!=null">#{imageUuid},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
 			     <if test="engText!=null">#{engText},</if>
 			     <if test="description!=null">#{description},</if>
 			     <if test="orderList!=null">#{orderList},</if>
@@ -79,9 +79,9 @@
 	   update website_homepage_brand_t 
 	   <set>
 			     <if test="id!=null">id=#{id},</if>
-			     <if test="name!=null">name=#{name},</if>
+			     <if test="brandName!=null">brandName=#{brandName},</if>
 			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
-			     <if test="imageUuid!=null">imageUuid=#{imageUuid},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
 			     <if test="engText!=null">engText=#{engText},</if>
 			     <if test="description!=null">description=#{description},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
@@ -112,14 +112,14 @@
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
+				<if test=" brandName != null and brandName != '' ">
+					and brandName=#{brandName} 
 				</if>
 				<if test=" iconUrl != null and iconUrl != '' ">
 					and iconUrl=#{iconUrl} 
 				</if>
-				<if test=" imageUuid != null and imageUuid != '' ">
-					and imageUuid=#{imageUuid} 
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
 				</if>
 				<if test=" engText != null and engText != '' ">
 					and engText=#{engText} 
@@ -165,14 +165,14 @@
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
+				<if test=" brandName != null and brandName != '' ">
+					and brandName=#{brandName} 
 				</if>
 				<if test=" iconUrl != null and iconUrl != '' ">
 					and iconUrl=#{iconUrl} 
 				</if>
-				<if test=" imageUuid != null and imageUuid != '' ">
-					and imageUuid=#{imageUuid} 
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
 				</if>
 				<if test=" engText != null and engText != '' ">
 					and engText=#{engText} 
@@ -217,14 +217,14 @@
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
+				<if test=" brandName != null and brandName != '' ">
+					and brandName=#{brandName} 
 				</if>
 				<if test=" iconUrl != null and iconUrl != '' ">
 					and iconUrl=#{iconUrl} 
 				</if>
-				<if test=" imageUuid != null and imageUuid != '' ">
-					and imageUuid=#{imageUuid} 
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
 				</if>
 				<if test=" engText != null and engText != '' ">
 					and engText=#{engText} 
@@ -293,9 +293,9 @@
 		update website_homepage_brand_t
 		<set>
 			     <if test="id!=null">id=#{id},</if>
-			     <if test="name!=null">name=#{name},</if>
+			     <if test="brandName!=null">brandName=#{brandName},</if>
 			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
-			     <if test="imageUuid!=null">imageUuid=#{imageUuid},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
 			     <if test="engText!=null">engText=#{engText},</if>
 			     <if test="description!=null">description=#{description},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
@@ -312,4 +312,9 @@
   			#{idList}
  		</foreach>
 	</update>
+	
+	<!-- 查询最大序号  -->
+	<select id="selectMaxOrderList" resultType="int">
+		select max(orderList) from website_homepage_brand_t
+	</select>
 </mapper> 

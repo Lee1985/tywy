@@ -1,6 +1,8 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
@@ -12,9 +14,9 @@ import com.tywy.sc.base.entity.BaseEntity;
  @SuppressWarnings("serial")
 public class WebsiteHomepageBrandT extends BaseEntity implements Serializable {
 	private java.lang.String id; // 主键id
-	private java.lang.String name; // 名称
+	private java.lang.String brandName; // 名称
 	private java.lang.String iconUrl; // 图标地址
-	private java.lang.String imageUuid; // 图片uuid
+	private java.lang.String imgUuid; // 图片uuid
 	private java.lang.String engText; // 英文标识
 	private java.lang.String description; // 描述
 	private java.lang.Integer orderList; // 排序
@@ -25,6 +27,9 @@ public class WebsiteHomepageBrandT extends BaseEntity implements Serializable {
 	private java.util.Date createDate; // 创建时间
 	private java.lang.String updateUser; // 修改用户
 	private java.util.Date updateDate; // 修改时间
+	
+	private SystemPictureInfo systemPictureInfo;
+	private String createDateStr;
 	/**
      * 获取主键id属性
      *
@@ -43,24 +48,14 @@ public class WebsiteHomepageBrandT extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 	
-	/**
-     * 获取名称属性
-     *
-     * @return name
-     */
-	public java.lang.String getName() {
-		return name;
+	public java.lang.String getBrandName() {
+		return brandName;
 	}
-	
-	/**
-	 * 设置名称属性
-	 *
-	 * @param name
-	 */
-	public void setName(java.lang.String name) {
-		this.name = name;
+
+	public void setBrandName(java.lang.String brandName) {
+		this.brandName = brandName;
 	}
-	
+
 	/**
      * 获取图标地址属性
      *
@@ -84,17 +79,16 @@ public class WebsiteHomepageBrandT extends BaseEntity implements Serializable {
      *
      * @return imageUuid
      */
-	public java.lang.String getImageUuid() {
-		return imageUuid;
+	public java.lang.String getImgUuid() {
+		return imgUuid;
 	}
-	
 	/**
 	 * 设置图片uuid属性
 	 *
 	 * @param imageUuid
 	 */
-	public void setImageUuid(java.lang.String imageUuid) {
-		this.imageUuid = imageUuid;
+	public void setImgUuid(java.lang.String imgUuid) {
+		this.imgUuid = imgUuid;
 	}
 	
 	/**
@@ -276,16 +270,32 @@ public class WebsiteHomepageBrandT extends BaseEntity implements Serializable {
 	public void setUpdateDate(java.util.Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
+
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
+	}
+
+	public String getCreateDateStr() {
+		createDateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(createDate);
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
 
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("WebsiteHomepageBrandT");
         sb.append("{id=").append(id);
-        sb.append(", name=").append(name);
+        sb.append(", brandName=").append(brandName);
         sb.append(", iconUrl=").append(iconUrl);
-        sb.append(", imageUuid=").append(imageUuid);
+        sb.append(", imgUuid=").append(imgUuid);
         sb.append(", engText=").append(engText);
         sb.append(", description=").append(description);
         sb.append(", orderList=").append(orderList);

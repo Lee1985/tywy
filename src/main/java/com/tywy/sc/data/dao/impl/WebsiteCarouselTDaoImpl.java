@@ -11,12 +11,13 @@ import com.tywy.sc.data.model.WebsiteCarouselT;
  */
 @Component
 public class WebsiteCarouselTDaoImpl extends BaseDaoImpl<WebsiteCarouselT> implements WebsiteCarouselTDao{
+	
 	public WebsiteCarouselTDaoImpl(){
 		setSql_name_space(sqlNameSpace);
 	}
 
 	@Override
-	public Integer selectMaxOrderList() {		
+	public Integer selectMaxOrderList() {
 		return dao.getSqlSessionTemplate().selectOne(sql_name_space + ".selectMaxOrderList");
 	}
 }

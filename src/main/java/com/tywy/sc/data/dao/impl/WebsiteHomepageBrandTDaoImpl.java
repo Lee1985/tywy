@@ -11,7 +11,13 @@ import com.tywy.sc.data.model.WebsiteHomepageBrandT;
  */
 @Component
 public class WebsiteHomepageBrandTDaoImpl extends BaseDaoImpl<WebsiteHomepageBrandT> implements WebsiteHomepageBrandTDao{
+	
 	public WebsiteHomepageBrandTDaoImpl(){
 		setSql_name_space(sqlNameSpace);
+	}
+
+	@Override
+	public Integer selectMaxOrderList() {
+		return dao.getSqlSessionTemplate().selectOne(sql_name_space + ".selectMaxOrderList");
 	}
 }

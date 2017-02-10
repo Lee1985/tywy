@@ -1,5 +1,7 @@
 package com.tywy.utils.stream.util;
 
+import java.util.Map;
+
 public class StreamVO {
 	
 	private String urlPath;
@@ -19,6 +21,8 @@ public class StreamVO {
 	private String params;
 	
 	private String msg;
+	
+	private Map<String,Object> map;
 
 	public String getUrlPath() {
 		return urlPath;
@@ -90,5 +94,13 @@ public class StreamVO {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public Map<String, Object> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
 	}
 }

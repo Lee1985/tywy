@@ -1613,13 +1613,24 @@
 			for (c = 0; c < a.length; c++)
 				files.push(a[c].config);
 			this.get("onSelect") ? this.get("onSelect")(files) : this.onSelect(files);
-			for (c in this.uploadInfo)
-				b++;
+			for (c in this.uploadInfo) b++;
+			
+			if(b == 1 && b == this.get("simLimit")){
+				//单文件上传处理,进行文件的替换
+				console.log(this.uploadInfo);
+				this.uploadInfo = {};
+				for (c = 0; c < a.length; c++){
+					this.validateFile(a[c]) && this.addStreamTask(a[c]);
+				}
+				return;
+			}
+			
 			if (b == this.get("simLimit") || a.length > this.get("simLimit")) {
 				this.get("onFileCountExceed") ? this.get("onFileCountExceed")(Math.max(a.length, b), this.get("simLimit"))
 						: this.onFileCountExceed(Math.max(a.length, b), this.get("simLimit"));
 				return !1;
 			}
+
 			for (c = 0; c < a.length; c++)
 				this.validateFile(a[c]) && this.addStreamTask(a[c]);
 		},
