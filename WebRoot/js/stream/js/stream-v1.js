@@ -1239,6 +1239,7 @@
 			/** do not hidden the upload button */
 			/*bStreaming ? this.startPanel.style.display = "none" : (this.startPanel.style.height = "1px", this.startPanel.style.width = "1px");*/
 			this.waiting.push(file_id);
+			
 			this.config.autoUploading && this.upload(file_id);
 		},
 		hideBrowseBlock: function() {
@@ -1443,6 +1444,7 @@
 			if(index == null) return;
 			this.uploading = !0;
 			
+			console.log(index);
 			this.uploadInfo[index].actived = !0;
 			var file = this.uploadInfo[index].file, self = this;
 			var frmUploadURL = this.get("frmUploadURL");
@@ -1617,22 +1619,22 @@
 			
 			if(b == 1 && b == this.get("simLimit")){
 				//单文件上传处理,进行文件的替换
-				console.log(this.uploadInfo);
 				this.uploadInfo = {};
 				for (c = 0; c < a.length; c++){
+					debugger;
+					console.log(a[c]);
+					this.waiting = [];
 					this.validateFile(a[c]) && this.addStreamTask(a[c]);
 				}
-				return;
+			}else{
+				if (b == this.get("simLimit") || a.length > this.get("simLimit")) {
+					this.get("onFileCountExceed") ? this.get("onFileCountExceed")(Math.max(a.length, b), this.get("simLimit"))
+							: this.onFileCountExceed(Math.max(a.length, b), this.get("simLimit"));
+					return !1;
+				}
+				for (c = 0; c < a.length; c++)
+					this.validateFile(a[c]) && this.addStreamTask(a[c]);
 			}
-			
-			if (b == this.get("simLimit") || a.length > this.get("simLimit")) {
-				this.get("onFileCountExceed") ? this.get("onFileCountExceed")(Math.max(a.length, b), this.get("simLimit"))
-						: this.onFileCountExceed(Math.max(a.length, b), this.get("simLimit"));
-				return !1;
-			}
-
-			for (c = 0; c < a.length; c++)
-				this.validateFile(a[c]) && this.addStreamTask(a[c]);
 		},
 		validateFile : function(uploader) {
 			var name = uploader.get("name"), size = uploader.get("size"),

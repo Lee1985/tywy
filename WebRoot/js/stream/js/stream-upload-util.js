@@ -56,7 +56,6 @@ function singleCommonUpload(model_name,complete){
 				  file.fheight = h;
 				  
 			  });
-			  console.log(file);	
 			  console.log("文件： " + file.name + "|" + file.size + " 已上传成功！");
 			  complete(file);
 			}

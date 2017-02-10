@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>网站首页轮播图维护</title>
+<title>网站首页经典案例</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -34,23 +34,23 @@
 	  
 	  $('#editBtn').click(function(){
 		  doEdit(function(row){
-			  console.log(row);
-			  $('#addImg').hide();			  
+			  $('#addImg').hide();
 			  $('#imgShow').attr('src','downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath);
 			  $('#imgShow').show();
+			  $('#operType').val('');
 		  });
 	  });
 	  
 	  $('#deleteBtn').click(function(){
-		  doDelete('system/websiteHomePageCarouselAjaxDelete.do');
+		  doDelete('system/websiteHomepageCaseTAjaxDelete.do');
 	  });
 	  
 	  $('#lockOpenBtn').click(function(){
-		  doUpdateStatus('system/websiteHomePageCarouselAjaxUpdate.do',1);
+		  doUpdateStatus('system/websiteHomepageCaseTAjaxUpdate.do',1);
 	  });
 	  
 	  $('#lockBtn').click(function(){
-		  doUpdateStatus('system/websiteHomePageCarouselAjaxUpdate.do',0);
+		  doUpdateStatus('system/websiteHomepageCaseTAjaxUpdate.do',0);
 	  });
 	  
 	});
@@ -116,7 +116,7 @@ div#rMenu {
 <body>
 	<div style="width:100%;height:100%">
 		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
-			data-options="url:'system/websiteHomePageCarouselAjaxPage.do', iconCls:'icon-save', 
+			data-options="url:'system/websiteHomepageCaseTAjaxPage.do', iconCls:'icon-save', 
 			rownumbers:true, pagination:true, singleSelect:true, 
 			toolbar:'#toolbar',rowStyler:function(index,row){   
 	          if (row.status==0){   
@@ -125,10 +125,12 @@ div#rMenu {
 	     	}">
 			<thead>
 				<tr>
-					<th data-options="field:'urlPath',width:160,align:'left',sortable:true,formatter:formatImg">图片</th>
-					<th data-options="field:'orderList',width:200,align:'center',sortable:true">排序</th>
-					<th data-options="field:'status',width:150,align:'center',sortable:true,formatter:formatStatus">状态</th>
-					<th data-options="field:'createDateStr',width:200,align:'center',sortable:true">上传时间</th>
+					<th width="15%" data-options="field:'urlPath',align:'left',sortable:true,formatter:formatImg">图片</th>
+					<th width="15%" data-options="field:'caseName',align:'center',sortable:true">名称</th>
+					<th width="15%" data-options="field:'engText',align:'center',sortable:true">英文名称</th>
+					<th width="5%" data-options="field:'orderList',align:'center',sortable:true">排序</th>
+					<th width="5%" data-options="field:'status',align:'center',sortable:true,formatter:formatStatus">状态</th>
+					<th width="15%" data-options="field:'createDateStr',align:'center',sortable:true">创建时间</th>
 				</tr>
 			</thead>
 		</table>
@@ -137,7 +139,7 @@ div#rMenu {
 			style="width:400px;padding:10px 20px" closed="true"
 			buttons="#dlg-buttons">
 			<div class="ftitle">请完善以下信息！</div>
-			<form id="fm" name="fm" method="post" action="system/websiteHomePageCarouselAjaxSave.do">
+			<form id="fm" name="fm" method="post" action="system/websiteHomepageCaseTAjaxSave.do">
 				<div class="fitem">
 					<div style="float: left;margin-top: 25px;"><font color="red">*</font>图片:</div>
 					<div id="showImage" class="showImage" style="width:160px;height:90px;border:1px solid;margin-left:70px;cursor:pointer;text-align:center;" >
@@ -146,17 +148,26 @@ div#rMenu {
 						<img id="imgShow" class="imgShow" src="" style="display:none;width:100%;height:100%;"/>
 					</div>
 					<div style="width:160px;margin-left:70px;text-align:center;" >建议比例(16:9)</div>
-					<!-- <img id="imgShow" class="imgShow" style="margin-left: 40px;cursor:pointer;background-color:#434343" src="images/add.png" /> -->
 					<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="imgUuidLabel" name="imgUuid">
 					<input type="hidden" id="operType" name="operType">
 				</div>
 				<div class="fitem">
+					<label><font color="red">*</font>名称:</label>
+					<input id="brandNameLabel" name="caseName" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'"/>
+				</div>
+				<div class="fitem">
+					<label><font color="red">*</font>英文名称:</label>
+					<input id="engTextLabel" name="engText" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'"/>
+				</div>
+				<div class="fitem">
+					<label>链接地址:</label>
+					<input id="targetUrlLabel" name="targetUrl" style="width: 200px" class="easyui-textbox" data-options="validType:'length[1,100]'"/>
+				</div>
+				<div class="fitem">
 					<label>状态:</label>
-					<select id="status" name="status" class="easyui-combobox" style="width:100px;" 
-						data-options="panelHeight:'auto',editable:false"
-						>
+					<select id="status" name="status" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto',editable:false">
 						<option value="1" selected="selected">启用</option>
 						<option value="0">禁用</option>
 					</select>
@@ -182,7 +193,7 @@ div#rMenu {
 	<script type="text/javascript" src="js/stream/js/stream-upload-util.js"></script>
 	<script type="text/javascript">
 	 	  var index;
-		  var stream = singleCommonUpload('website_homepage_carousel',function(file){
+		  var stream = singleCommonUpload('website_homepage_case',function(file){
 		      var inputs = ''; 
 			  for(var prop in file){
 				  var value = file[prop];
@@ -197,8 +208,10 @@ div#rMenu {
 				  }
 			  }  
 			  $('#fm').append(inputs);
-			  save();	
-		});
+			  save();
+		  });
+		  
+		
 		
 		function uploadAndSave(){
 			var operType = $('#operType').val();
@@ -213,7 +226,7 @@ div#rMenu {
 			if(!validation()){
 				return false;
 			}
-			stream.upload();
+			stream.upload();			
 		}
 		
 		function save(){
