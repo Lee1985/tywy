@@ -170,7 +170,7 @@ public class IoUtil {
     public static void main(String[] args) {
     	String sourceFileName = getBusinessFileName() + ".jpeg";
     	try {
-			File file = getTokenedFile("homepage","2222.jpg");
+			File file = getTokenedFile("homepage",sourceFileName);
 			System.out.println(getBusinessFileName());
 			System.out.println(file.getAbsolutePath());
 			sourceFileName = sourceFileName.substring(sourceFileName.lastIndexOf('.'),sourceFileName.length());

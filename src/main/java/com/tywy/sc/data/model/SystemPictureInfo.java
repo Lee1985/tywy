@@ -25,6 +25,7 @@ public class SystemPictureInfo extends BaseEntity implements Serializable {
     private java.lang.String cdate; // 创建日期
     private java.lang.String params; // 参数
 
+    private String fileSize;
     /**
      * 获取属性
      *
@@ -222,4 +223,14 @@ public class SystemPictureInfo extends BaseEntity implements Serializable {
     public void setParams(java.lang.String params) {
         this.params = params;
     }
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+    
+    
 }
