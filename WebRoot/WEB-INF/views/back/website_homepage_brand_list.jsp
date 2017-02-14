@@ -61,14 +61,14 @@
 	function formatImg(value, row) {
 		if(row.systemPictureInfo){
 			var url = 'downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath;
-			return "<img src="+ url +" style=\"height:90px;width:160px;background-color:#434343\"/>";	
+			return "<img src="+ url +" style=\"height:90px;width:160px \"/>";	
 		}		
 	}
 	
 	function formatIcon(value,row){
 		if(row.systemPictureInfo){
 			var url = 'downFileResult.do?urlPath=' + row.iconUrl;
-			return "<img src="+ url +" style=\"height:50px;width:50px;background-color:#434343\"/>";	
+			return "<img src="+ url +" style=\"height:50px;width:50px\"/>";	
 		}
 	}
 	
@@ -178,8 +178,7 @@ div#rMenu {
 				</div>
 				<div class="fitem">
 					<div style="float: left;margin-top: 25px;"><font color="red">*</font>图标:</div>					
-					<img id="iconImgShow" class="iconImgShow" style="margin-left: 70px;cursor:pointer;background-color:#434343" width="80" height="80" src="images/add.jpg" />
-					
+					<img id="iconImgShow" class="iconImgShow" style="margin-left: 70px;cursor:pointer" width="80" height="80" src="images/add.jpg" />
 				</div>
 				<div class="fitem">
 					<label>链接地址:</label>

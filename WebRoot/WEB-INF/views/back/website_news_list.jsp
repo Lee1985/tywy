@@ -212,7 +212,7 @@ div#rMenu {
 				</div>
 				<div class="fitem">
 					<label><font color="red">*</font>新闻标题:</label>
-					<input id="titleLabel" name="title" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'"/>
+					<input id="titleLabel" name="title" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
 				</div>
 				<div class="fitem">
 					<label>新闻类别:</label>

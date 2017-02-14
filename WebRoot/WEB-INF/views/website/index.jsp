@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -27,19 +27,15 @@
 	<body>
 		<!--header start-->
 		<header>
-		    <!-- <script type="text/javascript">
-			 $("header").load("header.do");
-		    </script> -->
 		    <jsp:include page="header.jsp" flush="true"/>
 		</header>
 		<!--header end-->
 		<!--轮播图-->
 		<div class="js-box">
-			 <div class="slider">
-			      <div class="slide"><img src="resource/website/img/banner.png"></div>
-			      <div class="slide"><img src="resource/website/img/banner1.png"></div>
-			      <div class="slide"><img src="resource/website/img/img01.png"></div>
-			      <div class="slide"><img src="resource/website/img/banner1.png"></div>
+			 <div class="slider">			 		
+			 	 <c:forEach items="${carouselList}" var="carousel">
+			 	 	<div class="slide"><img src="downFileResult.do?urlPath=${carousel.systemPictureInfo.urlPath}"></div>
+			 	 </c:forEach>
             </div>
 		</div>
 		<!--轮播图-->
@@ -47,7 +43,7 @@
 		<div class="company_box">
 			<h2 class="title">公司简介<span>Company profile</span></h2>
 			<div class="company_detail">吉林省天雅万印地毯科技有限公司专业从事于印花地毯的科技研发、生产和销售，是国内著名的地毯解决方案提供商。历经十余年的发展，天雅地毯目前已经在天津和吉林拥有两座现代化工厂和遍布全国各大中城市的22 家销售分公司，以及国内外数千家不同级别的经销商，形成了系统化、全方位的营销服务网络。</div>
-			<a href="companyProfile.html" class="more">MORE</a>
+			<a href="companyProfile.do" class="more">MORE</a>
 		</div>
 		<!--公司简介-->
 		<!--品牌推广-->
@@ -113,19 +109,27 @@
 		<!--新闻动态-->
 		<div class="company_box">
 			<h2 class="title">新闻动态<span>News information</span></h2>
-			<div class="clearfix">
-			<div class="news_detail news_left">
-				<p class="news_time">2014-07-18</p>
-				<h2 class="title1">天雅地毯年中销售会议召开</h2>
-				<div class="news_text">2014年7月12-13日，天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上2014年7月12-13日，天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上</div>
+			<div class="clearfix">			
+				<c:forEach items="${newsList}" var="news" varStatus="status">
+					<c:choose>
+						<c:when test="${status.count % 2 == 0 }">
+							<div class="news_detail news_right">
+								<p class="news_time">${news.createDateStr }</p>
+								<h2 class="title1">${news.title }</h2>
+								<div class="news_text">${news.content }</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="news_detail news_left">
+								<p class="news_time">${news.createDateStr }</p>
+								<h2 class="title1">${news.title }</h2>
+								<div class="news_text">${news.content }</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
 			</div>
-			<div class="news_detail news_right">
-				<p class="news_time">2014-07-18</p>
-				<h2 class="title1">天雅地毯年中销售会议召开</h2>
-				<div class="news_text">2014年7月12-13日，天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上2014年7月12-13日，天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上</div>
-			</div>
-			</div>
-			<a href="news1.html" class="more">MORE</a>
+			<a href="news.do" class="more">MORE</a>
 		</div>
 		<!--新闻动态-->
 		<!--footer-->
@@ -139,8 +143,6 @@
 		</slide>
 		<!--悬浮层-->
 	</body>
-	<!--<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>-->
-	<!--<script src="js/common.js" type="text/javascript" charset="utf-8"></script>-->
 	<script src="resource/website/js/jquery.bxslider.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function(){
