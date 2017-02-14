@@ -3,8 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -18,7 +17,17 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
-<script type="text/javascript" src="js/system/easy.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+<script type="text/javascript"
+	src="http://www.jeasyui.net/Public/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/grid-dnd/datagrid-dnd.js"></script>
+<script type="text/javascript" src="js/layer/layer.min.js"></script>
 <script type="text/javascript" src="js/system/base.js"></script>
 
 <style type="text/css">
@@ -53,9 +62,10 @@
 	function formatImg(value, row) {
 		return "<img src="+ row.urlPath +" style=\"height:50px;background-color:#434343\"/>";
 	}
+
 	function save() {
 		var src = $("#headImgs").attr('src');
-		if( src == ''){
+		if (src == '') {
 			$.messager.show({
 				title : '提示',
 				msg : '请上传图片'
@@ -91,7 +101,7 @@
 	function doAdd() {
 		$('#dlg').dialog('open').dialog('setTitle', '新建');
 		$('#fm').form('clear');
-		$('#headImgs').attr('src','images/add.jpg');
+		$('#headImgs').attr('src', 'images/add.jpg');
 	}
 	function doEdit() {
 		var row = $('#dg').datagrid('getSelected');
@@ -100,7 +110,7 @@
 			$('#fm').form('load', row);
 			var headUrl = row.urlPath;
 			if (headUrl == '' || headUrl == null || headUrl == undefined) {
-				$('#headImgs').attr('src','images/add.jpg');
+				$('#headImgs').attr('src', 'images/add.jpg');
 			} else {
 				$("#headImgs").attr("src", headUrl);
 			}
@@ -134,13 +144,13 @@
 	}
 	function onChange(fileObj) {
 		var r = isimg(fileObj.value);
-		if(!r){
+		if (!r) {
 			$.messager.show({
 				title : '提示',
 				msg : '图片格式不正确'
 			});
 			fileObj.value = "";
-			return ;
+			return;
 		}
 		var reader = new FileReader();
 		reader.readAsDataURL(fileObj.files[0]);
@@ -148,8 +158,8 @@
 			$("#headImgs").attr("src", e.target.result);
 		};
 	}
-	function isDeleteStyler(value,row,index){
-		if (value ==1){
+	function isDeleteStyler(value, row, index) {
+		if (value == 1) {
 			return 'background-color:#ccc;color:red;';
 		}
 	}
@@ -162,8 +172,8 @@
 			name : Trim($('#name_search').val())
 		});
 	}
-	function Trim(str){ 
-		return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	function Trim(str) {
+		return str.replace(/(^\s*)|(\s*$)/g, "");
 	}
 	function searchDetail() {
 		var row = $('#dg').datagrid('getSelected');
@@ -176,42 +186,75 @@
 			});
 		}
 	}
-	function doDetail(id){
+	function doDetail(id) {
 		$("#albumDetail").attr("src", "wechatAlbumListTList.do?id=" + id);
 		$('#albumDetailId').dialog('open').dialog('setTitle', '专区详情');
 	}
+
+	function formatOrder(value, row, index) {
+		return index+1;
+	}
+	function save_order() {
+		var ss = $('#dg').datagrid('getRowNum');
+	}
+	$.extend($.fn.datagrid.methods, {
+		getRowNum : function(jq) {
+			var opts = $.data(jq[0], "datagrid").options;
+			var array = new Array();
+			opts.finder.getTr(jq[0], "", "selected", 1).each(
+				function() {
+					array.push($(this).find("td.datagrid-td-rownumber").text());
+				});
+// 			var tr2 = opts.finder.getTr(jq[0], "", "allbody", 2);  
+			debugger;
+			 
+			return array.join(",");
+		}
+	});
 </script>
 </head>
 
 <body>
-	<div style="width:100%;height:100%">
-		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
+	<div style="width: 100%; height: 100%">
+		<table id="dg" class="easyui-datagrid"
+			style="width: 100%; height: 100%"
 			data-options="url:'wechatElectronicAlbumTAjaxPage.do', iconCls:'icon-save', 
-			rownumbers:true, pagination:true, singleSelect:true, 
-			toolbar:'#toolbar'">
+			rownumbers:true, pagination:true, singleSelect:true,toolbar:'#toolbar',
+			onLoadSuccess:function(){
+				$(this).datagrid('enableDnd');
+			}">
 			<thead>
 				<tr>
-					<th data-options="field:'imgUuid',width:60,align:'left',sortable:true,formatter:formatImg">专区封面</th>
-					<th data-options="field:'name',width:200,align:'center',sortable:true">相册名称</th>
-					<th data-options="field:'orderList',width:200,align:'center',sortable:true">排序</th>
-					<th data-options="field:'description',width:200,align:'center',sortable:true">相册描述</th>
-					<th data-options="field:'counts',width:200,align:'center',sortable:true">照片数量</th>
-					<th data-options="field:'updateDate',width:200,align:'center',sortable:true">更新时间</th>
-					<th data-options="field:'isDelete',width:80,align:'center',sortable:true,styler:isDeleteStyler,formatter:formatIsDelete">是否删除</th>
+					<th
+						data-options="field:'imgUuid',width:60,align:'left',sortable:true,formatter:formatImg">专区封面</th>
+					<th
+						data-options="field:'name',width:200,align:'center',sortable:true">相册名称</th>
+					<th
+						data-options="field:'orderList',width:200,align:'center',sortable:true,formatter:formatOrder">排序</th>
+					<th
+						data-options="field:'description',width:200,align:'center',sortable:true">相册描述</th>
+					<th
+						data-options="field:'counts',width:200,align:'center',sortable:true">照片数量</th>
+					<th
+						data-options="field:'updateDate',width:200,align:'center',sortable:true">更新时间</th>
+					<th
+						data-options="field:'isDelete',width:80,align:'center',sortable:true,styler:isDeleteStyler,formatter:formatIsDelete">是否删除</th>
 				</tr>
 			</thead>
 		</table>
 		<div id="toolbar">
 			<div>
-				相册名称: <input id="name_search" class="easyui-textbox" style="width:180px"> &nbsp;&nbsp; 
-				 <a href="javaScript:void()" onclick="searchData()" class="easyui-linkbutton" plain="true"
-				 	data-options="iconCls:'icon-search'">搜索</a>&nbsp;&nbsp;
+				相册名称: <input id="name_search" class="easyui-textbox"
+					style="width: 180px"> &nbsp;&nbsp; <a
+					href="javaScript:void()" onclick="searchData()"
+					class="easyui-linkbutton" plain="true"
+					data-options="iconCls:'icon-search'">搜索</a>&nbsp;&nbsp;
 			</div>
-			<div style="margin-bottom:5px;">
+			<div style="margin-bottom: 5px;">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search',plain:true"
-					onclick="searchDetail()">查看</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton"
+					onclick="searchDetail()">查看</a> <a href="javascript:void(0)"
+					class="easyui-linkbutton"
 					data-options="iconCls:'icon-add',plain:true" onclick="doAdd()">创建相册</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-edit',plain:true" onclick="doEdit()">编辑相册</a>
@@ -219,14 +262,23 @@
 					data-options="iconCls:'icon-remove',plain:true"
 					onclick="doDelete('wechatElectronicAlbumTAjaxDelete.do')">删除相册</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-remove',plain:true"
-					onclick="">上传照片</a>
+					data-options="iconCls:'icon-remove',plain:true" onclick="">上传照片</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					data-options="iconCls:'icon-save',plain:true"
+					onclick="save_order()">排序保存</a>
 			</div>
 		</div>
 	</div>
+	<div id="albumDetailId" class="easyui-dialog"
+		data-options="iconCls:'icon-save',resizable:true,modal:true"
+		style="width: 80%; height: 50%; top: 39px;" closed="true">
+		<iframe id="albumDetail" src="" style="width: 100%; height: 100%;"
+			frameborder="no" border="0" marginwidth="0" marginheight="0"
+			scrolling="no" allowtransparency="yes"></iframe>
+	</div>
 	<div id="dlg" class="easyui-dialog"
 		data-options="iconCls:'icon-save',resizable:true,modal:true"
-		style="width:400px;height:500px;padding:10px 20px;" closed="true"
+		style="width: 400px; height: 500px; padding: 10px 20px;" closed="true"
 		buttons="#dlg-buttons">
 		<div class="ftitle">请完善以下信息！</div>
 		<form id="fm" name="fm" method="post"
@@ -235,41 +287,32 @@
 			<input type="hidden" id="id" name="id">
 			<div class="fitem" style="float: left;">
 				<label>相册封面(建议800*400)</label> <img id="headImgs" alt="" src=""
-					style="width: 200px;height: 100px" onclick="headImg.click()">
-				<label>&nbsp;</label> <input type="file" id="headImg"
-					name="headImg" style="width:200px;display: none"
-					onChange="onChange(this)"
+					style="width: 200px; height: 100px" onclick="headImg.click()">
+				<label>&nbsp;</label> <input type="file" id="headImg" name="headImg"
+					style="width: 200px; display: none" onChange="onChange(this)"
 					data-options="prompt:'选择封面图片...',required:true">
 			</div>
 			<div class="fitem">
 				<label>相册名称:</label> <input id="name" name="name"
 					class="easyui-textbox" data-options="required:true">
 			</div>
-			<div class="fitem">
+			<!-- <div class="fitem">
 				<label>排序:</label> <input id="orderList" name="orderList"
 					class="easyui-textbox" data-options="required:true">
-			</div>
+			</div> -->
 			<div class="fitem" style="float: left;">
 				<label>描述:</label> <input id="description" name="description"
-					class="easyui-textbox" style="height:200px;width: 200"
+					class="easyui-textbox" style="height: 200px; width: 200"
 					data-options="prompt:'描述信息',multiline:true,required:false,validType:'length[0,2000]'">
 			</div>
 		</form>
 	</div>
 	<div id="dlg-buttons">
 		<a href="javascript:void(0)" class="easyui-linkbutton c6"
-			data-options="iconCls:'icon-ok'" onclick="save()" style="width:90px">确定</a>
+			data-options="iconCls:'icon-ok'" onclick="save()" style="width: 90px">确定</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			data-options="iconCls:'icon-cancel'"
-			onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
-	</div>
-	<div id="albumDetailId" class="easyui-dialog"
-		data-options="iconCls:'icon-save',resizable:true,modal:true"
-		style="width:80%;height:80%;" closed="true">
-		<iframe id="albumDetail" src=""
-			style="width: 100%;height: 100%" frameborder="no" border="0"
-			marginwidth="0" marginheight="0" scrolling="no"
-			allowtransparency="yes"></iframe>
+			onclick="javascript:$('#dlg').dialog('close')" style="width: 90px">取消</a>
 	</div>
 </body>
 </html>

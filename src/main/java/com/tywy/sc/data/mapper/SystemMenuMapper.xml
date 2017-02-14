@@ -15,10 +15,11 @@
                     select="com.tywy.sc.data.dao.SystemMenuDao.selectAllByPid"
                     column="id" ofType="SystemMenu">
         </collection>
-        <collection property="systemMenuActs"
+        <!-- 删除按钮权限查询 -->
+        <!-- <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByMenuId"
                     column="id">
-        </collection>
+        </collection> -->
     </resultMap>
 
     <resultMap id="roleMenuResultMap" type="com.tywy.sc.data.model.SystemMenu">
