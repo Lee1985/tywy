@@ -37,7 +37,6 @@
 		           		</div>
 	           		</a>
 	           	</li>
-				<div class="slide"><img src="${item.urlPath}"></div>
 			</c:forEach>
            <!-- 	<li>
            		<a href="javaScript:void(0)" onclick="toDetail('gallery_1')">

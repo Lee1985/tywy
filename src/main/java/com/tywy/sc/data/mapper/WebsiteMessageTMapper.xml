@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tywy.sc.data.dao.WebsiteMessageTDao">
+
+	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WebsiteMessageT">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="mobile" column="mobile" />
+		<result property="content" column="content" />
+		<result property="createDate" column="createDate" />
+		<result property="isDelete" column="isDelete" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     name,
+	     mobile,
+	     content,
+	     createDate,
+	     isDelete
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into website_message_t  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="name!=null">name,</if>
+			     <if test="mobile!=null">mobile,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="name!=null">#{name},</if>
+			     <if test="mobile!=null">#{mobile},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update website_message_t 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     website_message_t 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from website_message_t
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_message_t
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from website_message_t
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_message_t where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from website_message_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from website_message_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update website_message_t
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 
