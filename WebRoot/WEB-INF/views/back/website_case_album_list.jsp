@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<base href="<%=basePath%>">
-		<title>企业资质</title>
+		<title>经典案例相册</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script type="text/javascript" src="js/system/easy.js"></script>
@@ -37,10 +37,13 @@
 	</head>
 
 	<body>
-			<h1 id="try-it-out">企业资质的</em>图册维护,支持文件夹,建议比例3:2</h1>
+			<h1 id="try-it-out">${caseInfo.caseName}的</em>图册维护,支持文件夹,建议比例16:9</h1>
 			<div id="dropzone">
 				<form action="/upload" class="dropzone dz-clickable dz-started" id="uploadForm" method="post">
-					<c:forEach items="${list}" var="picture">
+					<input type="hidden" id="caseIdLabel" name="caseId" value="${caseInfo.id }"/>
+					<input type="hidden" id="caseNameLabel" name="caseName" value="${caseInfo.caseName }"/>
+					
+					<c:forEach items="${list }" var="picture">
 						<div id="${picture.systemPictureInfo.uuid }" data-id="${picture.id }" class="dz-preview dz-file-preview dz-processing dz-error dz-add" style="margin:12px;">
 							<div class="dz-image" style="width:100%;"><img width="173px" height="100px" data-dz-thumbnail="" src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"></div>
 			
@@ -80,7 +83,10 @@
 								</svg>
 							</div> -->
 							<div>
-								<input type="text" id="${picture.id }input" name="${picture.id }input" placeholder="请在此输入图片名称" value="${picture.descName }"/>
+								<input type="text" id="${picture.id }input" name="${picture.id }input" placeholder="请在此输入图片名称" value="${picture.imageName }"/>
+							</div>
+							<div>
+								<input type="text" id=${picture.id }number" name="${picture.id }number" placeholder="请在此输入图片编号" value="${picture.serialNumber }"/>
 							</div>
 						</div>
 					</c:forEach>
@@ -88,6 +94,7 @@
 			</div>
 			<div style="width:100%;text-align: center; height: 50px; " >
 				<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="uploadAndSave()" style="width:90px;padding-bottom: 0;">保存</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:location.href='system/websiteCaseTList.do';" style="width:90px">取消</a>
 			</div>
 		<script type="text/javascript" src="js/stream/js/stream-v1.js"></script>
 		<script type="text/javascript" src="js/stream/js/stream-upload-util.js"></script>
@@ -140,18 +147,21 @@
 					</svg>
 				</div>
 				<div>
-					<input type="text" id="#FILE_ID#input" name="#FILE_ID#input" placeholder="请在此输入图片名称" data-options="required:true,validType:'length[1,25]'"/>
+					<input type="text" id="#FILE_ID#input" name="#FILE_ID#input" placeholder="请在此输入图片名称"/>
+				</div>
+				<div>
+					<input type="text" id="#FILE_ID#number" name="#FILE_ID#number" placeholder="请在此输入图片编号"/>
 				</div>
 			</div>
 		</script>
 
-		
 		<script type="text/javascript">
-				var stream = mutiFileUpload('website_company_qualification',function(file){
+				var stream = mutiFileUpload('website_case_ablum',function(file){
 					var imageName = $("#"+file.id+'input').val();
-					var formInfo = $("#uploadForm").serialize()+'&descName='+imageName;
+					var serialNumber = $("#"+file.id+'number').val();
+					var formInfo = $("#uploadForm").serialize()+'&imageName='+imageName+'&serialNumber='+serialNumber;
 				    var ajaxOptions = {
-		    		 url: 'system/websiteCompanyQualificationTAjaxSave.do',
+		    		 url: 'system/websiteCaseAlbumTAjaxSave.do',
 		    		 data:formInfo,
 		    		 type: 'post',
 		    		 async: false,
@@ -186,12 +196,13 @@
 				function save(){
 					$('.dz-add').each(function(i){
 						var id = $(this).data('id');
-						var imageName = $(this).find('input').val();
+						var imageName = $("#"+id+'input').val();
+						var serialNumber = $("#"+id+'number').val();
 						 var ajaxOptions = {
-			    		 url: 'system/websiteCompanyQualificationTAjaxSave.do',
-				    		 data:'id='+id+'&descName='+imageName,
+			    		 url: 'system/websiteCaseAlbumTAjaxSave.do',
+				    		 data:'id='+id+'&imageName='+imageName+'&serialNumber='+serialNumber,
 				    		 type: 'post',
-				    		 async: false,    
+				    		 async: false,
 				    		 dataType: 'json',
 				    		 success: function(data) {
 				    			console.log(data);
@@ -219,7 +230,7 @@
 				$(function(){
 					$('.dz-preview').click(function(e){
 						e.stopPropagation();
-						var url = "system/websiteCompanyQualificationTAjaxDelete.do";
+						var url = "system/websiteCaseAlbumTAjaxDelete.do";
 						var uuid = $(this).attr('id');
 						var id = $(this).data('id');						
 						$.messager.confirm('Confirm', '你确定要删除吗?', function(r) {

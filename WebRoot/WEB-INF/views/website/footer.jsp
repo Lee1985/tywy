@@ -13,21 +13,14 @@
 	<ul id="brandFooter"><h3>天雅品牌</h3></ul>
 	<ul>
 	<h3>天雅设计</h3>
-		<li><a href="designList.html">设计图册</a></li>
-		<li><a href="team.html">最新设计</a></li>
+		<li><a href="designList.do">设计图册</a></li>
+		<li><a href="team.do">设计团队</a></li>
 	</ul>
-	<ul>
-	<h3>经典案例</h3>
-		<li><a href="classicCase.html">客房</a></li>
-		<li><a href="classicCase.html">走廊</a></li>
-		<li><a href="classicCase.html">宴会</a></li>
-		<li><a href="classicCase.html">餐包</a></li>
-		<li><a href="classicCase.html">娱乐</a></li>
-	</ul>
+	<ul id="caseFooter"><h3>经典案例</h3></ul>
 	<ul>
 	<h3>天雅销售</h3>
-		<li><a href="map.html">销售网络</a></li>
-		<li><a href="contact.html">联系我们</a></li>
+		<li><a href="map.do">销售网络</a></li>
+		<li><a href="contact.do">联系我们</a></li>
 	</ul>
 	<div class="code_box">
 		<img src="resource/website/img/weinxin.png" alt="微信二维码" />

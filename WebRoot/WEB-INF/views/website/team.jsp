@@ -40,8 +40,8 @@
 		<div class="banner banner_bg7">
 			<div class="nav_bg">
 				<ul class="navigation">
-					<li><a href="designList.html">设计图册</a></li>
-					<li class="selected"><a href="team.html">设计团队</a></li>
+					<li><a href="designList.do">设计图册</a></li>
+					<li class="selected"><a href="team.do">设计团队</a></li>
 				</ul>
 			</div>
 		</div>

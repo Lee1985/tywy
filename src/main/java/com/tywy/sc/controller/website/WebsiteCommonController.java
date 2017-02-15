@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.WebsiteBrandT;
+import com.tywy.sc.data.model.WebsiteCaseT;
 import com.tywy.sc.data.model.WebsiteCategoryT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
 import com.tywy.sc.services.WebsiteBrandTService;
+import com.tywy.sc.services.WebsiteCaseTService;
 import com.tywy.sc.services.WebsiteCategoryTService;
 import com.tywy.sc.services.WebsiteIntroductionTService;
 
@@ -31,6 +33,9 @@ public class WebsiteCommonController extends BaseController{
 	
 	@Resource
 	private WebsiteBrandTService websiteBrandTService;
+	
+	@Resource
+	private WebsiteCaseTService websiteCaseTService;
 	
 	@RequestMapping(value = "aboutMenu")
 	@ResponseBody
@@ -62,5 +67,16 @@ public class WebsiteCommonController extends BaseController{
 		info.setSort("createDate");
 		info.setOrder("asc");
 		return websiteBrandTService.selectAll(info);
+	}
+	
+	@RequestMapping(value = "caseMenu")
+	@ResponseBody
+	public List<WebsiteCaseT> caseMenu(HttpServletRequest request,HttpServletResponse response){
+		WebsiteCaseT info = new WebsiteCaseT();
+		info.setStatus("1");
+		info.setIsDelete("0");
+		info.setSort("createDate");
+		info.setOrder("asc");
+		return websiteCaseTService.selectAll(info);
 	}
 }

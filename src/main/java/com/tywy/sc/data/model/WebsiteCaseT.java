@@ -1,6 +1,8 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
@@ -22,6 +24,8 @@ public class WebsiteCaseT extends BaseEntity implements Serializable {
 	private java.lang.String createUser; // 创建者
 	private java.lang.String status; // 
 	private java.lang.String isDelete; // 
+	
+	private String createDateStr;
 	/**
      * 获取属性
      *
@@ -220,6 +224,14 @@ public class WebsiteCaseT extends BaseEntity implements Serializable {
 		this.isDelete = isDelete;
 	}
 	
+	public String getCreateDateStr() {
+		createDateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(createDate);
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
 
 	@Override
     public String toString() {

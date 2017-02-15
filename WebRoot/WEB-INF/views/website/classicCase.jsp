@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	String path = request.getContextPath();
@@ -15,12 +16,19 @@
 		<!--reset css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/common.css"/>
 		<!--reset css-->
-		<!--轮播图 css-->
-		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.bxslider.css"/>
-		<!--轮播图 css-->
 		<!--function css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/style.css"/>
 		<!--function css-->
+		<!--owl css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.carousel.css"/>
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.theme.css"/>
+		<!--owl css-->
+		<!--lightbox css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.fs.boxer.css"/>
+		<!--lightbox css-->
+		<!--分页器 css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/pagination.css"/>
+		<!--分页器 css-->
 		<script src="resource/website/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 		<title>天雅地毯</title>
 	</head>
@@ -42,25 +50,17 @@
 			<div class="main">
 				<div class="carpets_box">
 					<div class="carpets_text">
-						<p>天雅知道，色彩，设计决定了整个外观和空间的感觉。为了确保我们的设计看起来更精湛，天雅使用的打印其技术是世界上最先进的数码印花技术。这完美的数码印刷技术能够将精心设计的图案和细节完美的呈现。</p>
-						<p>公司设有设计研发中心，具有最大、最专业的设计团队，并与意大利顶级设计公司长期深度合作，拥有多项图案设计专利，不断推出国际最新趋势的印花地毯设计。</p>
+						${configInfo.configValue }
 					</div>
 				</div>
 				<div class="carpets_pic case">
 					<div class="qualification_box">
 		        	<div class="controls-pre1 controls1 disabled"></div>
 		        	<div class="carousel-box">
-		        	<div class="carousel case_img" id="d_carousel">
-		        			<a href="javascript:;" class="selected">2017</a>
-		        			<a href="javascript:;">2016</a>
-		        			<a href="javascript:;">2015</a>
-		        			<a href="javascript:;">2014</a>
-		        			<a href="javascript:;">2013</a>
-		        			<a href="javascript:;">2012</a>
-		        			<a href="javascript:;">2011</a>
-		        			<a href="javascript:;">2010</a>
-		        			<a href="javascript:;">2009</a>
-		        			<a href="javascript:;">2008</a>
+		        		<div class="carousel case_img" id="d_carousel">		        			
+		        			<c:forEach items="${caseList }" var="caseInfo">
+		        				<a id="${caseInfo.id }" href="classicCase.do?caseId=${caseInfo.id}&page=1#${caseInfo.id }" <c:if test="${caseId eq caseInfo.id }">class="selected"</c:if>>${caseInfo.caseName }</a>
+		        			</c:forEach>
 	                    </div>
 		        	</div>
 		            <div class="controls-next1 controls1"></div>
@@ -68,60 +68,32 @@
 		        </div>
 				</div>
 				<div class="case_list clearfix">
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img1.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img2.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img3.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img4.png" alt="" />
-						<p class="case_name">印花天雅地毯印花天雅地毯印花天雅地毯印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img5.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img6.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img7.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
-					<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer" href="resource/website/img/lightbox1.png">
-						<img src="resource/website/img/img8.png" alt="" />
-						<p class="case_name">印花天雅地毯</p>
-						<p class="case_number">1009001</p>
-					</a>
+					<c:forEach items="${list }" var="picture">
+						<a title="${picture.imageName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+							<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }" alt="" />
+							<p class="case_name">${picture.imageName}</p>
+							<p class="case_number">${picture.serialNumber}</p>
+						</a>
+					</c:forEach>
 				</div>
 				<section id="page_container" class="page-container">
 					<div class="list-view-page">
 						<div class="wrapper">
 							<div id="Pagination" class="pagination">
-								<a href="javascript:void(0)">首页</a>
-								<a href="javascript:void(0)">上一页</a>
-								<span class="current">1</span>
-								<a href="?p=2">2</a>
-								<a href="?p=3">3</a>
-								<a href="?p=4">4</a>
-								<a href="?p=5">5</a>
-								<a href="?p=2" class="next">下一页</a>
-								<a href="?p=5" class="next">尾页</a>
+								<%-- <a href="classicCase.do?caseId=${caseId}&page=1">首页</a>
+								<a href="classicCase.do?caseId=${caseId}&page=${page-1}">上一页</a>
+								<c:forEach var="p" begin="1" end="${pages}" step="1">
+									<c:choose>
+										<c:when test="${p eq page}">
+											<span class="current">${p}</span>			
+										</c:when>
+										<c:otherwise>
+											<a href="classicCase.do?caseId=${caseId}&page=${p}">${p}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<a href="classicCase.do?caseId=${caseId}&page=${page+1}" class="next">下一页</a>
+								<a href="classicCase.do?caseId=${caseId}&page=${pages}" class="next">尾页</a> --%>
 							</div>
 						</div>
 					</div>
@@ -140,10 +112,10 @@
 		</slide>
 		<!--悬浮层-->
 	</body>
-	<script src="js/owl.carousel.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery.fs.boxer.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/lightbox.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resource/website/js/owl.carousel.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resource/website/js/jquery.fs.boxer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resource/website/js/lightbox.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resource/website/js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function(){
 		var  q_owl = $("#d_carousel");
@@ -241,13 +213,14 @@
 	
 	//
 	 function initPagination() {
-	 	var num_entries=100;
+	 	var num_entries=${total};
         $("#Pagination").pagination(num_entries, {
-            items_per_page: 10, //每页显示10条数目
+            items_per_page: 8, //每页显示10条数目
             num_edge_entries: 1, //边缘页数
             num_display_entries: 4, //主体页数，
-            current_page: 1, //当前选中的页面
+            current_page: 0, //当前选中的页面
 //          callback: pageselectCallback,
+			link_to:"classicCase.do?caseId=${caseId}",
             prev_text: "上一页",
             next_text: "下一页"
         });

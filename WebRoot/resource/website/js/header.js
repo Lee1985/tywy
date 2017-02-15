@@ -57,4 +57,22 @@ $(function(){
 	 }
 	};
 	$.ajax(ajaxOptions);
+	
+	//经典案例
+	var ajaxOptions = {
+	 url: 'caseMenu.do',
+	 type: 'post',
+	 dataType: 'json',
+	 success: function(data) {
+		 if(data && data.length > 0){
+			 //header的处理
+			 var footerMenus = '';
+			 $.each(data,function(key,value){
+				 footerMenus += '<li><a href="classicCase.do?id=' + value.id + '">' + value.caseName + '</a></li>';
+			 });
+			 $('#caseFooter').append(footerMenus);
+		 }		 
+	 }
+	};
+	$.ajax(ajaxOptions);
 });

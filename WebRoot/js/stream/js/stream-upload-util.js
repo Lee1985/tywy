@@ -158,7 +158,7 @@ function mutiFileUpload(model_name,complete){
 							}
 						}
 					});
-					$("#"+ files[i].id+"input").click(function(e) {
+					$('input[type="text"]').click(function(e) {
 						e.stopPropagation();						
 					});														
 				}

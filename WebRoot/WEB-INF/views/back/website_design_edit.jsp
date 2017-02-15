@@ -50,7 +50,7 @@ KindEditor.ready(function(K) {
 		width : '100%',
 		height:'339px',
 		cssPath : '../js/kingeditor/plugins/code/prettify.css',
-		uploadJson : basePath + 'keUpload.do?model=website_brand_content',
+		uploadJson : basePath + 'keUpload.do?model=website_design_content',
 		fileManagerJson : 'jsp/file_manager_json.jsp',
 		allowFileManager : true,
 		items : [ 'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',

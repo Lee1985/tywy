@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	String path = request.getContextPath();
@@ -15,12 +16,16 @@
 		<!--reset css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/common.css"/>
 		<!--reset css-->
-		<!--轮播图 css-->
-		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.bxslider.css"/>
-		<!--轮播图 css-->
 		<!--function css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/style.css"/>
 		<!--function css-->
+		<!--owl css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.carousel.css"/>
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.theme.css"/>
+		<!--owl css-->
+		<!--lightbox css-->
+		<link rel="stylesheet" type="text/css" href="css/jquery.fs.boxer.css"/>
+		<!--lightbox css-->
 		<script src="resource/website/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="resource/website/js/jquery.fs.boxer.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="resource/website/js/lightbox.js" type="text/javascript" charset="utf-8"></script>
@@ -51,14 +56,25 @@
 			<div class="main">
 				<div class="carpets_box">
 					<div class="design_box">
-						<div class="gray_bg"></div>
-						<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer design_left" href="resource/website/img/lightbox1.png"><img src="resource/website/img/design1.png"/></a>
-						<div class="design_title">设计图册</div>
-						<a title="照片的名称或没写就不显示照片的名称或没写就不显示照片的名称或没写就不显示照片的名称" rel="gallery" class="boxer design_right" href="resource/website/lightbox11.png"><img src="resource/website/img/design2.png"/></a>
+						<c:forEach items="${list}" var="picture" varStatus="status">
+							<c:choose>
+								<c:when test="${status.count eq 1 }">
+									<div class="gray_bg"></div>
+									<a title="${picture.designName }" rel="gallery" class="boxer design_left" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>									
+								</c:when>
+								<c:when test="${status.count eq 2 }">
+									<div class="design_title">设计图册</div>
+									<a title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>		
+								</c:when>
+								<c:otherwise>
+									<a style="display: none;" title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>						
+													
 					</div>
 					<div class="carpets_text">
-						<p>天雅知道，色彩，设计决定了整个外观和空间的感觉。为了确保我们的设计看起来更精湛，天雅使用的打印其技术是世界上最先进的数码印花技术。这完美的数码印刷技术能够将精心设计的图案和细节完美的呈现。</p>
-						<p> 公司设有设计研发中心，具有最大、最专业的设计团队，并与意大利顶级设计公司长期深度合作，拥有多项图案设计专利，不断推出国际最新趋势的印花地毯设计。</p>
+						${configInfo.configValue }
 					</div>
 				</div>
 			</div>
@@ -77,28 +93,28 @@
 	</body>
 	<script type="text/javascript">
 		$(function(){
-		var  q_owl = $("#q_carousel");
-            q_owl.owlCarousel({
-	   	    items: 1,
-	        navigation: false,    
-	        autoPlay: false,
-	        stopOnHover: true,
-	        pagination : false,
-	        slideSpeed:500,
-	        rewindNav:false
-    });
- 
-   	//上一张切换
-    $(".qualification_box .controls-pre").click(function(e){ 
-    		q_owl.trigger('owl.prev');
-
-    });
-
-    //下一张切换
-    $(".qualification_box .controls-next").click(function(e){ 
-    		q_owl.trigger('owl.next');
-
-    });
-	});
+			var  q_owl = $("#q_carousel");
+	            q_owl.owlCarousel({
+		   	    items: 1,
+		        navigation: false,    
+		        autoPlay: false,
+		        stopOnHover: true,
+		        pagination : false,
+		        slideSpeed:500,
+		        rewindNav:false
+	    	});
+	 		
+		   	//上一张切换
+		    $(".qualification_box .controls-pre").click(function(e){ 
+		    		q_owl.trigger('owl.prev');
+		
+		    });
+	
+		    //下一张切换
+		    $(".qualification_box .controls-next").click(function(e){ 
+		    		q_owl.trigger('owl.next');
+		
+		    });	
+		});
 	</script>
 </html>
