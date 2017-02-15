@@ -63,7 +63,7 @@
 			<tr>
 				<td width="20%"><img align="middle"
 					src="${pageContext.request.contextPath}/images/L2_04.png" /></td>
-				<td width="65%">&nbsp;</td>
+				<td width="70%">&nbsp;</td>
 				<td nowrap="nowrap">欢迎您：
 					${sessionScope.SESSION_USER.userName}</td>
 				<td nowrap="nowrap"><a href="./logout.do" target="_parent">退出</a>
