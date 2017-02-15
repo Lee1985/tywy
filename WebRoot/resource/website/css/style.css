@@ -28,29 +28,27 @@ h2.title1:after{content: ""; display: block; position: absolute; width: 20px; he
 div.news_text{height: 40px; line-height: 20px; overflow: hidden; text-overflow: ellipsis; display: -moz-box; display: -webkit-box; -moz-box-orient: vertical; -webkit-box-orient: vertical; -webkit-line-clamp: 2;}
 
 div.box{width: 100%; height: 720px; background-color: #FFFFFF;}
-div.brand_left{width: 67%; height: 100%; float: left; background: url(../img/img01.png) no-repeat center center; background-size: cover;}
+div.brand_left{width: 67%; height: 100%; }
+div.brand_left img{width: 100%; height: 100%;}
 div.brand_right{width: 33%; height: 100%; float: right; 
 display: -moz-box;display: -webkit-box; display: -ms-flexbox; -moz-box-align: center; -webkit-box-align: center; -moz-box-pack: center; -webkit-box-pack: center;
 display: -webkit-flex;  -webkit-align-content: center; align-content: center; -webkit-align-items: center;align-items: center; flex-wrap: wrap; -webkit-flex-wrap: wrap;}
 h2.title0{font-size: 36px; text-align: center; position: relative; margin-bottom: 63px; width: 100%;}
 h2.title0 span{display: block;  font-size: 20px;  color: #999999;}
-h2.brand_title:before{ width: 48px; height: 52px; content: ""; display: block; background: url(../img/branding.png) no-repeat center; position: absolute; left: 50%; margin-left: -24px;  top: -60px;}
-h2.carpet_title:before{ width: 58px; height: 43px; content: ""; display: block; background: url(../img/carpet3d.png) no-repeat center; position: absolute; left: 50%; margin-left: -29px;  top: -60px;}
-h2.printed_title:before{ width: 58px; height: 43px; content: ""; display: block; background: url(../img/carpet.png) no-repeat center; position: absolute; left: 50%; margin-left: -29px;  top: -60px;}
+h2.title0 img{ width: 48px; height: 52px; position: absolute; left: 50%; margin-left: -24px;  top: -60px;}
 div.box_detail{padding-left: 80px; padding-right: 80px; font-size: 20px; line-height: 36px; color: #848789;}
-div.printed_left{width: 67%; height: 100%; float: right; background: url(../img/img02.png) no-repeat center center; background-size: cover;}
-div.printed_right{width: 33%; height: 100%; float: left; 
-display: -moz-box;display: -webkit-box; display: -ms-flexbox; -moz-box-align: center; -webkit-box-align: center; -moz-box-pack: center; -webkit-box-pack: center;
-display: -webkit-flex;  -webkit-align-content: center; align-content: center; -webkit-align-items: center;align-items: center; flex-wrap: wrap; -webkit-flex-wrap: wrap;}
-div.carpet_left.brand_left{background: url(../img/img03.png) no-repeat center; background-size: cover;}
 div.carpet_box{margin-bottom: 98px;}
 
 div.case_box{width: 100%;  position: relative; margin-bottom: 98px;}
 div.bigpic{width: 100%; height: 100%; overflow: hidden;}
 div.bigpic img{width: 100%; height: 100%; }
 div.mask{width: 20%; height: 100%; background-color: rgba(116,25,29,.9); position: absolute;right: 0; top: 0; z-index: 10;}
-div.case_title{padding-top: 97px; padding-right: 95px; text-align: right;}
-div.case_title img{display: inline-block;}
+div.case_title{padding-top: 97px; padding-right: 95px; text-align: right;color: #FFFFFF; position: relative; height: 100%;}
+p.chinese_word{font-size: 60px; width: 60px; position: absolute; right: 115px;top: 116px; line-height: 1.1;}
+p.english_word{font-size: 36px; width: 120%; height: 36px;  position: absolute; right: 190px;top: 409px;  -webkit-transform: rotate(90deg);
+-moz-transform: rotate(90deg);-ms-transform: rotate(90deg);-o-transform: rotate(90deg);transform: rotate(90deg);-webkit-tranform-origin: right top;-moz-tranform-origin: right top;-ms-tranform-origin: right top;
+-o-tranform-origin: right top;transform-origin: right top; letter-spacing: -1px; }
+div.case_title:before{content: ""; width: 4px; height: 30px; background-color: #FFFFFF; display: block; position: absolute; right: 95px; }
 a.more1 {width: 160px;height: 45px;text-align: center;line-height: 45px;display: block;font-size: 16px;color: #FFFFFF;border: 1px solid #FFFFFF;  background-color: #7e3334; margin: auto;-webkit-transition: all 0.4s;-o-transition: all 0.4s;transition: all 0.4s; position: absolute; right: 95px; bottom: 97px;}
 ul.smallpic{position: absolute; right: 337px; bottom: 20px; z-index: 11;}
 ul.smallpic li{margin-top: 35px; position: relative; border: 4px solid transparent; cursor: pointer;}

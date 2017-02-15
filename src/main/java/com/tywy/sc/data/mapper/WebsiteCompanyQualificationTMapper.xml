@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tywy.sc.data.dao.WebsiteCompanyQualificationTDao">
+
+	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WebsiteCompanyQualificationT">
+		<id property="id" column="id" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="descName" column="descName" />
+		<result property="status" column="status" />
+		<result property="isDelete" column="isDelete" />
+		<result property="createUser" column="createUser" />
+		<result property="createDate" column="createDate" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     imgUuid,
+	     descName,
+	     status,
+	     isDelete,
+	     createUser,
+	     createDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into website_company_qualification_t  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="descName!=null">descName,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="createUser!=null">createUser,</if>
+			     <if test="createDate!=null">createDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="descName!=null">#{descName},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="createUser!=null">#{createUser},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update website_company_qualification_t 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="descName!=null">descName=#{descName},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     website_company_qualification_t 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from website_company_qualification_t
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" descName != null and descName != '' ">
+					and descName=#{descName} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_company_qualification_t
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" descName != null and descName != '' ">
+					and descName=#{descName} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from website_company_qualification_t
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" descName != null and descName != '' ">
+					and descName=#{descName} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from website_company_qualification_t where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from website_company_qualification_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from website_company_qualification_t where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update website_company_qualification_t
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="descName!=null">descName=#{descName},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

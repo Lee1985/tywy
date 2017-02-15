@@ -43,6 +43,7 @@ public class WebsiteCategoryTController extends BaseController {
 	public PageInfo<WebsiteCategoryT> websiteCategoryTAjaxPage(HttpServletRequest request,
 			HttpServletResponse response, WebsiteCategoryT info, Integer page,
 			Integer rows) {
+		
 		PageInfo<WebsiteCategoryT> pageInfo = new PageInfo<WebsiteCategoryT>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);

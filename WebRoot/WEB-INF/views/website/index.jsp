@@ -46,36 +46,23 @@
 			<a href="companyProfile.do" class="more">MORE</a>
 		</div>
 		<!--公司简介-->
-		<!--品牌推广-->
-		<div class="brand_box box">
-			<div class="brand_left"></div>
-			<div class="brand_right">
-				<h2 class="title0 brand_title">品牌推广<span>BRANDING</span></h2>
-				<div class="brand_detail box_detail">品牌传递着情感，而情感是品牌的催化剂。<br />
-为提升天雅地毯的品牌影响力，公司与央视建立战略合作伙伴关系，长期在综合频道、新闻频道进行品牌宣传推广！</div>
+				
+		<c:forEach items="${brandList }" var="brand" varStatus="status">
+			<div class="brand_box box" <c:if test="${status.count eq brandList.size() }">style="margin-bottom:98px;"</c:if> >
+				<div class="brand_left"><img src="downFileResult.do?urlPath=${brand.systemPictureInfo.urlPath }"/></div>
+				<div class="brand_right">
+					<h2 class="title0">
+						<img src="downFileResult.do?urlPath=${brand.iconUrl }"/>
+						${brand.brandName }
+						<span>${brand.engText }</span>
+					</h2>
+					<div class="box_detail">
+						${brand.description }
+					</div>
+				</div>
 			</div>
-		</div>
-		<!--品牌推广-->
-		<!--印花地毯-->
-		<div class="printed_box box">
-			<div class="printed_left"></div>
-			<div class="printed_right">
-				<h2 class="title0 printed_title">印花地毯<span>PRINTED CARPET</span></h2>
-				<div class="printed_detail box_detail">品牌传递着情感，而情感是品牌的催化剂。<br />
-为提升天雅地毯的品牌影响力，公司与央视建立战略合作伙伴关系，长期在综合频道、新闻频道进行品牌宣传推广！</div>
-			</div>
-		</div>
-		<!--印花地毯-->
-		<!--3D地毯-->
-		<div class="carpet_box box">
-			<div class="brand_left carpet_left"></div>
-			<div class="brand_right">
-				<h2 class="title0 carpet_title">3D地毯<span>3D CARPET</span></h2>
-				<div class="carpet_detail box_detail">品牌传递着情感，而情感是品牌的催化剂。<br />
-为提升天雅地毯的品牌影响力，公司与央视建立战略合作伙伴关系，长期在综合频道、新闻频道进行品牌宣传推广！</div>
-			</div>
-		</div>
-		<!--3D地毯-->
+		</c:forEach>
+
 		<!--经典案例-->
 		<div class="company_box">
 			<h2 class="title">经典案例<span>Project profile</span></h2>
@@ -88,23 +75,26 @@
 		<div class="case_box">
 			<div class="bigpic"><img src="" alt="" /></div>
 			<div class="mask">
-				<div class="case_title"><img src=""/></div>
+				<div class="case_title">
+					<p class="chinese_word"></p>
+					<p class="english_word"></p>
 				<a href="" class="more1">MORE</a>
+				</div>
+				<ul class="smallpic">
+					<li class="selected">
+						<img src=""/>
+						<span></span>
+					</li>
+					<li>
+						<img src=""/>
+						<span></span>
+					</li>
+					<li>
+						<img src=""/>
+						<span></span>
+					</li>
+				</ul>
 			</div>
-			<ul class="smallpic">
-				<li class="selected">
-					<img src=""/>
-					<span></span>
-				</li>
-				<li>
-					<img src=""/>
-					<span></span>
-				</li>
-				<li>
-					<img src=""/>
-					<span></span>
-				</li>
-			</ul>
 		</div>
 		<!--新闻动态-->
 		<div class="company_box">
@@ -129,7 +119,7 @@
 					</c:choose>
 				</c:forEach>
 			</div>
-			<a href="news.do" class="more">MORE</a>
+			<a href="news.do?categoryId=${categoryId}" class="more">MORE</a>
 		</div>
 		<!--新闻动态-->
 		<!--footer-->
@@ -145,41 +135,86 @@
 	</body>
 	<script src="resource/website/js/jquery.bxslider.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(function(){
-			//轮播图
-			 $('.slider').bxSlider({
-						auto: true,
-			            slideWidth: 1920, 
-			            slideMargin: 0,
-			            minSlides: 1,
-			            maxSlides: 1,
-			            slideMargin: 2,
-			            captions: true,
-			            
-			          });
-			//案例展示
-			var w=$(window).width();
-			$(".case_box").height(w/2.2);
-			$(".box").height(w*0.67/1.8);
-			$(".js-box").height(w/1.96);
-			var arr=[["resource/website/img/tabimg1.png","resource/website/img/tabSmall1.png","客房展示","resource/website/img/tabtitle.png"],["resource/website/img/tabimg2.png","resource/website/img/tabSmall2.png","宴会展示","resource/website/img/tabtitle2.png"],["resource/website/img/tabimg3.png","resource/website/img/tabSmall3.png","客房展示","resource/website/img/tabtitle.png"]];
-			var arr1=["news1.html","news.html","news0.html"];
-			$(".bigpic img").attr("src",arr[0][0]);
-			$(".case_title img").attr("src",arr[0][3]);
-			$(".smallpic li").eq(0).find("img").attr("src",arr[0][1]);
-			$(".smallpic li").eq(0).find("span").text(arr[0][2]);
-			$(".smallpic li").eq(1).find("img").attr("src",arr[1][1]);
-			$(".smallpic li").eq(1).find("span").text(arr[1][2]);
-			$(".smallpic li").eq(2).find("img").attr("src",arr[2][1]);
-			$(".smallpic li").eq(2).find("span").text(arr[2][2]);
-			$(".more1").attr("href",arr1[0]);
-			$(".smallpic li").on("click",function(){
-				var indexs=$(this).index();
-				$(this).addClass("selected").siblings().removeClass("selected");
-				$(".bigpic img").attr("src",arr[indexs][0]);
-				$(".case_title img").attr("src",arr[indexs][3]);
-				$(".more1").attr("href",arr1[indexs]);
-			});
-		});
+	$(function(){
+		//轮播图
+		 $('.slider').bxSlider({
+			auto: true,
+            slideWidth: 1920, 
+            slideMargin: 0,
+            minSlides: 1,
+            maxSlides: 1,
+            slideMargin: 2,
+            captions: true,
+          });
+		
+		 var ajaxOptions = {
+	   		 url: 'websiteHomepageCase.do',
+	   		 type: 'post',
+	   		 dataType: 'json',
+	   		 success: function(data) {
+	   			 var rows = data.rows;
+	   			 if(rows && rows.length > 0){
+	   				 var arr = new Array();
+	   				 $.each(rows,function(key,value){
+	   					 var arr_1 = new Array();
+	   					 arr_1.push('downFileResult.do?urlPath=' + value.systemPictureInfo.urlPath);
+	   					 //resource/website/img/tabSmall1.png
+	   					 arr_1.push('downFileResult.do?urlPath=' + value.systemPictureInfo.urlPath);
+	   					 arr_1.push(value.caseName);
+	   					 arr_1.push(value.engText);
+	   					 arr.push(arr_1);
+	   				 });
+	   				 
+	   				 if(arr.length > 0){
+	   					var w=$(window).width();
+	   					$(".case_box").height(w/2.2);
+	   					$(".box").height(w*0.67/1.8);
+	   					$(".js-box").height(w/1.96);
+	   					var arr1=["news1.html","news.html","news0.html"];
+	   					$(".bigpic img").attr("src",arr[0][0]);
+	   					$(".case_title .chinese_word").text(arr[0][2]);
+	   					$(".case_title .english_word").text(arr[0][3]);
+	   					$(".smallpic li").eq(0).find("img").attr("src",arr[0][1]);
+	   					$(".smallpic li").eq(0).find("img").attr("width","288px");
+	   					$(".smallpic li").eq(0).find("img").attr("height","180px");
+	   					$(".smallpic li").eq(0).find("span").text(arr[0][2]);
+	   					
+	   					$(".smallpic li").eq(1).find("img").attr("src",arr[1][1]);
+	   					$(".smallpic li").eq(1).find("img").attr("width","288px");
+	   					$(".smallpic li").eq(1).find("img").attr("height","180px");
+	   					$(".smallpic li").eq(1).find("span").text(arr[1][2]);
+	   					
+	   					$(".smallpic li").eq(2).find("img").attr("src",arr[2][1]);
+	   					$(".smallpic li").eq(2).find("img").attr("width","288px");
+	   					$(".smallpic li").eq(2).find("img").attr("height","180px");
+	   					$(".smallpic li").eq(2).find("span").text(arr[2][2]);
+	   					
+	   					$(".more1").attr("href",arr1[0]);
+	   					$(".smallpic li").on("click",function(){
+	   						var indexs=$(this).index();
+	   						$(this).addClass("selected").siblings().removeClass("selected");
+	   						$(".bigpic img").attr("src",arr[indexs][0]);
+	   						$(".case_title .chinese_word").text(arr[indexs][2]);
+	   						$(".case_title .english_word").text(arr[indexs][3]);
+	   						$(".more1").attr("href",arr1[indexs]);
+	   					});
+	   				 }
+	   			 }
+	   		 }
+   		};
+   		$.ajax(ajaxOptions);
+		
+		//品牌推广
+		var len=$(".box").size();
+		for (var i=0;i<len;i++) {
+			if ((i+ 1)%2==0) {
+				$(".box").eq(i).find(".brand_left").css("float","right");
+				$(".box").eq(i).find(".brand_right").css("float","left");
+			} else {
+				$(".box").eq(i).find(".brand_left").css("float","left");
+				$(".box").eq(i).find(".brand_right").css("float","right");
+			}
+		}
+	});
 	</script>
 </html>

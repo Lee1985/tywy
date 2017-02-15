@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -33,12 +33,13 @@
 		    <jsp:include page="header.jsp" flush="true"/>
 		</header>
 		<!--header end-->
-	<!--banner-->
+		<!--banner-->
 		<div class="banner banner_bg3">
 			<div class="nav_bg">
 				<ul class="navigation">
-					<li class="selected"><a href="news1.html">行业新闻</a></li>
-					<li><a href="news1.html">企业新闻</a></li>
+					<c:forEach items="${categoryList}" var="category" varStatus="status">
+						<li <c:if test="${categoryId eq  category.id}">class="selected"</c:if>><a href="news.do?categoryId=${category.id }">${category.name }</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
@@ -48,54 +49,20 @@
 			<div class="main">
 				<div class="newslist_box">
 					<ul>
-						<li>
-							<a href="newsDetail.do">
-							<div class="newslist_left">
-								<img src="resource/website/img/newlist1.png" alt="" />
-							</div>
-								<div class="newslist_right">
-									<h2 class="title4">天雅地毯年中销售会议召开</h2>
-									<p class="newslist_time">2014年07月18日 14:54</p>
-									<div class="newslist_detail">天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上，分析天雅地毯2014年度年中销售会议在河南云台山银河花园酒店隆重召开。此次会议是在总结上半年销售情况的基础上，分析</div>
+						<c:forEach items="${newsList }" var="news">
+							<li>
+								<a href="newsDetail.do?id=${news.id }">
+								<div class="newslist_left">
+									<img src="downFileResult.do?urlPath=${news.systemPictureInfo.urlPath}" alt="" />
 								</div>
-						  </a>
-						</li>
-						<li>
-							<a href="newsDetail1.html">
-							<div class="newslist_left">
-								<img src="resource/website/img/newlist2.png" alt="" />
-							</div>
-								<div class="newslist_right">
-									<h2 class="title4">我公司被推举为地毯协会副会长单位</h2>
-									<p class="newslist_time">2014年07月18日 14:54</p>
-									<div class="newslist_detail">近日，中国工艺美术协会地毯专业委员会2013年会在江苏无锡召开，天雅地毯凭借在地毯行业的杰出表现和有目共睹的综</div>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="newsDetail1.html">
-							<div class="newslist_left">
-								<img src="" alt="" />
-							</div>
-								<div class="newslist_right">
-									<h2 class="title4">天雅地毯成功参展第十六届中国国际地面材料及铺装技术展览会</h2>
-									<p class="newslist_time">2014年07月18日 14:54</p>
-									<div class="newslist_detail">第十三届中国国际地面材料及铺装技术展览会在上海新国际博览中心隆重开幕。</div>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="newsDetail1.html">
-							<div class="newslist_left">
-								<img src="resource/website/img/newlist3.png" alt="" />
-							</div>
-								<div class="newslist_right">
-									<h2 class="title4">天雅地毯成功参展第十六届中国国际地面材料及铺装技术展览会</h2>
-									<p class="newslist_time">2014年07月18日 14:54</p>
-									<div class="newslist_detail">第十三届中国国际地面材料及铺装技术展览会在上海新国际博览中心隆重开幕。</div>
-								</div>
-							</a>
-						</li>
+									<div class="newslist_right">
+										<h2 class="title4">${news.title }</h2>
+										<p class="newslist_time">${news.createDateStr }</p>
+										<div class="newslist_detail">${news.content }</div>
+									</div>
+							  </a>
+							</li>
+						</c:forEach>																			
 					</ul>
 				</div>
 			</div>

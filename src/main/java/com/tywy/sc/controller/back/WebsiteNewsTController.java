@@ -34,6 +34,7 @@ import com.tywy.utils.stream.util.StreamVO;
  */
 @Controller
 public class WebsiteNewsTController extends BaseController {
+	
 	@Resource
 	private WebsiteNewsTService websiteNewsTService;
 	
