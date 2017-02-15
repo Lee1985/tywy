@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>试戏管理系统</title>
+<title>天雅管理系统</title>
 <meta charset="utf-8" />
 <meta name="renderer" content="webkit|ie-stand|ie-comp">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

@@ -38,9 +38,9 @@
 		</ul>
 	</div>
 	<div class="address_detail address2">
-		<h3 class="address_name">天津天雅万印毯业科技有限公司</h3>
+		<h3 class="address_name">江苏天雅万印毯业科技有限公司</h3>
 		<ul>
-			<li>地址：中国天津东丽区荒草坨北地毯仓库</li>
+			<li>地址：中国江苏东丽区荒草坨北地毯仓库</li>
 			<li>邮箱：<a href="mailto:tianyanq2@126.com">tianyanq2@126.com</a></li>
 			<li>网址：<a href="http://www.tycarpet.com">http://www.tycarpet.com</a></li>
 		</ul>
