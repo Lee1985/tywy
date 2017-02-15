@@ -4,15 +4,15 @@ import java.io.Serializable;
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
- * website_design_t实体表()
+ * website_case_t实体表()
  * @author lipeng
- * @date 2017-02-15 17:15:36
+ * @date 2017-02-16 02:32:48
  * @project 
  */
  @SuppressWarnings("serial")
-public class WebsiteDesignT extends BaseEntity implements Serializable {
+public class WebsiteCaseT extends BaseEntity implements Serializable {
 	private java.lang.String id; // 
-	private java.lang.String designName; // 设计名称
+	private java.lang.String caseName; // 
 	private java.lang.String parentid; // 封面ID
 	private java.lang.Integer orderList; // 排序
 	private java.lang.String imgUuid; // 照片
@@ -20,10 +20,8 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	private java.lang.String description; // 相册描述
 	private java.util.Date createDate; // 创建时间
 	private java.lang.String createUser; // 创建者
-	private java.lang.String status; // 状态
-	private java.lang.String isDelete; // 删除状态
-	
-	private SystemPictureInfo systemPictureInfo;
+	private java.lang.String status; // 
+	private java.lang.String isDelete; // 
 	/**
      * 获取属性
      *
@@ -43,21 +41,21 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取设计名称属性
+     * 获取属性
      *
-     * @return designName
+     * @return caseName
      */
-	public java.lang.String getDesignName() {
-		return designName;
+	public java.lang.String getCaseName() {
+		return caseName;
 	}
 	
 	/**
-	 * 设置设计名称属性
+	 * 设置属性
 	 *
-	 * @param designName
+	 * @param caseName
 	 */
-	public void setDesignName(java.lang.String designName) {
-		this.designName = designName;
+	public void setCaseName(java.lang.String caseName) {
+		this.caseName = caseName;
 	}
 	
 	/**
@@ -187,7 +185,7 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取状态属性
+     * 获取属性
      *
      * @return status
      */
@@ -196,7 +194,7 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置状态属性
+	 * 设置属性
 	 *
 	 * @param status
 	 */
@@ -205,7 +203,7 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取删除状态属性
+     * 获取属性
      *
      * @return isDelete
      */
@@ -214,28 +212,21 @@ public class WebsiteDesignT extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置删除状态属性
+	 * 设置属性
 	 *
 	 * @param isDelete
 	 */
 	public void setIsDelete(java.lang.String isDelete) {
 		this.isDelete = isDelete;
 	}
-
-	public SystemPictureInfo getSystemPictureInfo() {
-		return systemPictureInfo;
-	}
 	
-	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
-		this.systemPictureInfo = systemPictureInfo;
-	}
 
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("WebsiteDesignT");
+        sb.append("WebsiteCaseT");
         sb.append("{id=").append(id);
-        sb.append(", designName=").append(designName);
+        sb.append(", caseName=").append(caseName);
         sb.append(", parentid=").append(parentid);
         sb.append(", orderList=").append(orderList);
         sb.append(", imgUuid=").append(imgUuid);

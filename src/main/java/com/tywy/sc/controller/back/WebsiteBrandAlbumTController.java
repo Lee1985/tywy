@@ -127,7 +127,7 @@ public class WebsiteBrandAlbumTController extends BaseController {
 		}
 		return getJsonResult(result, "操作成功",msg);
 	}
-
+	
 	@RequestMapping(value = "system/websiteBrandAlbumTAjaxDelete")
 	@ResponseBody
 	public Map<String,Object> websiteBrandAlbumTAjaxDelete(HttpServletRequest request,
