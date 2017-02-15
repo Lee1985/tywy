@@ -16,10 +16,10 @@
                     column="id" ofType="SystemMenu">
         </collection>
         <!-- 删除按钮权限查询 -->
-        <!-- <collection property="systemMenuActs"
+        <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByMenuId"
                     column="id">
-        </collection> -->
+        </collection>
     </resultMap>
 
     <resultMap id="roleMenuResultMap" type="com.tywy.sc.data.model.SystemMenu">
@@ -36,10 +36,10 @@
                     column="{roleId=roleId,id=id}" ofType="SystemMenu">
         </collection>
         <!-- 删除按钮权限查询 -->
-        <!-- <collection property="systemMenuActs"
+        <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByRole"
                     column="{roleId=roleId,id=id}">
-        </collection> -->
+        </collection>
     </resultMap>
 
     <resultMap id="roleMenuLoginResultMap" type="com.tywy.sc.data.model.SystemMenu">
@@ -56,10 +56,10 @@
                     column="{roleId=roleId,id=id}" ofType="SystemMenu">
         </collection>
         <!-- 删除按钮权限查询 -->
-        <!-- <collection property="systemMenuActs"
+        <collection property="systemMenuActs"
                     select="com.tywy.sc.data.dao.SystemMenuActDao.selectAllByRoleLogin"
                     column="{roleId=roleId,id=id}">
-        </collection> -->
+        </collection>
     </resultMap>
     <!-- 动态sql -->
     <sql id="colomnResult">

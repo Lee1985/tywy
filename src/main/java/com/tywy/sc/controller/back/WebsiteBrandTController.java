@@ -36,7 +36,7 @@ public class WebsiteBrandTController extends BaseController {
 	public String websiteBrandTList(HttpServletRequest request,HttpServletResponse response) {
 		return "back/website_brand_list";
 	}
-
+	
 	@RequestMapping(value = "system/websiteBrandTAjaxPage")
 	@ResponseBody
 	public PageInfo<WebsiteBrandT> websiteBrandTAjaxPage(HttpServletRequest request,
@@ -46,6 +46,8 @@ public class WebsiteBrandTController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
+		info.setSort("createDate");
+		info.setOrder("desc");
 		websiteBrandTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}

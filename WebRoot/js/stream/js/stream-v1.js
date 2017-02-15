@@ -1444,7 +1444,6 @@
 			if(index == null) return;
 			this.uploading = !0;
 			
-			console.log(index);
 			this.uploadInfo[index].actived = !0;
 			var file = this.uploadInfo[index].file, self = this;
 			var frmUploadURL = this.get("frmUploadURL");
@@ -1622,7 +1621,6 @@
 				this.uploadInfo = {};
 				for (c = 0; c < a.length; c++){
 					debugger;
-					console.log(a[c]);
 					this.waiting = [];
 					this.validateFile(a[c]) && this.addStreamTask(a[c]);
 				}

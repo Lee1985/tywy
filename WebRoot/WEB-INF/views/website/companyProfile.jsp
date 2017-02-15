@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	String path = request.getContextPath();
@@ -27,9 +28,6 @@
 	<body>
 		<!--header start-->
 		<header>
-		    <!-- <script type="text/javascript">
-			 $("header").load("header.do");
-		    </script> -->
 		    <jsp:include page="header.jsp" flush="true"/>
 		</header>
 		<!--header end-->
@@ -37,11 +35,10 @@
 		<div class="banner banner_bg1">
 			<div class="nav_bg">
 				<ul class="navigation">
-					<li class="selected"><a href="companyProfile.html">企业介绍</a></li>
-					<li><a href="companyQualification.html">企业资质</a></li>
-					<li><a href="javascript:;">企业文化</a></li>
-					<li><a href="javascript:;">企业工艺</a></li>
-					<li><a href="javascript:;">企业品质</a></li>
+					<c:forEach items="${introductionList }" var="introduce">
+						<li <c:if test="${introduce.id eq introduction.id}">class="selected"</c:if>><a href="aboutContent.do?id=${introduce.id }">${introduce.introduceName }</a></li>
+					</c:forEach>
+					<li><a href="companyQualification.do">企业资质</a></li>
 				</ul>
 			</div>
 		</div>
@@ -50,10 +47,9 @@
 		<main>
 			<div class="main">
 				<div class="company_profile">
-					<h1 class="title2">企业介绍</h1>
+					<h1 class="title2">${introduction.introduceName }</h1>
 					<div class="c_detail">
-						<p> 吉林省天雅万印地毯科技有限公司专业从事于印花地毯的科技研发、生产和销售，是国内著名的地毯解决方案提供商。历经十余年的发展，天雅地毯目前已经在天津和吉林拥有两座现代化工厂和遍布全国各大中城市的22 家销售分公司，以及国内外数千家不同级别的经销商，形成了系统化、全方位的营销服务网络。目前,天雅已形成亚洲规模最大的、以印花地毯为主导，以阿克明地毯、拼块地毯、簇绒地毯及家居地毯为辅的全产业链地毯生产企业，年销量超过1200 万平米。</p>
-					    <p>作为印花地毯行业的引领者，“真诚服务”的理念融进了天雅人的血液，贯彻执行到生产经营中的各个环节，从美学设计、科技研发， 到生产制造与物流配送,这种理念带给用户的直观感受，体现在更贴近用户环境的设计艺术、更安全环保的健康保障、更舒适耐磨的产品品质，以及更短的交货时间。</p>
+						${introduction.description }
 					</div>
 				</div>
 			</div>

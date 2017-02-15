@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	String path = request.getContextPath();
@@ -15,12 +16,13 @@
 		<!--reset css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/common.css"/>
 		<!--reset css-->
-		<!--轮播图 css-->
-		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.bxslider.css"/>
-		<!--轮播图 css-->
 		<!--function css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/style.css"/>
 		<!--function css-->
+		<!--owl css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.carousel.css"/>
+		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.theme.css"/>
+		<!--owl css-->
 		<script src="resource/website/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 		<title>天雅地毯</title>
 	</head>
@@ -37,11 +39,10 @@
 		<div class="banner banner_bg1">
 			<div class="nav_bg">
 				<ul class="navigation">
-					<li><a href="companyProfile.html">企业介绍</a></li>
-					<li class="selected"><a href="companyQualification.html">企业资质</a></li>
-					<li><a href="javascript:;">企业文化</a></li>
-					<li><a href="javascript:;">企业工艺</a></li>
-					<li><a href="javascript:;">企业品质</a></li>
+					<c:forEach items="${introductionList }" var="introduce">
+						<li><a href="aboutContent.do?id=${introduce.id }">${introduce.introduceName }</a></li>
+					</c:forEach>
+					<li class="selected"><a href="companyQualification.do">企业资质</a></li>
 				</ul>
 			</div>
 		</div>
@@ -53,62 +54,36 @@
 		        	<div class="controls-pre controls"></div>
 		        	<div class="carousel-box">
 		        		<div class="carousel" id="q_carousel">
-		                   	<a href="javascript:;" class="currenthx">
-		                   		<div class="j_box">
-		                   				<div>
-		                   					<img src="resource/website/img/zz1.png" alt="" />
-		                   					<p>饭店协会会员单位</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz3.png" alt="" />
-		                   					<p>AAA级信用企业</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz3.png" alt="" />
-		                   					<p>吉林省著名商标</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz4.png" alt="" />
-		                   					<p>新西兰羊毛认证标志</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz5.png" alt="" />
-		                   					<p>全国质量检测稳定合格产品</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz6.png" alt="" />
-		                   					<p>全国质量检测稳定合格产品</p>
-		                   				</div>
-		                   		</div>
-		                   	</a>
-		                    <a href="javascript:;">
-		                    	<div class="j_box">
-		                   				<div>
-		                   					<img src="resource/website/img/zz1.png" alt="" />
-		                   					<p>饭店协会会员单位</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz3.png" alt="" />
-		                   					<p>AAA级信用企业</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz3.png" alt="" />
-		                   					<p>吉林省著名商标</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz4.png" alt="" />
-		                   					<p>新西兰羊毛认证标志</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz5.png" alt="" />
-		                   					<p>全国质量检测稳定合格产品</p>
-		                   				</div>
-		                   				<div>
-		                   					<img src="resource/website/img/zz6.png" alt="" />
-		                   					<p>全国质量检测稳定合格产品</p>
-		                   				</div>
-		                   		</div>
-		                    </a>
+		        			<c:forEach items="${list }" var="cq" varStatus="status">
+		        				<c:choose>
+		        					<c:when test="${status.index % 6 eq 0 }">
+		        						<a href="javascript:;" <c:if test="${status.index eq 0 }">class="currenthx"</c:if>>
+			                   			<div class="j_box">
+			                   				<div>
+			                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+			                   					<p>${cq.descName}</p>
+			                   				</div>
+		        					</c:when>
+		        					<c:otherwise>
+		        						<c:choose>
+		        							<c:when test="${status.count % 6 eq 0 || status.count eq list.size()}">
+				        								<div>
+						                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+						                   					<p>${cq.descName}</p>
+						                   				</div>
+						                   			</div>
+						                   		</a>
+		        							</c:when>
+		        							<c:otherwise>
+		        								<div>
+				                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+				                   					<p>${cq.descName}</p>
+				                   				</div>				                   				
+		        							</c:otherwise>
+		        						</c:choose>
+		        					</c:otherwise>
+		        				</c:choose>
+		        			</c:forEach>		        				                   	
 		           		</div>
 		        	</div>
 		            <div class="controls-next controls"></div>
@@ -128,7 +103,7 @@
 		</slide>
 		<!--悬浮层-->
 	</body>
-	<script src="js/owl.carousel.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resource/website/js/owl.carousel.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function(){
 			var  q_owl = $("#q_carousel");
@@ -141,12 +116,12 @@
 			        slideSpeed:500,
 			        rewindNav:false
 		    });
-		 
+		 	
 		   	//资质上一张切换
 		    $(".qualification_box .controls-pre").click(function(e){ 
 		    		q_owl.trigger('owl.prev');
 		    });
-		
+			
 		    //资质下一张切换
 		    $(".qualification_box .controls-next").click(function(e){ 
 		    		q_owl.trigger('owl.next');

@@ -5,30 +5,12 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<script src="resource/website/js/header.js" type="text/javascript" charset="utf-8"></script>
 <script src="resource/website/js/footer.js" type="text/javascript" charset="utf-8"></script>
 <div class="sitemap clearfix">
-	<ul>
-	<h3>关于天雅</h3>
-		<li><a href="companyProfile.html">企业简介</a></li>
-		<li><a href="companyQualification.html">企业资质</a></li>
-		<li><a href="">企业荣誉</a></li>
-		<li><a href="">企业文化</a></li>
-		<li><a href="">企业工艺</a></li>
-		<li><a href="">企业品质</a></li>
-	</ul>
-	<ul>
-	<h3>新闻动态</h3>
-		<li><a href="news1.html">行业新闻</a></li>
-		<li><a href="news1.html">企业新闻</a></li>
-	</ul>
-	<ul>
-	<h3>天雅品牌</h3>
-		<li><a href="brand.html">宣传推广</a></li>
-		<li><a href="yinhuaCarpet.html">印花地毯</a></li>
-		<li><a href="yinhuaCarpet.html">3D地毯</a></li>
-		<li><a href="yinhuaCarpet.html">家居地毯</a></li>
-		<li><a href="yinhuaCarpet.html">阿克明地毯</a></li>
-	</ul>
+	<ul id="aboutFooter"><h3>关于天雅</h3></ul>
+	<ul id="newsFooter"><h3>新闻动态</h3></ul>
+	<ul id="brandFooter"><h3>天雅品牌</h3></ul>
 	<ul>
 	<h3>天雅设计</h3>
 		<li><a href="designList.html">设计图册</a></li>

@@ -42,8 +42,10 @@
 		<!--公司简介-->
 		<div class="company_box">
 			<h2 class="title">公司简介<span>Company profile</span></h2>
-			<div class="company_detail">吉林省天雅万印地毯科技有限公司专业从事于印花地毯的科技研发、生产和销售，是国内著名的地毯解决方案提供商。历经十余年的发展，天雅地毯目前已经在天津和吉林拥有两座现代化工厂和遍布全国各大中城市的22 家销售分公司，以及国内外数千家不同级别的经销商，形成了系统化、全方位的营销服务网络。</div>
-			<a href="companyProfile.do" class="more">MORE</a>
+			<div class="company_detail">
+				${introduction.description }
+			</div>
+			<a href="aboutContent.do?id=${introduction.id }" class="more">MORE</a>
 		</div>
 		<!--公司简介-->
 				

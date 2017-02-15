@@ -24,6 +24,8 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 	private java.lang.String isDelete; // 是否删除0否1是
 	
 	private String createDateStr;
+	private String isHomePage;
+	
 	/**
      * 获取属性
      *
@@ -193,6 +195,14 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 
 	public void setCreateDateStr(String createDateStr) {
 		this.createDateStr = createDateStr;
+	}
+
+	public String getIsHomePage() {
+		return isHomePage;
+	}
+
+	public void setIsHomePage(String isHomePage) {
+		this.isHomePage = isHomePage;
 	}
 
 	@Override

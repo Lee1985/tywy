@@ -192,8 +192,14 @@
 							$("#"+ files[i].id).click(function(e) {
 								e.stopPropagation();
 								if ($(this).hasClass('dz-processing')) {
-									$(this).remove();	
+									$(this).remove();
 									delete _t.uploadInfo[$(this).attr('id')];
+									for(var i=0; i<_t.waiting.length; i++) {
+									    if(_t.waiting[i] == $(this).attr('id')) {
+									      _t.waiting.splice(i, 1);
+									      break;
+									    }
+									}
 								}
 							});
 							$("#"+ files[i].id+"input").click(function(e) {
@@ -300,6 +306,11 @@
 						//console && console.log(msg);
 						//console && console.log("-------------onQueueComplete-------------------End");
 						layer.close(index);
+						_t.uploadInfo={};
+						$('.dz-edit').each(function(){
+							$(this).removeClass('.dz-edit');
+							$(this).addClass('.dz-add');
+						});
 					},
 					onUploadError: function(status, msg) {
 						//console && console.log("-------------onUploadError-------------------");

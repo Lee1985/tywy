@@ -10,14 +10,7 @@
 	<h1 class="logo"><img src="resource/website/img/logo.png"/></h1>
 	<ul class="nav clearfix">
 		<li><a href="index.do">首页</a></li>
-		<li href="" class="select_menu">
-			<a href="">关于</a>
-			<div class="second_menu">
-				<a href="companyProfile.do"><span>企业简介</span></a>
-				<a href="companyQualification.do"><span>企业资质</span></a>
-				<a href="#"><span>企业荣誉</span></a>
-			</div>
-		</li>
+		<li id="aboutLi" class="select_menu"><a href="aboutContent.do">关于</a></li>
 		<li><a href="news.do">新闻</a></li>
 		<li><a href="brand.do">品牌</a></li>
 		<li><a href="designList.do">天雅设计</a></li>

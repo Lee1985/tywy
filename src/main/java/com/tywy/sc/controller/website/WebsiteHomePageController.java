@@ -19,12 +19,14 @@ import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WebsiteCarouselT;
 import com.tywy.sc.data.model.WebsiteHomepageBrandT;
 import com.tywy.sc.data.model.WebsiteHomepageCaseT;
+import com.tywy.sc.data.model.WebsiteIntroductionT;
 import com.tywy.sc.data.model.WebsiteNewsT;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCarouselTService;
 import com.tywy.sc.services.WebsiteCategoryTService;
 import com.tywy.sc.services.WebsiteHomepageBrandTService;
 import com.tywy.sc.services.WebsiteHomepageCaseTService;
+import com.tywy.sc.services.WebsiteIntroductionTService;
 import com.tywy.sc.services.WebsiteNewsTService;
 import com.tywy.utils.JsoupUtils;
 
@@ -48,6 +50,9 @@ public class WebsiteHomePageController extends BaseController{
 	
 	@Resource
 	private WebsiteHomepageCaseTService websiteHomepageCaseTService;
+	
+	@Resource
+	private WebsiteIntroductionTService websiteIntroductionTService;
 	
 	@RequestMapping(value = "index")
 	public String index(HttpServletRequest request,HttpServletResponse response) {
@@ -77,6 +82,15 @@ public class WebsiteHomePageController extends BaseController{
 			websiteCarousel.setSystemPictureInfo(pic);
 		}
 		request.setAttribute("carouselList", carouselList);
+		
+		//企业介绍
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("isHomePage", "1");
+		params.put("isDelete", "0");
+		params.put("status", "1");
+		WebsiteIntroductionT introduction = websiteIntroductionTService.selectEntity(params);
+		introduction.setDescription(JsoupUtils.removeStyle(introduction.getDescription()));
+		request.setAttribute("introduction", introduction);
 		
 		//品牌
 		PageInfo<WebsiteHomepageBrandT> brandPageInfo = new PageInfo<WebsiteHomepageBrandT>();

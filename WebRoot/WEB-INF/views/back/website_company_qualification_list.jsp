@@ -80,7 +80,7 @@
 								</svg>
 							</div> -->
 							<div>
-								<input type="text" id="${picture.id }input" name="${picture.id }input" placeholder="请在此输入图片名称" value="${picture.imageName }"/>
+								<input type="text" id="${picture.id }input" name="${picture.id }input" placeholder="请在此输入图片名称" value="${picture.descName }"/>
 							</div>
 						</div>
 					</c:forEach>
@@ -155,7 +155,7 @@
 		    		 url: 'system/websiteCompanyQualificationTAjaxSave.do',
 		    		 data:formInfo,
 		    		 type: 'post',
-		    		 async: false,    
+		    		 async: false,
 		    		 dataType: 'json',
 		    		 success: function(data) {
 		    			 /** 100% percent */
@@ -176,7 +176,7 @@
 					}
 					save();
 					if($('.dz-edit').size() > 0){
-						_t.upload();
+						stream.upload();
 					}else{
 						if(layer){
 							layer.close(index);

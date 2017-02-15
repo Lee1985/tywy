@@ -150,6 +150,12 @@ function mutiFileUpload(model_name,complete){
 						if ($(this).hasClass('dz-processing')) {
 							$(this).remove();	
 							delete _t.uploadInfo[$(this).attr('id')];
+							for(var i=0; i<_t.waiting.length; i++) {
+							    if(_t.waiting[i] == $(this).attr('id')) {
+							      _t.waiting.splice(i, 1);
+							      break;
+							    }
+							}
 						}
 					});
 					$("#"+ files[i].id+"input").click(function(e) {
@@ -231,6 +237,11 @@ function mutiFileUpload(model_name,complete){
 			},
 			onQueueComplete: function(msg) {
 				layer.close(index);
+				_t.uploadInfo = {};
+				$('.dz-edit').each(function(){
+					$(this).removeClass('.dz-edit');
+					$(this).addClass('.dz-add');
+				});
 			},
 			onUploadError: function(status, msg) {
 				$("#i_error_tips > span.text-message").append(msg + ", 状态码:" + status);
