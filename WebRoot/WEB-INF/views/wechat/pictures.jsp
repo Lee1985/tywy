@@ -118,7 +118,7 @@
 			window.location.href="./toWechatContact.do";
 		}
 		function toWechatWebsite() {
-			window.location.href="./toWechatWebsite.do";
+			window.location.href="./index.do";
 		}
 		function toWelcomeIndex() {
 			window.location.href="./welcomeIndex.do";

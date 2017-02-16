@@ -96,6 +96,28 @@ public class WeChatAlbumController extends BaseController {
 		map.put("parentid", parentid);
 		map.put("isDelete", "0");
 		List<WechatAlbumListT> albums = listTService.selectAll(map);
+		List<String> imageUuidList = new ArrayList<String>();
+		for(WechatAlbumListT entity : albums){
+			imageUuidList.add(entity.getImgUuid());
+		}
+		if(imageUuidList == null || imageUuidList.isEmpty()){
+			model.addAttribute("albums", albums);
+			return "wechat/differentArea";
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if(picList == null || picList.isEmpty()){
+			model.addAttribute("albums", albums);
+			return "wechat/differentArea";
+		}
+		Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
+		for(SystemPictureInfo pictureInfo : picList){
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for(WechatAlbumListT entity : albums){
+			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
+			entity.setSystemPictureInfo(pic);
+		}
+		
 		model.addAttribute("albums", albums);
 
 		return "wechat/differentArea";

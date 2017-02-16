@@ -91,12 +91,11 @@ public class WechatAlbumListTController extends BaseController {
 			info.setImgUuid(imgUuid);
 		}
 
-		String now = DateUtils.getDateTimeFormat(new Date());
-		info.setUpdateDate(now);
+		info.setUpdateDate(new Date());
 		info.setUpdateUser(systemUser.getId());
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
-			info.setCreateDate(now);
+			info.setCreateDate(new Date());
 			info.setCreateUser(systemUser.getId());
 			result = service.insert(info);
 			msg = "保存失败！";
@@ -121,8 +120,8 @@ public class WechatAlbumListTController extends BaseController {
 		try {
 			WechatAlbumListT uinfo = new WechatAlbumListT();
 			uinfo.setId(info.getId());
-			uinfo.setIsDelete(1);
-			uinfo.setUpdateDate(DateUtils.getDateTimeFormat(new Date()));
+			uinfo.setIsDelete("1");
+			uinfo.setUpdateDate(new Date());
 			uinfo.setUpdateUser(systemUser.getId());
 			result = service.update(uinfo);
 		} catch (Exception e) {

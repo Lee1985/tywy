@@ -67,7 +67,7 @@
 	}
 	
 	function formatOptions(value, row){
-		return '<a href="system/websiteBrandAlbumTList.do?brandId=' + row.id +'">维护图片</a>'
+		return '<a href="system/wechatAlbumListTList.do?albumId=' + row.id +'">维护图片</a>'
 	}
 </script>
 <style type="text/css">
@@ -130,10 +130,10 @@ div#rMenu {
 				<tr>
 					<th width="10%" data-options="field:'urlPath',align:'center',sortable:true,formatter:formatImg">专区封面</th>
 					<th width="15%" data-options="field:'albumName',align:'center',sortable:true">相册名称</th>
-					<th width="5%" data-options="field:'orderList',align:'center',sortable:true">排序</th>
+					<!-- <th width="5%" data-options="field:'orderList',align:'center',sortable:true">排序</th> -->
 					<th width="25%" data-options="field:'description',align:'center',sortable:true">相册描述</th>
 					<th width="5%" data-options="field:'status',align:'center',sortable:true,formatter:formatStatus">状态</th>
-					<th width="5%" data-options="field:'count',align:'center',sortable:true">照片数量</th>
+					<!-- <th width="5%" data-options="field:'count',align:'center',sortable:true">照片数量</th> -->
 					<th width="15%" data-options="field:'updateDateStr',align:'center',sortable:true">更新时间</th>
 					<th width="10%" data-options="field:'options',align:'center',sortable:true,formatter:formatOptions">操作</th>
 				</tr>

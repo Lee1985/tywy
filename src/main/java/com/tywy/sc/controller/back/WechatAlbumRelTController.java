@@ -27,6 +27,7 @@ import com.tywy.utils.UUIDUtil;
  */
 @Controller
 public class WechatAlbumRelTController extends BaseController {
+	
 	@Resource
 	private WechatAlbumRelTService service;
 

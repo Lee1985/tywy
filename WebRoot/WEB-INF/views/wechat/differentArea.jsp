@@ -29,7 +29,7 @@
            	<c:forEach items="${albums}" var="item">
            		<li>
 	           		<a href="javaScript:void(0)" onclick="toDetail('${item.id}')">
-	           			<img class="lazy"  alt="" width="10" height="10"  data-original="${item.urlPath}" alt="" />
+	           			<img class="lazy"  alt="" width="10" height="10"  data-original="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}"  src="downFileResult.do?${item.systemPictureInfo.urlPath}" alt="" />
 	           			<p>${item.serialNumber}</p>
 		           		<div class="single_select">
 		           			<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/>

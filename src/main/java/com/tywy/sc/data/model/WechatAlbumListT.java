@@ -1,6 +1,7 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.tywy.sc.base.entity.BaseEntity;
 
@@ -20,12 +21,16 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	private java.lang.String mediaId; // 微信素材id
 	private java.lang.String serialNumber; // 编号
 	private java.lang.String description; // 相册描述
-	private String createDate; // 创建时间
+	private Date createDate; // 创建时间
 	private java.lang.String createUser; // 创建者
-	private String updateDate; // 修改时间
+	private Date updateDate; // 修改时间
 	private java.lang.String updateUser; // 修改者
-	private java.lang.Integer isDelete; // 是否删除(1-是，0-否）
+	private java.lang.String isDelete; // 是否删除(1-是，0-否）
 	private java.lang.String urlPath; // 图片路径
+	
+	private String createDateStr;
+	private String updateDateStr;
+	private SystemPictureInfo systemPictureInfo;
 
 	/**
 	 * 获取属性
@@ -154,24 +159,6 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * 获取创建时间属性
-	 *
-	 * @return createDate
-	 */
-	public String getCreateDate() {
-		return createDate;
-	}
-
-	/**
-	 * 设置创建时间属性
-	 *
-	 * @param createDate
-	 */
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
 	 * 获取创建者属性
 	 *
 	 * @return createUser
@@ -187,24 +174,6 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	 */
 	public void setCreateUser(java.lang.String createUser) {
 		this.createUser = createUser;
-	}
-
-	/**
-	 * 获取修改时间属性
-	 *
-	 * @return updateDate
-	 */
-	public String getUpdateDate() {
-		return updateDate;
-	}
-
-	/**
-	 * 设置修改时间属性
-	 *
-	 * @param updateDate
-	 */
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	/**
@@ -225,30 +194,60 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 		this.updateUser = updateUser;
 	}
 
-	/**
-	 * 获取是否删除(1-是，0-否）属性
-	 *
-	 * @return isDelete
-	 */
-	public java.lang.Integer getIsDelete() {
-		return isDelete;
-	}
-
-	/**
-	 * 设置是否删除(1-是，0-否）属性
-	 *
-	 * @param isDelete
-	 */
-	public void setIsDelete(java.lang.Integer isDelete) {
-		this.isDelete = isDelete;
-	}
-
 	public java.lang.String getUrlPath() {
 		return urlPath;
 	}
 
 	public void setUrlPath(java.lang.String urlPath) {
 		this.urlPath = urlPath;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public java.lang.String getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(java.lang.String isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public String getCreateDateStr() {
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
+
+	public String getUpdateDateStr() {
+		return updateDateStr;
+	}
+
+	public void setUpdateDateStr(String updateDateStr) {
+		this.updateDateStr = updateDateStr;
+	}
+
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
 	}
 
 }

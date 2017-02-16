@@ -114,7 +114,7 @@ function singleIconCommonUpload(model_name,complete){
 	return new Stream(config);
 }
 
-function mutiFileUpload(model_name,complete){
+function mutiFileUpload(model_name,complete,queueComplete){
 	/**
 	 * 配置文件（如果没有默认字样，说明默认值就是注释下的值）
 	 * 但是，on*（onSelect， onMaxSizeExceed...）等函数的默认行为
@@ -133,7 +133,7 @@ function mutiFileUpload(model_name,complete){
 			browseFileId : "uploadForm", /** 文件选择的Dom Id，如果不指定，默认是i_select_files */
 			dragAndDropTips : $('#DropUploadMessage').text().trim(),
 			dragAndDropArea: "uploadForm",
-			postVarsPerFile:{model: "website_company_qualification"},
+			postVarsPerFile:{model: model_name},
 			tokenURL:"/tywy/tk",
 			uploadURL:"/tywy/upload",
 			onSelect: function(files) {
@@ -242,6 +242,9 @@ function mutiFileUpload(model_name,complete){
 					$(this).removeClass('.dz-edit');
 					$(this).addClass('.dz-add');
 				});
+				if(queueComplete && typeof(queueComplete)=="function"){
+					queueComplete(msg);
+				}
 			},
 			onUploadError: function(status, msg) {
 				$("#i_error_tips > span.text-message").append(msg + ", 状态码:" + status);
