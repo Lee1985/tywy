@@ -153,6 +153,6 @@ public class WebsiteNewsTController extends BaseController {
 			// TODO: handle exception
 		}
 
-		return getJsonResult(result,"操作成功", "删除失败！");
+		return getJsonResult(result,"操作成功", "操作失败！");
 	}
 }

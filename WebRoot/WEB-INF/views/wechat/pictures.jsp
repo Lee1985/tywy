@@ -43,8 +43,8 @@
 			<div class="picture_box">
 				<c:forEach items="${albums}" var="item">
 					<a href="javaScript:void(0)" onclick="toZone('${item.id}')">
-						<img src="${item.urlPath}" alt="${item.name}" />
-						<p>${item.name}</p>
+						<img src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" alt="${item.albumName}" />
+						<p>${item.albumName}</p>
 					</a>
 				</c:forEach>
 				<!-- <a href="javaScript:void(0)" onclick="toZone()">

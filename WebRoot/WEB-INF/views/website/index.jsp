@@ -157,6 +157,7 @@
 	   			 var rows = data.rows;
 	   			 if(rows && rows.length > 0){
 	   				 var arr = new Array();
+	   				 var arr1 = new Array();
 	   				 $.each(rows,function(key,value){
 	   					 var arr_1 = new Array();
 	   					 arr_1.push('downFileResult.do?urlPath=' + value.systemPictureInfo.urlPath);
@@ -165,6 +166,11 @@
 	   					 arr_1.push(value.caseName);
 	   					 arr_1.push(value.engText);
 	   					 arr.push(arr_1);
+	   					 if(value.targetUrl && $.trim(value.targetUrl) != ''){
+	   						 arr1.push(value.targetUrl);
+	   					 }else{
+	   						arr1.push('#');
+	   					 }
 	   				 });
 	   				 
 	   				 if(arr.length > 0){
@@ -172,7 +178,7 @@
 	   					$(".case_box").height(w/2.2);
 	   					$(".box").height(w*0.67/1.8);
 	   					$(".js-box").height(w/1.96);
-	   					var arr1=["news1.html","news.html","news0.html"];
+	   					//var arr1=["news1.html","news.html","news0.html"];
 	   					$(".bigpic img").attr("src",arr[0][0]);
 	   					$(".case_title .chinese_word").text(arr[0][2]);
 	   					$(".case_title .english_word").text(arr[0][3]);

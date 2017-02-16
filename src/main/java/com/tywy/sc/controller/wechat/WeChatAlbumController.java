@@ -14,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.data.model.WechatAlbumRelT;
 import com.tywy.sc.data.model.WechatElectronicAlbumT;
 import com.tywy.sc.data.model.WechatHomepageAlbumT;
+import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WechatAlbumListTService;
 import com.tywy.sc.services.WechatAlbumRelTService;
 import com.tywy.sc.services.WechatElectronicAlbumTService;
@@ -40,6 +42,8 @@ public class WeChatAlbumController extends BaseController {
 	private WechatAlbumListTService listTService;
 	@Resource
 	private WechatAlbumRelTService relTService;
+	@Resource
+	private SystemPictureInfoService systemPictureInfoService;
 
 	/**
 	 * 跳转电子相册
@@ -56,7 +60,24 @@ public class WeChatAlbumController extends BaseController {
 		model.addAttribute("carousels", carousels);
 
 		// 获取专区
+		map.put("status", "1");
 		List<WechatElectronicAlbumT> albums = electronicService.selectAll(map);
+		List<String> imageUuidList = new ArrayList<String>();
+		for(WechatElectronicAlbumT entity : albums){
+			imageUuidList.add(entity.getImgUuid());
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if(picList == null || picList.isEmpty()){
+			return "wechat/pictures";
+		}
+		Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
+		for(SystemPictureInfo pictureInfo : picList){
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for(WechatElectronicAlbumT entity : albums){
+			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
+			entity.setSystemPictureInfo(pic);
+		}
 		model.addAttribute("albums", albums);
 
 		// 当前登陆用户的id

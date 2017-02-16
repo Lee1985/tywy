@@ -8,14 +8,14 @@
         <id property="id" column="id"/>
         <result property="orderList" column="orderList"/>
         <result property="imgUuid" column="imgUuid"/>
-        <result property="name" column="name"/>
+        <result property="albumName" column="albumName"/>
         <result property="description" column="description"/>
         <result property="createDate" column="createDate"/>
         <result property="updateDate" column="updateDate"/>
         <result property="createUser" column="createUser"/>
         <result property="updateUser" column="updateUser"/>
         <result property="isDelete" column="isDelete"/>
-        <result property="urlPath" column="urlPath" />
+        <result property="status" column="status" />
     </resultMap>
     <!-- 动态sql -->
     <sql id="colomnResult">
@@ -23,14 +23,14 @@
 	     id,
 	     orderList,
 	     imgUuid,
-	     name,
-	     (select urlPath from system_picture_info where uuid=imgUuid ) urlPath,
+	     albumName,
 	     description,
 	     createDate,
 	     updateDate,
 	     createUser,
 	     updateUser,
-	     isDelete
+	     isDelete,
+	     status
 	 ]]>
     </sql>
     <insert id="insert">
@@ -39,25 +39,27 @@
             <if test="id!=null">id,</if>
             <if test="orderList!=null">orderList,</if>
             <if test="imgUuid!=null">imgUuid,</if>
-            <if test="name!=null">name,</if>
+            <if test="albumName!=null">albumName,</if>
             <if test="description!=null">description,</if>
             <if test="createDate!=null">createDate,</if>
             <if test="updateDate!=null">updateDate,</if>
             <if test="createUser!=null">createUser,</if>
             <if test="updateUser!=null">updateUser,</if>
             <if test="isDelete!=null">isDelete,</if>
+            <if test="status!=null">status,</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="id!=null">#{id},</if>
             <if test="orderList!=null">#{orderList},</if>
             <if test="imgUuid!=null">#{imgUuid},</if>
-            <if test="name!=null">#{name},</if>
+            <if test="albumName!=null">#{albumName},</if>
             <if test="description!=null">#{description},</if>
             <if test="createDate!=null">#{createDate},</if>
             <if test="updateDate!=null">#{updateDate},</if>
             <if test="createUser!=null">#{createUser},</if>
             <if test="updateUser!=null">#{updateUser},</if>
             <if test="isDelete!=null">#{isDelete},</if>
+            <if test="status!=null">#{status},</if>
         </trim>
     </insert>
 
@@ -67,13 +69,14 @@
             <if test="id!=null">id=#{id},</if>
             <if test="orderList!=null">orderList=#{orderList},</if>
             <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-            <if test="name!=null">name=#{name},</if>
+            <if test="albumName!=null">albumName=#{albumName},</if>
             <if test="description!=null">description=#{description},</if>
             <if test="createDate!=null">createDate=#{createDate},</if>
             <if test="updateDate!=null">updateDate=#{updateDate},</if>
             <if test="createUser!=null">createUser=#{createUser},</if>
             <if test="updateUser!=null">updateUser=#{updateUser},</if>
             <if test="isDelete!=null">isDelete=#{isDelete},</if>
+            <if test="status!=null">status=#{status},</if>
         </set>
         where
         id=#{id}
@@ -100,8 +103,8 @@
             <if test=" imgUuid != null and imgUuid != '' ">
                 and imgUuid=#{imgUuid}
             </if>
-            <if test=" name != null and name != '' ">
-                and name like '%${name}%'
+            <if test=" albumName != null and albumName != '' ">
+                and albumName like '%${albumName}%'
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -118,8 +121,11 @@
             <if test=" updateUser != null and updateUser != '' ">
                 and updateUser=#{updateUser}
             </if>
-            <if test=" isDelete != null ">
+            <if test="  isDelete != null and isDelete != '' ">
                 and isDelete=#{isDelete}
+            </if>
+            <if test="  status != null and status != '' ">
+                and status=#{status}
             </if>
         </where>
     </select>
@@ -141,8 +147,8 @@
             <if test=" imgUuid != null and imgUuid != '' ">
                 and imgUuid=#{imgUuid}
             </if>
-            <if test=" name != null and name != '' ">
-                and name like '%${name}%'
+            <if test=" albumName != null and albumName != '' ">
+                and albumName like '%${albumName}%'
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -159,8 +165,11 @@
             <if test=" updateUser != null and updateUser != '' ">
                 and updateUser=#{updateUser}
             </if>
-            <if test=" isDelete != null ">
+            <if test=" isDelete != null and isDelete != ''">
                 and isDelete=#{isDelete}
+            </if>
+            <if test=" status != null and status != ''">
+                and status=#{status}
             </if>
         </where>
         <if test="sort != null">
@@ -181,8 +190,8 @@
             <if test=" imgUuid != null and imgUuid != '' ">
                 and imgUuid=#{imgUuid}
             </if>
-            <if test=" name != null and name != '' ">
-                and name=#{name}
+            <if test=" albumName != null and albumName != '' ">
+                and albumName=#{albumName}
             </if>
             <if test=" description != null and description != '' ">
                 and description=#{description}
@@ -225,7 +234,7 @@
             #{idList}
         </foreach>
     </select>
-
+	
     <!-- 批量删除 -->
     <delete id="batchDelete" parameterType="java.util.List">
         delete from wechat_electronic_album_t where id in
@@ -241,13 +250,14 @@
             <if test="id!=null">id=#{id},</if>
             <if test="orderList!=null">orderList=#{orderList},</if>
             <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
-            <if test="name!=null">name=#{name},</if>
+            <if test="albumName!=null">albumName=#{albumName},</if>
             <if test="description!=null">description=#{description},</if>
             <if test="createDate!=null">createDate=#{createDate},</if>
             <if test="updateDate!=null">updateDate=#{updateDate},</if>
             <if test="createUser!=null">createUser=#{createUser},</if>
             <if test="updateUser!=null">updateUser=#{updateUser},</if>
             <if test="isDelete!=null">isDelete=#{isDelete},</if>
+            <if test="status!=null">status=#{status},</if>
         </set>
         where id in
         <foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

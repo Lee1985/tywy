@@ -94,7 +94,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         return pageInfo;
     }
 
-
     @Override
     public PageInfo<T> selectAll(T info, PageInfo<T> pageInfo) {
         try {

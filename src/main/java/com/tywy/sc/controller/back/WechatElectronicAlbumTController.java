@@ -35,8 +35,11 @@ import com.tywy.utils.UUIDUtil;
  */
 @Controller
 public class WechatElectronicAlbumTController extends BaseController {
+	
 	@Resource
 	private WechatElectronicAlbumTService service;
+	
+	
 	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
 
@@ -92,11 +95,11 @@ public class WechatElectronicAlbumTController extends BaseController {
 		}
 
 		String now = DateUtils.getDateTimeFormat(new Date());
-		info.setUpdateDate(now);
+		info.setUpdateDateStr(now);
 		info.setUpdateUser(systemUser.getId());
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
-			info.setCreateDate(now);
+			info.setCreateDateStr(now);
 			info.setCreateUser(systemUser.getId());
 			result = service.insert(info);
 			msg = "保存失败！";
@@ -121,8 +124,8 @@ public class WechatElectronicAlbumTController extends BaseController {
 		try {
 			WechatElectronicAlbumT uinfo = new WechatElectronicAlbumT();
 			uinfo.setId(info.getId());
-			uinfo.setIsDelete(1);
-			uinfo.setUpdateDate(DateUtils.getDateTimeFormat(new Date()));
+			uinfo.setIsDelete("1");
+			uinfo.setUpdateDateStr(DateUtils.getDateTimeFormat(new Date()));
 			uinfo.setUpdateUser(systemUser.getId());
 			result = service.update(uinfo);
 		} catch (Exception e) {
@@ -136,7 +139,7 @@ public class WechatElectronicAlbumTController extends BaseController {
 			// 删除旧图片
 			WechatElectronicAlbumT info = service.selectById(id);
 			if (info != null) {
-				String delRealPath = info.getUrlPath();
+				String delRealPath = info.getSystemPictureInfo().getUrlPath();
 				if (delRealPath != null) {
 					deleteFile(root + delRealPath);
 					SystemPictureInfo delp = new SystemPictureInfo();
