@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tywy.constant.CfgConstant;
 import com.tywy.constant.MessageConstanct;
 import com.tywy.sc.base.service.BaseServiceImpl;
@@ -29,6 +30,8 @@ import com.tywy.sc.services.WechatPubReplyTService;
 import com.tywy.sc.services.WechatUserInfoTService;
 import com.tywy.utils.DateUtils;
 import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.stream.config.Configurations;
+import com.tywy.utils.wechat.FileUpload;
 import com.tywy.utils.wechat.FormatXmlUtil;
 import com.tywy.utils.wechat.JSONUtil;
 import com.tywy.utils.wechat.NetWorkCenter;
@@ -203,12 +206,69 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		List<WechatAlbumListT> list = albumService.selectAll(map);
 		if (list != null && list.size() > 0) {
 			WechatAlbumListT album = list.get(0);
-			respMessage = new FormatXmlUtil().formatImgAnswer(from, to, album.getMediaId());
+
+			String mediaId = album.getMediaId();
+			if (StringUtils.isNotEmpty(mediaId) && album.getEffectDate() != null) {
+				// 1.1.检查微信的临时文件是否过期
+				if (new Date().compareTo(album.getEffectDate()) > 0) {
+					// 如果临时文件过期重新上传临时文件
+					mediaId = resendWechatMedia(album);
+				}
+			} else {
+				// 1.2.上传临时文件
+				mediaId = resendWechatMedia(album);
+			}
+
+			respMessage = new FormatXmlUtil().formatImgAnswer(from, to, mediaId);
 		} else {
 			respMessage = new FormatXmlUtil().formatTextAnswer(from, to, MessageConstanct.SEARCH_IMG_NONE_WORDS);
 		}
-		logger.debug("-----------------搜索图片--回复文本消息:{}-----------------", respMessage);
+		logger.debug("-----------------搜索图片--回复消息:{}-----------------", respMessage);
 		return respMessage;
+	}
+
+	/**
+	 * TODO 上传临时素材到微信服务器
+	 * 
+	 * @param album
+	 * @param token
+	 * @return
+	 */
+	private String resendWechatMedia(WechatAlbumListT album) {
+
+		// 1.获取token
+		String token = getAccessToken();
+		String mediaId = null;
+		if (StringUtils.isNotEmpty(token)) {
+
+			// 1.获取配置中文件的本地路径
+			String localPath = Configurations.getFileRepository();
+			String path = album.getUrlPath();
+			localPath = localPath + "/" + path;
+
+			// 2.获取微信请求的URL
+			String requestUrl = CfgConstant.ADD_MEDIA_URL.replace("_ACCESS_TOKEN", token).replace("_TYPE", "image");
+
+			try {
+				JSONObject jsonObject = FileUpload.send(requestUrl, localPath);
+				if (jsonObject.containsKey("errcode")) {
+					logger.debug("-----------------上传微信素材失败:{}-----------------", jsonObject);
+				} else {
+					// 更新mediaId
+					mediaId = (String) jsonObject.get("media_id");
+					Map<String, Object> map = new HashMap<>();
+					map.put("id", album.getId());
+					map.put("mediaId", mediaId);
+					map.put("effectDate", DateUtils.getNextDate(3));// 设置失效日期
+					albumService.update(map);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			logger.debug("-----------------搜索图片--获取token失败:{}-----------------", token);
+		}
+		return mediaId;
 	}
 
 	/**
@@ -238,8 +298,6 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 
 	/**
 	 * 获取access token
-	 *
-	 * @return
 	 */
 	private String getAccessToken() {
 		String requestUrl = CfgConstant.GET_ACCESSTOKEN_URL.replace("_APPID", CfgConstant.APPID).replace("_APPSECRET",

@@ -93,6 +93,7 @@ public class WechatHomepageAlbumTController extends BaseController {
 			WechatHomepageAlbumT info, StreamVO streamVO, String operType) {
 		int result = 0;
 		String msg = "";
+		info.setIsDelete(0);
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setCreateUser(getSessionUser(request).getId());
 			result = service.insertWithImage(info, streamVO);

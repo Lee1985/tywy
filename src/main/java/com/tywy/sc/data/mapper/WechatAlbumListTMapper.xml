@@ -18,6 +18,7 @@
 		<result property="updateUser" column="updateUser" />
 		<result property="isDelete" column="isDelete" />
 		<result property="urlPath" column="urlPath" />
+		<result property="effectDate" column="effectDate" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -29,6 +30,7 @@
 	     mediaId,
 	     serialNumber,
 	     (select urlPath from system_picture_info where uuid=imgUuid ) urlPath,
+	     effectDate,
 	     description,
 	     createDate,
 	     createUser,
@@ -52,6 +54,7 @@
 			     <if test="updateDate!=null">updateDate,</if>
 			     <if test="updateUser!=null">updateUser,</if>
 			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="effectDate!=null">effectDate,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -66,6 +69,7 @@
 			     <if test="updateDate!=null">#{updateDate},</if>
 			     <if test="updateUser!=null">#{updateUser},</if>
 			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="effectDate!=null">#{effectDate},</if>
 		</trim>
 	</insert>
 
@@ -84,6 +88,7 @@
 			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
 			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="effectDate!=null">effectDate=#{effectDate},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -134,8 +139,11 @@
 				<if test=" updateUser != null and updateUser != '' ">
 					and updateUser=#{updateUser} 
 				</if>
-				<if test=" isDelete != null and isDelete != '' ">
+				<if test=" isDelete != null">
 					and isDelete=#{isDelete} 
+				</if>
+				<if test=" effectDate != null and effectDate != '' ">
+					and effectDate=#{effectDate} 
 				</if>
 		</where>
 	</select>
@@ -184,6 +192,9 @@
 				<if test=" isDelete != null ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" effectDate != null and effectDate != '' ">
+					and effectDate=#{effectDate} 
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -230,6 +241,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" effectDate != null and effectDate != '' ">
+					and effectDate=#{effectDate} 
+				</if>
 		</where>
 	</select>
 	<!-- 根据主键查询信息 -->
@@ -238,7 +252,6 @@
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from wechat_album_list_t where 
-			
 			   	 id=#{id} 
 		]]>
 		
@@ -278,6 +291,7 @@
 			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
 			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="effectDate!=null">effectDate=#{effectDate},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

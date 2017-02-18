@@ -1,11 +1,15 @@
 package com.tywy.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 日期工具类
@@ -350,5 +354,24 @@ public class DateUtils {
 		DateFormat sdf = new SimpleDateFormat(dateFormat);
 		String str = sdf.format(date);
 		return str;
+	}
+
+	/**
+	 * 获取当前日期后第n天
+	 * 
+	 * @param n
+	 * @return String
+	 */
+	public static String getNextDate(int n) {
+		// 获取当前日期
+		Date date = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat(DATETIME_DEFAULT_FORMAT);
+		// 通过日历获取下一天日期
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_YEAR, +n);
+		String nextDate_1 = sf.format(cal.getTime());
+		System.out.println(nextDate_1);
+		return nextDate_1;
 	}
 }

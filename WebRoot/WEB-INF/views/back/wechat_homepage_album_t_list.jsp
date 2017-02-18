@@ -45,13 +45,13 @@
 		  doDelete('system/wechatHomepageAlbumTAjaxDelete.do');
 	  });
 	  
-	  $('#lockOpenBtn').click(function(){
+	/*   $('#lockOpenBtn').click(function(){
 		  doUpdateStatus('system/wechatHomepageCarouselAjaxUpdate.do',0);
 	  });
 	  
 	  $('#lockBtn').click(function(){
 		  doUpdateStatus('system/wechatHomepageCarouselAjaxUpdate.do',1);
-	  });
+	  }); */
 	  
 	});
 	
@@ -167,8 +167,8 @@ div#rMenu {
 			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addBtn">添加</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="deleteBtn">删除</a>	
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock_open" plain="true" id="lockOpenBtn">启用</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock" plain="true" id="lockBtn">禁用</a>
+			<!-- <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock_open" plain="true" id="lockOpenBtn">启用</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock" plain="true" id="lockBtn">禁用</a> -->
 		</div>
 		<div id="dlg-buttons">
 			<a href="javascript:void(0)" class="easyui-linkbutton c6"

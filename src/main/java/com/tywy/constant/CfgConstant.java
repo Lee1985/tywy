@@ -58,5 +58,9 @@ public class CfgConstant {
 	 * 创建个性化菜单
 	 */
 	public static String ADD_CONDITIONAL_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=_ACCESS_TOKEN";
+	/**
+	 * 新增临时素材
+	 */
+	public static String ADD_MEDIA_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=_ACCESS_TOKEN&type=_TYPE";
 
 }
