@@ -25,7 +25,7 @@
 		</header>-->
 		<!--header-->
 		<!--main-->
-		<input type="hidden" id="id" name="id" value="${album.id}">
+		<input type="hidden" id="id" name="id" value="${id}">
 		<main>
            	<div class="gallery-mask" id="gallery_mask">
 			    <div class="swiper-container" id="swiper_wrapper">
@@ -33,54 +33,13 @@
 				        <c:forEach items="${albums}" var="item">
 				            <div class="swiper-slide" id="${item.orderList}">
 				                <div class="swiper-pic">
-				                	<img alt="" id="1" data-src="${item.urlPath}" class="swiper-lazy" 
+				                	<img alt="" id="${item.orderList}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
 				                		 data-desc="${item.description}">
 				                    <div class="swiper-lazy-preloader"></div>
 				                </div>
 				            </div>
+			            	<div class="clearfix"></div>
 						</c:forEach>
-			            <!-- <div class="swiper-slide" id="gallery_2">
-			                <div class="swiper-pic"><img alt="" id="2" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="02享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网1">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_3">
-			                <div class="swiper-pic"><img alt="" id="3" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="03享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网2">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_4">
-			                <div class="swiper-pic"><img alt="" id="4"  data-src="images/wechat/js0.png" class="swiper-lazy" data-desc="04享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网3">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_5">
-			                <div class="swiper-pic"><img alt="" id="5"  data-src="images/wechat/js0.png" class="swiper-lazy" data-desc="05享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网4">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_6">
-			                <div class="swiper-pic"><img alt="" id="6" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="06享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网5">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_7">
-			                <div class="swiper-pic"><img alt="" id="8" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="07享受舒适惬意的慢生活 9款小清新阳光餐厅（来自：和家网）享受舒适惬意的慢生活 9款小清新阳光餐厅享受
-			                    和家网6">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div>
-			            <div class="swiper-slide" id="gallery_8">
-			                <div class="swiper-pic"><img alt="" id="9" data-src="images/wechat/big_pic.png" class="swiper-lazy" data-desc="08享受舒适惬意的慢生活 7">
-			                    <div class="swiper-lazy-preloader"></div>
-			                </div>
-			            </div> -->
-			            <div class="clearfix"></div>
 			        </div>
 			    </div>
 
@@ -101,7 +60,6 @@
 			    right: 0;
 			    bottom: 0;
 			    z-index: 904;
-			    background: rgba(0, 0, 0, 0.8);    
 			    position: absolute;
 			    left: 50%;
 			    top: 50% !important;

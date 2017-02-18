@@ -26,11 +26,8 @@
 				<div class="js-box">
 					<div class="slider">
 						<c:forEach items="${carousels}" var="item">
-							<div class="slide"><img src="${item.urlPath}"></div>
+							<div class="slide"><img src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}"></div>
 						</c:forEach>
-						<!-- <div class="slide"><img src="images/wechat/js0.png"></div>
-						<div class="slide"><img src="images/wechat/js1.png"></div>
-						<div class="slide"><img src="images/wechat/js0.png"></div> -->
 				    </div>
 				    <div class="js_word">
 				    	<p class="chinese">天雅地毯  印花地毯引领者</p>
@@ -47,30 +44,6 @@
 						<p>${item.albumName}</p>
 					</a>
 				</c:forEach>
-				<!-- <a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_kf.png" alt="客房区域" />
-					<p>客房区域</p>
-				</a>
-				<a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_zl.png" alt="走廊区域" />
-					<p>走廊区域</p>
-				</a>
-				<a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_yh.png" alt="宴会区域" />
-					<p>宴会区域</p>
-				</a>
-				<a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_cb.png" alt="餐包区域" />
-					<p>餐包区域</p>
-				</a>
-				<a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_yl.png" alt="娱乐区域" />
-					<p>娱乐区域</p>
-				</a>
-				<a href="javaScript:void(0)" onclick="toZone()">
-					<img src="images/wechat/icon_bg.png" alt="办公区域" />
-					<p>办公区域</p>
-				</a> -->
 			</div>
 		</main>
 		<!--main-->
@@ -124,7 +97,7 @@
 			window.location.href="./welcomeIndex.do";
 		}
 		function toCollection() {
-			window.location.href="./toCollection.do?userid="+${openid} ;
+			window.location.href="./toCollection.do?userid=${openid}";
 		}
 	</script>	
 </html>

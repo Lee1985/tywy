@@ -17,8 +17,23 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
-<script type="text/javascript" src="js/system/easy.js"></script>
+
 <style type="text/css">
+.ztree li span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0;
+	vertical-align: top;
+	*vertical-align: middle
+}
+
+div#rMenu {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	text-align: left;
+	padding: 2px;
+}
 #fm {
 	margin: 0;
 	padding: 10px 5px;
@@ -45,51 +60,6 @@
 	width: 200px;
 }
 </style>
-<script type="text/javascript">
-	function doEdit() {
-		var row = $('#dg').datagrid('getSelected');
-		if (row) {
-			$('#dlg').dialog('open').dialog('setTitle', '修改');
-			$('#fm').form('load', row);
-		}
-	}
-	function formatType(value, row) {    
-	    if (value == 1) {
-			return "首次关注";
-		} else if (value == 2) {
-			return "联系我们";
-		} else {
-			return "搜索图片";
-		}
-	}
-	function save() {
-		var index;
-		$('#fm').form('submit', {
-			onSubmit : function() {
-				var rr = $(this).form('enableValidation').form('validate');
-				if (rr) {
-					index = layer.load('操作中...请等待！', 0);
-				} else {
-					return false;
-				}
-			},
-			dataType : 'json',
-			success : function(result) {
-				var result = eval('(' + result + ')');
-				layer.close(index);
-				if (result.success) {
-					$('#dlg').dialog('close'); // close the dialog
-					$('#dg').datagrid('reload'); // reload the user data
-				} else {
-					$.messager.show({
-						title : '提示',
-						msg : result.msg
-					});
-				}
-			}
-		});
-	}
-</script>
 </head>
 
 <body>
@@ -100,9 +70,9 @@
 			toolbar:'#toolbar'">
 			<thead>
 				<tr>
-					<th data-options="field:'content',width:200,align:'center',sortable:true">内容</th>
-					<th data-options="field:'type',width:150,align:'center',sortable:true,formatter:formatType">位置</th>
-					<th data-options="field:'createDate',width:125,align:'center',sortable:true">创建时间</th>
+					<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 10%;">位置</th>
+					<th data-options="field:'content',align:'center',sortable:true" style="width: 50%;">内容</th>
+					<th data-options="field:'createDate',align:'center',sortable:true" style="width: 10%;">创建时间</th>
 				</tr>
 			</thead>
 		</table>
@@ -113,8 +83,9 @@
 			</div>
 		</div>
 	</div>
-	<div id="dlg" class="easyui-dialog" data-options="iconCls:'icon-save',resizable:true,modal:true"
-			style="width:400px;height:320px;padding:10px 20px;top:50px" closed="true" 
+	<div id="dlg" class="easyui-dialog"
+			data-options="iconCls:'icon-save',resizable:true,modal:true"
+			style="width:100%;height:100%;padding:10px 20px" closed="true"
 			buttons="#dlg-buttons">
 			<div class="ftitle">请完善以下信息！</div>
 			<form id="fm" name="fm" method="post"
@@ -131,9 +102,7 @@
 					</select>
 				</div>
 				<div class="fitem">
-					<label>内容 :</label> <input id="content" name="content"
-						class="easyui-textbox" style="height:100px;width: 200"
-						data-options="prompt:'内容',multiline:true,required:false,validType:'length[0,2000]'">
+					<label>内容 :</label> <textarea id="contentHtml" name="content"></textarea>
 				</div>
 			</form>
 		</div>
@@ -145,4 +114,98 @@
 				onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
 		</div>
 </body>
+
+<script type="text/javascript" src="js/system/easy.js"></script>
+<script type="text/javascript" src="js/system/keditor.js"></script>
+<script>
+	var basePath = "<%=basePath%>";
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('#contentHtml', {
+			width : '750px',
+			height:'300px',
+			cssPath : '../js/kingeditor/plugins/code/prettify.css',
+			//uploadJson : 'jsp/upload_json.jsp',
+			uploadJson : basePath + 'keUpload.do?model=webchat_reply_content',
+			fileManagerJson : 'jsp/file_manager_json.jsp',
+			allowFileManager : true,
+			items : [ 'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+        'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+        'anchor', 'link', 'unlink', 'media'],
+			afterChange : function() {
+				this.sync();// 这个是必须的,如果你要覆盖afterChange事件的话,请记得最好把这句加上.
+			},
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['fm'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['fm'].submit();
+				});
+			}
+		});
+		prettyPrint();
+	});
+	
+	var index;		
+	function save(){
+	  $('#fm').form('submit', {
+		onSubmit: function() {
+		      if(!validation()){
+		    	 return false;
+		      }
+		    },  
+	    dataType: 'json',
+	    success: function(result) {
+	      var result = eval('(' + result + ')');
+	      layer.close(index);
+	      if (result.success) {
+	        $('#dlg').dialog('close'); // close the dialog
+	        $('#dg').datagrid('reload'); // reload the menu data
+	      } else {
+	        $.messager.alert('错误信息', result.msg, 'error');
+	        return false;
+	      }
+	    }
+	  });
+	}
+	
+	function validation(){
+		var rr = $('#fm').form('enableValidation').form('validate');
+	    if (rr) {
+	    	index = layer.load('操作中...请等待！', 0);
+	    } else {
+	        return false;
+	    }
+	    return true;
+	}
+</script>
+<script type="text/javascript">
+	function doEdit() {
+		var row = $('#dg').datagrid('getSelected');
+		if (row) {
+			editor.html(row.content);
+			$('#dlg').dialog('open').dialog('setTitle', '修改');
+			$('#fm').form('load', row);
+		}
+	}
+	function formatType(value, row) {    
+	    if (value == 1) {
+			return "首次关注";
+		} else if (value == 2) {
+			return "联系我们";
+		} else {
+			return "搜索图片";
+		}
+	}
+</script>
+
 </html>

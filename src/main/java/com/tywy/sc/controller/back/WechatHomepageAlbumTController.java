@@ -1,6 +1,8 @@
 package com.tywy.sc.controller.back;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,24 +10,20 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.tywy.constant.FileConstant;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
-import com.tywy.sc.data.model.FileInfo;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.SystemUser;
 import com.tywy.sc.data.model.WechatHomepageAlbumT;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WechatHomepageAlbumTService;
 import com.tywy.utils.DateUtils;
-import com.tywy.utils.FileTool;
-import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.stream.util.StreamVO;
 
 /**
  * 
@@ -41,25 +39,47 @@ public class WechatHomepageAlbumTController extends BaseController {
 	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
 
-	@RequestMapping(value = "/wechatHomepageAlbumTList")
+	@RequestMapping(value = "system/wechatHomepageAlbumTList")
 	public String wechatHomepageAlbumTList(HttpServletRequest request, HttpServletResponse response) {
-		return "/back/wechat_homepage_album_t_list";
+		return "back/wechat_homepage_album_t_list";
 	}
 
-	@RequestMapping(value = "/wechatHomepageAlbumTAjaxPage")
+	@RequestMapping(value = "system/wechatHomepageAlbumTAjaxPage")
 	@ResponseBody
 	public PageInfo<WechatHomepageAlbumT> wechatHomepageAlbumTAjaxPage(HttpServletRequest request,
 			HttpServletResponse response, WechatHomepageAlbumT info, Integer page, Integer rows) {
-		info.setOrder("asc");
-		info.setSort("orderList");
 		PageInfo<WechatHomepageAlbumT> pageInfo = new PageInfo<WechatHomepageAlbumT>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		info.setIsDelete(0);
+		info.setSort("orderList");
+		info.setOrder("asc");
 		service.selectAll(info, pageInfo);
+		List<WechatHomepageAlbumT> carouselList = pageInfo.getRows();
+		if (carouselList == null || carouselList.isEmpty()) {
+			return pageInfo;
+		}
+		List<String> imageUuidList = new ArrayList<String>();
+		for (WechatHomepageAlbumT weChatCarousel : carouselList) {
+			imageUuidList.add(weChatCarousel.getImgUuid());
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if (picList == null || picList.isEmpty()) {
+			return pageInfo;
+		}
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for (WechatHomepageAlbumT weChatCarousel : carouselList) {
+			SystemPictureInfo pic = picMap.get(weChatCarousel.getImgUuid());
+			weChatCarousel.setSystemPictureInfo(pic);
+		}
+		pageInfo.setRows(carouselList);
 		return pageInfo;
 	}
 
-	@RequestMapping(value = "/wechatHomepageAlbumTAjaxAll")
+	@RequestMapping(value = "system/wechatHomepageAlbumTAjaxAll")
 	@ResponseBody
 	public List<WechatHomepageAlbumT> wechatHomepageAlbumTAjaxAll(HttpServletRequest request,
 			HttpServletResponse response, WechatHomepageAlbumT info, Integer page, Integer rows) {
@@ -67,48 +87,30 @@ public class WechatHomepageAlbumTController extends BaseController {
 		return results;
 	}
 
-	@RequestMapping(value = "/wechatHomepageAlbumTAjaxSave")
+	@RequestMapping(value = "system/wechatHomepageAlbumTAjaxSave")
 	@ResponseBody
 	public Map<String, Object> wechatHomepageAlbumTAjaxSave(HttpServletRequest request, HttpServletResponse response,
-			WechatHomepageAlbumT info) {
+			WechatHomepageAlbumT info, StreamVO streamVO, String operType) {
 		int result = 0;
 		String msg = "";
-
-		SystemUser systemUser = getSessionUser(request);
-		if (systemUser == null) {
-			return getJsonResult(result, "操作成功", "session过期请登录");
-		}
-
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		String root = request.getSession().getServletContext().getRealPath("/") + "\\";
-		// 上传图片
-		String imgUuid = UUIDUtil.getUUID();
-		MultipartFile picture = multipartRequest.getFile("headImg");
-		if (picture != null && picture.getSize() > 0) {
-			// 删除旧图片
-			deleteImg(info.getId(), root);
-			// 新图片处理
-			saveImg(root, imgUuid, picture);
-			info.setImgUuid(imgUuid);
-		}
-
-		String now = DateUtils.getDateTimeFormat(new Date());
-		info.setUpdateDate(now);
-		info.setUpdateUser(systemUser.getId());
 		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
-			info.setCreateDate(now);
-			info.setCreateUser(systemUser.getId());
-			result = service.insert(info);
+			info.setCreateUser(getSessionUser(request).getId());
+			result = service.insertWithImage(info, streamVO);
 			msg = "保存失败！";
 		} else {
-			result = service.update(info);
+			// 根据opertyp判断是否需要上传
+			if (StringUtils.isBlank(operType)) {
+				result = service.update(info);
+			} else {
+				result = service.updateWithImage(info, streamVO);
+			}
 			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功", msg);
+
 	}
 
-	@RequestMapping(value = "/wechatHomepageAlbumTAjaxDelete")
+	@RequestMapping(value = "system/wechatHomepageAlbumTAjaxDelete")
 	@ResponseBody
 	public Map<String, Object> wechatHomepageAlbumTAjaxDelete(HttpServletRequest request, HttpServletResponse response,
 			WechatHomepageAlbumT info) {
@@ -132,38 +134,16 @@ public class WechatHomepageAlbumTController extends BaseController {
 		return getJsonResult(result, "操作成功", "删除失败！");
 	}
 
-	private int deleteImg(String id, String root) {
-		if (id != null && !id.equals("")) {
-			// 删除旧图片
-			WechatHomepageAlbumT info = service.selectById(id);
-			if (info != null) {
-				String delRealPath = info.getUrlPath();
-				if (delRealPath != null) {
-					deleteFile(root + delRealPath);
-					SystemPictureInfo delp = new SystemPictureInfo();
-					delp.setUuid(info.getImgUuid());
-					systemPictureInfoService.delete(delp);
-				}
-			}
+	@RequestMapping(value = "system/wechatHomepageCarouselAjaxUpdate")
+	@ResponseBody
+	public Map<String, Object> wechatHomepageCarouselAjaxUpdate(HttpServletRequest request,
+			HttpServletResponse response, WechatHomepageAlbumT info) {
+		int result = 0;
+		try {
+			result = service.update(info);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		return 0;
-	}
-
-	private int saveImg(String root, String uuid, MultipartFile listfile) {
-		String pathTmp = FileConstant.UPLOAD_WECHAT_CAROUSELIMG_PATH + "/";
-		String path = pathTmp + DateUtils.toString(new Date(), "yyyy/MM/dd") + "/";
-		FileInfo imageInfo = FileTool.saveFile(listfile, root + path, 0, 0);
-
-		SystemPictureInfo pictureInfo = new SystemPictureInfo();
-		pictureInfo.setId(UUIDUtil.getUUID());
-		pictureInfo.setUuid(uuid);
-		pictureInfo.setUrlPath(path + imageInfo.getRealName());
-		pictureInfo.setFwidth(imageInfo.getWidth());
-		pictureInfo.setFheight(imageInfo.getHeight());
-		pictureInfo.setName(imageInfo.getRealName());
-		pictureInfo.setSuffix(imageInfo.getSuffix());
-		pictureInfo.setCdate(DateUtils.toString(new Date(), "yyyy-MM-dd HH:mm:ss"));
-		int result = systemPictureInfoService.insert(pictureInfo);
-		return result;
+		return getJsonResult(result, "操作成功", "删除失败！");
 	}
 }

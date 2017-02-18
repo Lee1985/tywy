@@ -15,7 +15,6 @@
 		<result property="updateDate" column="updateDate" />
 		<result property="updateUser" column="updateUser" />
 		<result property="isDelete" column="isDelete" />
-		<result property="urlPath" column="urlPath" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -23,7 +22,6 @@
 	     id,
 	     orderList,
 	     imgUuid,
-	     (select urlPath from system_picture_info where uuid=imgUuid ) urlPath,
 	     name,
 	     description,
 	     createDate,
@@ -258,4 +256,10 @@
 			#{idList}
 		</foreach>
 	</update>
+	
+	<!-- 查询最大序号  -->
+	<select id="selectMaxOrderList" resultType="int">
+		select max(orderList) from wechat_homepage_album_t
+	</select>
+	
 </mapper> 

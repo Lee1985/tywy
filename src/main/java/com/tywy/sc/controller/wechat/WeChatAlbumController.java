@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WechatAlbumListT;
-import com.tywy.sc.data.model.WechatAlbumRelT;
 import com.tywy.sc.data.model.WechatElectronicAlbumT;
 import com.tywy.sc.data.model.WechatHomepageAlbumT;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WechatAlbumListTService;
-import com.tywy.sc.services.WechatAlbumRelTService;
 import com.tywy.sc.services.WechatElectronicAlbumTService;
 import com.tywy.sc.services.WechatHomepageAlbumTService;
 
@@ -41,8 +39,6 @@ public class WeChatAlbumController extends BaseController {
 	@Resource
 	private WechatAlbumListTService listTService;
 	@Resource
-	private WechatAlbumRelTService relTService;
-	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
 
 	/**
@@ -57,24 +53,37 @@ public class WeChatAlbumController extends BaseController {
 		map.put("order", "asc");
 		map.put("isDelete", "0");
 		List<WechatHomepageAlbumT> carousels = albumTService.selectAll(map);
+		List<String> imgUuidList = new ArrayList<String>();
+		for (WechatHomepageAlbumT entity : carousels) {
+			imgUuidList.add(entity.getImgUuid());
+		}
+		List<SystemPictureInfo> carouselList = systemPictureInfoService.selectByUuids(imgUuidList);
+		Map<String, SystemPictureInfo> carouselMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : carouselList) {
+			carouselMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for (WechatHomepageAlbumT entity : carousels) {
+			SystemPictureInfo pic = carouselMap.get(entity.getImgUuid());
+			entity.setSystemPictureInfo(pic);
+		}
 		model.addAttribute("carousels", carousels);
 
 		// 获取专区
 		map.put("status", "1");
 		List<WechatElectronicAlbumT> albums = electronicService.selectAll(map);
 		List<String> imageUuidList = new ArrayList<String>();
-		for(WechatElectronicAlbumT entity : albums){
+		for (WechatElectronicAlbumT entity : albums) {
 			imageUuidList.add(entity.getImgUuid());
 		}
 		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
-		if(picList == null || picList.isEmpty()){
+		if (picList == null || picList.isEmpty()) {
 			return "wechat/pictures";
 		}
-		Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
-		for(SystemPictureInfo pictureInfo : picList){
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
 			picMap.put(pictureInfo.getUuid(), pictureInfo);
 		}
-		for(WechatElectronicAlbumT entity : albums){
+		for (WechatElectronicAlbumT entity : albums) {
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
 			entity.setSystemPictureInfo(pic);
 		}
@@ -97,27 +106,27 @@ public class WeChatAlbumController extends BaseController {
 		map.put("isDelete", "0");
 		List<WechatAlbumListT> albums = listTService.selectAll(map);
 		List<String> imageUuidList = new ArrayList<String>();
-		for(WechatAlbumListT entity : albums){
+		for (WechatAlbumListT entity : albums) {
 			imageUuidList.add(entity.getImgUuid());
 		}
-		if(imageUuidList == null || imageUuidList.isEmpty()){
+		if (imageUuidList == null || imageUuidList.isEmpty()) {
 			model.addAttribute("albums", albums);
 			return "wechat/differentArea";
 		}
 		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
-		if(picList == null || picList.isEmpty()){
+		if (picList == null || picList.isEmpty()) {
 			model.addAttribute("albums", albums);
 			return "wechat/differentArea";
 		}
-		Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
-		for(SystemPictureInfo pictureInfo : picList){
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
 			picMap.put(pictureInfo.getUuid(), pictureInfo);
 		}
-		for(WechatAlbumListT entity : albums){
+		for (WechatAlbumListT entity : albums) {
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
 			entity.setSystemPictureInfo(pic);
 		}
-		
+
 		model.addAttribute("albums", albums);
 
 		return "wechat/differentArea";
@@ -127,24 +136,36 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转详情
 	 */
 	@RequestMapping(value = "/toGallery")
-	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String id) {
-
-		List<Map<String, Object>> resultList = new ArrayList<>();
-		Map<String, Object> resultMap = new HashMap<>();
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String id, String parentid) {
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("parentid", id);
-		List<WechatAlbumRelT> albumList = relTService.selectAll(map);
-		if (albumList != null && albumList.size() > 0) {
-			for (WechatAlbumRelT wechatAlbumRelT : albumList) {
-				resultMap.put("id", wechatAlbumRelT.getId());
-				resultMap.put("urlPath", wechatAlbumRelT.getUrlPath());
-				resultMap.put("orderList", wechatAlbumRelT.getOrderList());
-				resultMap.put("description", wechatAlbumRelT.getDescription());
-			}
-			resultList.add(resultMap);
+		map.put("parentid", parentid);
+		map.put("isDelete", "0");
+		List<WechatAlbumListT> albums = listTService.selectAll(map);
+		List<String> imageUuidList = new ArrayList<String>();
+		for (WechatAlbumListT entity : albums) {
+			imageUuidList.add(entity.getImgUuid());
 		}
-		model.addAttribute("albums", resultList);
+		if (imageUuidList == null || imageUuidList.isEmpty()) {
+			model.addAttribute("albums", albums);
+			return "wechat/gallery";
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if (picList == null || picList.isEmpty()) {
+			model.addAttribute("albums", albums);
+			return "wechat/gallery";
+		}
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for (WechatAlbumListT entity : albums) {
+			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
+			entity.setSystemPictureInfo(pic);
+		}
+
+		model.addAttribute("albums", albums);
+		model.addAttribute("id", id);
 
 		return "wechat/gallery";
 	}

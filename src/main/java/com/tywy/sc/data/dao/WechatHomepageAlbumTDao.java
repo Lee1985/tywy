@@ -7,4 +7,6 @@ import com.tywy.sc.data.model.WechatHomepageAlbumT;
  */
 public interface WechatHomepageAlbumTDao extends BaseDao<WechatHomepageAlbumT>{
 	public String sqlNameSpace=WechatHomepageAlbumTDao.class.getName();
+
+	Integer selectMaxOrderList();
 }

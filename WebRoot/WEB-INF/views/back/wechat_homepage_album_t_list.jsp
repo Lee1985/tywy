@@ -1,11 +1,10 @@
-<%@ page language="java" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" 
+			+ request.getServerPort() + path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -20,7 +19,71 @@
 <meta http-equiv="expires" content="0">
 <script type="text/javascript" src="js/system/easy.js"></script>
 <script type="text/javascript" src="js/system/base.js"></script>
+<!-- <script type="text/javascript" src="js/uploadPreview.js"></script> -->
 
+<script type="text/javascript">
+	$(function() {
+	  $('#addBtn').click(function(){
+		  doAdd(function(){
+			  $('#imgShow').attr('src','');
+			  $('#addImg').show();
+			  $('#imgShow').hide();
+			  $('#status').combobox('select', 1);
+		  });
+	  });
+	  
+	  $('#editBtn').click(function(){
+		  doEdit(function(row){
+			  console.log(row);
+			  $('#addImg').hide();			  
+			  $('#imgShow').attr('src','downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath);
+			  $('#imgShow').show();
+		  });
+	  });
+	  
+	  $('#deleteBtn').click(function(){
+		  doDelete('system/wechatHomepageAlbumTAjaxDelete.do');
+	  });
+	  
+	  $('#lockOpenBtn').click(function(){
+		  doUpdateStatus('system/wechatHomepageCarouselAjaxUpdate.do',0);
+	  });
+	  
+	  $('#lockBtn').click(function(){
+		  doUpdateStatus('system/wechatHomepageCarouselAjaxUpdate.do',1);
+	  });
+	  
+	});
+	
+	function formatImg(value, row) {
+		if(row.systemPictureInfo){
+			var url = 'downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath;
+			return "<img src="+ url +" style=\"height:90px;width:160px;background-color:#434343\"/>";	
+		}		
+	}
+	
+	function formatStatus(value, row) {
+		var view = (value == 1) ? '禁用' : '启用';
+		return view;
+	}
+</script>
+<style type="text/css">
+.ztree li span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0;
+	vertical-align: top;
+	*vertical-align: middle
+}
+
+div#rMenu {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	text-align: left;
+	padding: 2px;
+}
+</style>
 <style type="text/css">
 #fm {
 	margin: 0;
@@ -41,184 +104,150 @@
 
 .fitem label {
 	display: inline-block;
-	width: 60px;
+	width: 65px;
 }
 
 .fitem input {
-	width: 200px;
+	width: 280px;
 }
 </style>
-
-<script type="text/javascript">
-	function formatImg(value, row) {
-		return "<img src="+ row.urlPath +" style=\"height:50px;background-color:#434343\"/>";
-	}
-	function save() {
-		var src = $("#headImgs").attr('src');
-		if( src == ''){
-			$.messager.show({
-				title : '提示',
-				msg : '请上传图片'
-			});
-			return false;
-		}
-		var index;
-		$('#fm').form('submit', {
-			onSubmit : function() {
-				var rr = $(this).form('enableValidation').form('validate');
-				if (rr) {
-					index = layer.load('操作中...请等待！', 0);
-				} else {
-					return false;
-				}
-			},
-			dataType : 'json',
-			success : function(result) {
-				var result = eval('(' + result + ')');
-				layer.close(index);
-				if (result.success) {
-					$('#dlg').dialog('close'); // close the dialog
-					$('#dg').datagrid('reload'); // reload the user data
-				} else {
-					$.messager.show({
-						title : '提示',
-						msg : result.msg
-					});
-				}
-			}
-		});
-	}
-	function doAdd() {
-		$('#dlg').dialog('open').dialog('setTitle', '新建');
-		$('#fm').form('clear');
-		$('#headImgs').attr('src','images/add.jpg');
-	}
-	function doEdit() {
-		var row = $('#dg').datagrid('getSelected');
-		if (row) {
-			$('#dlg').dialog('open').dialog('setTitle', '修改');
-			$('#fm').form('load', row);
-			var headUrl = row.urlPath;
-			if (headUrl == '' || headUrl == null || headUrl == undefined) {
-				$('#headImgs').attr('src','images/add.jpg');
-			} else {
-				$("#headImgs").attr("src", headUrl);
-			}
-		}
-	}
-	function doDelete(url) {
-		var row = $('#dg').datagrid('getSelected');
-		if (row) {
-			$.messager.confirm('提示', '你确定要删除吗?', function(r) {
-				if (r) {
-					$.post(url, {
-						id : row.id
-					}, function(result) {
-						if (result.success) {
-							$('#dg').datagrid('reload'); // reload the user data
-						} else {
-							$.messager.show({ // show error message
-								title : '提示',
-								msg : result.msg
-							});
-						}
-					}, 'json');
-				}
-			});
-		}
-	}
-	function onChange(fileObj) {
-		var r = isimg(fileObj.value);
-		if(!r){
-			$.messager.show({
-				title : '提示',
-				msg : '图片格式不正确'
-			});
-			fileObj.value = "";
-			return ;
-		}
-		var reader = new FileReader();
-		reader.readAsDataURL(fileObj.files[0]);
-		reader.onload = function(e) {
-			$("#headImgs").attr("src", e.target.result);
-		};
-	}
-	function isDeleteStyler(value,row,index){
-		if (value ==1){
-			return 'background-color:#ccc;color:red;';
-		}
-	}
-	function formatIsDelete(value, row) {
-		var view = (value == 1) ? '是' : '否';
-		return view;
-	}
-</script>
 </head>
 
 <body>
 	<div style="width:100%;height:100%">
 		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
-			data-options="url:'wechatHomepageAlbumTAjaxPage.do', iconCls:'icon-save', 
+			data-options="url:'system/wechatHomepageAlbumTAjaxPage.do', iconCls:'icon-save', 
 			rownumbers:true, pagination:true, singleSelect:true, 
-			toolbar:'#toolbar'">
+			toolbar:'#toolbar',rowStyler:function(index,row){   
+	          if (row.isDelete==1){   
+            		return 'color:red;';   
+	          	}   
+	     	}">
 			<thead>
 				<tr>
-					<th data-options="field:'imgUuid',width:50,align:'left',sortable:true,formatter:formatImg">图片</th>
+					<th data-options="field:'urlPath',width:160,align:'left',sortable:true,formatter:formatImg">图片</th>
 					<th data-options="field:'orderList',width:200,align:'center',sortable:true">排序</th>
-					<th data-options="field:'updateDate',width:200,align:'center',sortable:true">修改时间</th>
-					<th data-options="field:'isDelete',width:80,align:'center',sortable:true,styler:isDeleteStyler,formatter:formatIsDelete">是否删除</th>
-<!-- 					<th data-options="field:'createDate',width:150,align:'center',sortable:true">创建时间</th>
-					<th data-options="field:'createUser',width:60,align:'center',sortable:true">创建者</th>
-					<th data-options="field:'updateUser',width:125,align:'center',sortable:true">修改者</th> -->
+					<th data-options="field:'isDelete',width:150,align:'center',sortable:true,formatter:formatStatus">状态</th>
+					<th data-options="field:'createDateStr',width:200,align:'center',sortable:true">上传时间</th>
 				</tr>
 			</thead>
 		</table>
-		<div id="toolbar">
-			<div style="margin-bottom:5px;">
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-add',plain:true" onclick="doAdd()">新建</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-edit',plain:true" onclick="doEdit()">修改</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-remove',plain:true"
-					onclick="doDelete('wechatHomepageAlbumTAjaxDelete.do')">删除</a>
-			</div>
+		<div id="dlg" class="easyui-dialog"
+			data-options="iconCls:'icon-save',resizable:true,modal:true"
+			style="width:400px;padding:10px 20px" closed="true"
+			buttons="#dlg-buttons">
+			<div class="ftitle">请完善以下信息！</div>
+			<form id="fm" name="fm" method="post" action="system/wechatHomepageAlbumTAjaxSave.do">
+				<div class="fitem">
+					<div style="float: left;margin-top: 25px;"><font color="red">*</font>图片:</div>
+					<div id="showImage" class="showImage" style="width:160px;height:90px;border:1px solid;margin-left:70px;cursor:pointer;text-align:center;" >
+						<!-- <img id="imgShow" class="imgShow" src="images/add.png" style="width:50px;height:50px;"/> -->
+						<img id="addImg" class="addImg" src="images/add.png" style="width:50px;height:50px;padding-top: 20px;"/>
+						<img id="imgShow" class="imgShow" src="" style="display:none;width:100%;height:100%;"/>
+					</div>
+					<div style="width:160px;margin-left:70px;text-align:center;" >建议比例(16:9)</div>
+					<!-- <img id="imgShow" class="imgShow" style="margin-left: 40px;cursor:pointer;background-color:#434343" src="images/add.png" /> -->
+					<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
+					<input type="hidden" id="idLabel" name="id" />
+					<input type="hidden" id="imgUuidLabel" name="imgUuid">
+					<input type="hidden" id="operType" name="operType">
+				</div>
+				<div class="fitem">
+					<label>状态:</label>
+					<select id="status" name="status" class="easyui-combobox" style="width:100px;" 
+						data-options="panelHeight:'auto',editable:false"
+						>
+						<option value="1" selected="selected">启用</option>
+						<option value="0">禁用</option>
+					</select>
+				</div>
+			</form>
+		</div>
+		<div id="toolbar">						
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addBtn">添加</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="deleteBtn">删除</a>	
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock_open" plain="true" id="lockOpenBtn">启用</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock" plain="true" id="lockBtn">禁用</a>
+		</div>
+		<div id="dlg-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6"
+				iconCls="icon-ok" onclick="uploadAndSave()" style="width:90px">确定</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
 		</div>
 	</div>
-	<div id="dlg" class="easyui-dialog"
-		data-options="iconCls:'icon-save',resizable:true,modal:true"
-		style="width:400px;height:500px;padding:10px 20px;" closed="true"
-		buttons="#dlg-buttons">
-		<div class="ftitle">请完善以下信息！</div>
-		<form id="fm" name="fm" method="post"
-			action="wechatHomepageAlbumTAjaxSave.do"
-			data-options="novalidate:true" enctype="multipart/form-data">
-			<input type="hidden" id="id" name="id">
-			<div class="fitem" style="float: left;">
-				<label>图片(建议800*400)</label> <img id="headImgs" alt="" src=""
-					style="width: 200px;height: 100px" onclick="headImg.click()">
-				<label>&nbsp;</label> <input type="file" id="headImg"
-					name="headImg" style="width:200px;display: none"
-					onChange="onChange(this)"
-					data-options="prompt:'选择轮播图片...',required:true">
-			</div>
-			<div class="fitem">
-				<label>排序:</label> <input id="orderList" name="orderList"
-					class="easyui-textbox" data-options="required:true">
-			</div>
-			<div class="fitem" style="float: left;">
-				<label>描述:</label> <input id="description" name="description"
-					class="easyui-textbox" style="height:200px;width: 200"
-					data-options="prompt:'描述信息',multiline:true,required:false,validType:'length[0,2000]'">
-			</div>
-		</form>
-	</div>
-	<div id="dlg-buttons">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6"
-			data-options="iconCls:'icon-ok'" onclick="save()" style="width:90px">确定</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton"
-			data-options="iconCls:'icon-cancel'"
-			onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
-	</div>
+	<script type="text/javascript" src="js/stream/js/stream-v1.js"></script>
+	<script type="text/javascript" src="js/stream/js/stream-upload-util.js"></script>
+	<script type="text/javascript">
+	 	  var index;
+		  var stream = singleCommonUpload('wechat_homepage_album_t',function(file){
+		      var inputs = ''; 
+			  for(var prop in file){
+				  var value = file[prop];
+				  if(prop == 'id'){
+					  continue;
+				  }
+				  if($('input[name="' + prop + '"]').size() <= 0){
+					  inputs += '<input type="hidden" id="'+prop+'" name="'+prop+'" value="'+value+'" />';
+				  }else{
+					  $('input[name="' + prop + '"]').remove();
+					  inputs += '<input type="hidden" id="'+prop+'" name="'+prop+'" value="'+value+'" />';
+				  }
+			  }  
+			  $('#fm').append(inputs);
+			  save();	
+		});
+		
+		function uploadAndSave(){
+			var operType = $('#operType').val();
+			if(operType == ''){
+				//不上传图片,直接进行操作
+				if(!validation()){
+					return false;
+				}
+				save();
+				return false;	
+			}
+			if(!validation()){
+				return false;
+			}
+			stream.upload();
+		}
+		
+		function save(){
+		  $('#fm').form('submit', {
+		    dataType: 'json',
+		    success: function(result) {
+		      var result = eval('(' + result + ')');
+		      console.log(result);
+		      layer.close(index);
+		      if (result.success) {
+		        $('#dlg').dialog('close'); // close the dialog
+		        $('#dg').datagrid('reload'); // reload the menu data
+		      } else {
+		        $.messager.alert('错误信息', result.msg, 'error');
+		        return false;
+		      }
+		    }
+		  });
+		}
+		
+		function validation(){
+			var src = $('#imgShow').attr('src');
+			if (src == '') {
+		        $.messager.alert('错误信息', '请上传图片!', 'error');
+		        return false;
+		    }
+			var rr = $('#fm').form('enableValidation').form('validate');
+		    if (rr) {
+		    	index = layer.load('操作中...请等待！', 0);
+		    } else {
+		        return false;
+		    }
+		    return true;
+		}
+	</script>
 </body>
 </html>
