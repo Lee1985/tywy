@@ -130,7 +130,7 @@ div#rMenu {
 				<tr>
 					<th width="10%" data-options="field:'urlPath',align:'center',sortable:true,formatter:formatImg">专区封面</th>
 					<th width="15%" data-options="field:'albumName',align:'center',sortable:true">相册名称</th>
-					<!-- <th width="5%" data-options="field:'orderList',align:'center',sortable:true">排序</th> -->
+					<th width="5%" data-options="field:'orderList',align:'center',sortable:true">排序</th>
 					<th width="25%" data-options="field:'description',align:'center',sortable:true">相册描述</th>
 					<th width="5%" data-options="field:'status',align:'center',sortable:true,formatter:formatStatus">状态</th>
 					<!-- <th width="5%" data-options="field:'count',align:'center',sortable:true">照片数量</th> -->
@@ -161,6 +161,10 @@ div#rMenu {
 				<div class="fitem">
 					<label><font color="red">*</font>相册名称:</label>
 					<input id="albumNameLabel" name="albumName" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,25]'"/>
+				</div>
+				<div class="fitem">
+					<label>排序:</label>
+					<input id="orderListLabel" name="orderList" style="width: 200px" class="easyui-numberbox" data-options="min:1"/>
 				</div>
 				<div class="fitem">
 					<label>状态:</label>

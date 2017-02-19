@@ -29,12 +29,12 @@ public class WebsiteCarouselTServiceImpl extends BaseServiceImpl<WebsiteCarousel
 	@Pictureable
 	public int insertWithImage(WebsiteCarouselT info, @PictureKey StreamVO streamVO) {
 		info.setId(UUIDUtil.getUUID());
-		info.setType(1);		
+		info.setType(1);	
 		Integer maxOrderList = websiteCarouselTDao.selectMaxOrderList();
 		if(maxOrderList == null){
 			info.setOrderList(1);
 		}else{
-			info.setOrderList(maxOrderList + 1); 
+			info.setOrderList(maxOrderList + 1);
 		}
 		info.setCreateDate(new Date());
 		info.setIsDelete(0);

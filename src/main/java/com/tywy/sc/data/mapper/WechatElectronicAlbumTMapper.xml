@@ -264,4 +264,13 @@
             #{idList}
         </foreach>
     </update>
+    
+    <!-- 查询最大序号  -->
+	<select id="selectMaxOrderList" resultType="int">
+		select max(orderList) from wechat_electronic_album_t
+	</select>
+	
+	<update id="updateOrderList" parameterType="int">
+		update wechat_electronic_album_t set orderList = orderList + 1 where orderList >= #{orderList}
+	</update>
 </mapper> 

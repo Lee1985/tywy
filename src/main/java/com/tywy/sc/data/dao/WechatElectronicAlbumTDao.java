@@ -8,4 +8,8 @@ import com.tywy.sc.data.model.WechatElectronicAlbumT;
  */
 public interface WechatElectronicAlbumTDao extends BaseDao<WechatElectronicAlbumT> {
     public String sqlNameSpace = WechatElectronicAlbumTDao.class.getName();
+
+	public Integer selectMaxOrderList();
+
+	public Integer updateOrderList(Integer orderList);
 }
