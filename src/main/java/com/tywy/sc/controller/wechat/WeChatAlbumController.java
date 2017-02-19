@@ -47,6 +47,9 @@ public class WeChatAlbumController extends BaseController {
 	@RequestMapping(value = "/welcomeIndex")
 	public String welcomeIndex(HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		// 当前登陆用户的id
+		model.addAttribute("openid", "o_rsSv19Shjb9U71kWm8QmWdfh_E");
+
 		// 获取轮播图
 		Map<String, Object> map = new HashMap<>();
 		map.put("sort", "orderList");
@@ -89,17 +92,24 @@ public class WeChatAlbumController extends BaseController {
 		}
 		model.addAttribute("albums", albums);
 
-		// 当前登陆用户的id
-		model.addAttribute("openid", "o_rsSv19Shjb9U71kWm8QmWdfh_E");
-
 		return "wechat/pictures";
 	}
 
 	/**
 	 * 跳转专区
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param parentid
+	 * @param albumName
+	 * @return
 	 */
 	@RequestMapping(value = "/toDiffArea")
-	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid) {
+	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
+			String albumName) {
+
+		model.addAttribute("title", albumName);
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
@@ -136,7 +146,8 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转详情
 	 */
 	@RequestMapping(value = "/toGallery")
-	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String id, String parentid) {
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String id,
+			String parentid) {
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);

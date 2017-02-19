@@ -257,14 +257,14 @@
 		
 	</select>
 	
-	<!-- 批量删除 -->
+	<!-- 根据id批量查询 -->
 	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
 		select
 		<include refid="colomnResult" /> 
 		 from wechat_album_list_t where id in
-		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-  			#{idList}
- 		</foreach>
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")"> 
+            #{item} 
+        </foreach> 
 	</select>
 		
 	<!-- 批量删除 -->

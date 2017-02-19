@@ -18,79 +18,66 @@ public class WechatUserFavoriteT extends BaseEntity implements Serializable {
 	private java.lang.String imgUid; // 图片ID
 	private String createDate; // 收藏时间
 
+	private String urlPath;// 照片url
+	private List<String> idList;// 后台处理
+	private String ids;// 前台传入
 	private WechatAlbumListT album;// 照片
-	private List<String> idList;// 批量删除
+	private Integer sortFlag;// 排序标志1正序2倒叙
 
-	/**
-	 * 获取属性
-	 *
-	 * @return id
-	 */
 	public java.lang.String getId() {
 		return id;
 	}
 
-	/**
-	 * 设置属性
-	 *
-	 * @param id
-	 */
 	public void setId(java.lang.String id) {
 		this.id = id;
 	}
 
-	/**
-	 * 获取用户id属性
-	 *
-	 * @return userid
-	 */
 	public java.lang.String getUserid() {
 		return userid;
 	}
 
-	/**
-	 * 设置用户id属性
-	 *
-	 * @param userid
-	 */
 	public void setUserid(java.lang.String userid) {
 		this.userid = userid;
 	}
 
-	/**
-	 * 获取图片ID属性
-	 *
-	 * @return imgUid
-	 */
 	public java.lang.String getImgUid() {
 		return imgUid;
 	}
 
-	/**
-	 * 设置图片ID属性
-	 *
-	 * @param imgUid
-	 */
 	public void setImgUid(java.lang.String imgUid) {
 		this.imgUid = imgUid;
 	}
 
-	/**
-	 * 获取收藏时间属性
-	 *
-	 * @return createDate
-	 */
 	public String getCreateDate() {
 		return createDate;
 	}
 
-	/**
-	 * 设置收藏时间属性
-	 *
-	 * @param createDate
-	 */
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+
+	public List<String> getIdList() {
+		return idList;
+	}
+
+	public void setIdList(List<String> idList) {
+		this.idList = idList;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getUrlPath() {
+		return urlPath;
+	}
+
+	public void setUrlPath(String urlPath) {
+		this.urlPath = urlPath;
 	}
 
 	public WechatAlbumListT getAlbum() {
@@ -101,12 +88,12 @@ public class WechatUserFavoriteT extends BaseEntity implements Serializable {
 		this.album = album;
 	}
 
-	public List<String> getIdList() {
-		return idList;
+	public Integer getSortFlag() {
+		return sortFlag;
 	}
 
-	public void setIdList(List<String> idList) {
-		this.idList = idList;
+	public void setSortFlag(Integer sortFlag) {
+		this.sortFlag = sortFlag;
 	}
 
 }

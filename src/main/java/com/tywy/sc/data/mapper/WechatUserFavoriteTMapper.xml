@@ -9,9 +9,6 @@
 		<result property="userid" column="userid" />
 		<result property="imgUid" column="imgUid" />
 		<result property="createDate" column="createDate" />
-		<association property="album"
-			select="com.tywy.sc.data.dao.WechatElectronicAlbumTDao.selectById"
-			column="{imgUid}"></association>
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -25,26 +22,26 @@
 	<insert id="insert">
 	   insert into wechat_user_favorite_t  
 	   <trim prefix="(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">id,</if>
-			     <if test="userid!=null">userid,</if>
-			     <if test="imgUid!=null">imgUid,</if>
-			     <if test="createDate!=null">createDate,</if>
+		     <if test="id!=null">id,</if>
+		     <if test="userid!=null">userid,</if>
+		     <if test="imgUid!=null">imgUid,</if>
+		     <if test="createDate!=null">createDate,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
-			     <if test="id!=null">#{id},</if>
-			     <if test="userid!=null">#{userid},</if>
-			     <if test="imgUid!=null">#{imgUid},</if>
-			     <if test="createDate!=null">#{createDate},</if>
+		     <if test="id!=null">#{id},</if>
+		     <if test="userid!=null">#{userid},</if>
+		     <if test="imgUid!=null">#{imgUid},</if>
+		     <if test="createDate!=null">#{createDate},</if>
 		</trim>
 	</insert>
 
 	<update id="update">
 	   update wechat_user_favorite_t 
 	   <set>
-			     <if test="id!=null">id=#{id},</if>
-			     <if test="userid!=null">userid=#{userid},</if>
-			     <if test="imgUid!=null">imgUid=#{imgUid},</if>
-			     <if test="createDate!=null">createDate=#{createDate},</if>
+		     <if test="id!=null">id=#{id},</if>
+		     <if test="userid!=null">userid=#{userid},</if>
+		     <if test="imgUid!=null">imgUid=#{imgUid},</if>
+		     <if test="createDate!=null">createDate=#{createDate},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -62,18 +59,18 @@
 	<include refid="colomnResult" /> 
 	   from wechat_user_favorite_t
 	  <where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" userid != null and userid != '' ">
-					and userid=#{userid} 
-				</if>
-				<if test=" imgUid != null and imgUid != '' ">
-					and imgUid=#{imgUid} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
+			<if test=" id != null and id != '' ">
+				and id=#{id} 
+			</if>
+			<if test=" userid != null and userid != '' ">
+				and userid=#{userid} 
+			</if>
+			<if test=" imgUid != null and imgUid != '' ">
+				and imgUid=#{imgUid} 
+			</if>
+			<if test=" createDate != null and createDate != '' ">
+				and createDate=#{createDate} 
+			</if>
 		</where>
 	</select>
 	
@@ -85,24 +82,24 @@
 			from wechat_user_favorite_t
 		]]>
 		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" userid != null and userid != '' ">
-					and userid=#{userid} 
-				</if>
-				<if test=" imgUid != null and imgUid != '' ">
-					and imgUid=#{imgUid} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
-				<if test=" idList != null and idList != '' ">
-					imgUid in
-					<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
-			  			#{idList}
-			 		</foreach>
-				</if>
+			<if test=" id != null and id != '' ">
+				and id=#{id} 
+			</if>
+			<if test=" userid != null and userid != '' ">
+				and userid=#{userid} 
+			</if>
+			<if test=" imgUid != null and imgUid != '' ">
+				and imgUid=#{imgUid} 
+			</if>
+			<if test=" createDate != null and createDate != '' ">
+				and createDate=#{createDate} 
+			</if>
+			<if test=" idList != null and idList != '' ">
+				and imgUid in
+		 		<foreach collection="idList" index="index" item="item" open="(" separator="," close=")"> 
+		            #{item} 
+		        </foreach> 
+			</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -110,21 +107,20 @@
 	</select>
 	<!-- 根据条件查询数量 -->
 	<select id="selectCount"  resultType="int">
-
 		select count(id) from wechat_user_favorite_t
 		<where>
-				<if test=" id != null and id != '' ">
-					and id=#{id} 
-				</if>
-				<if test=" userid != null and userid != '' ">
-					and userid=#{userid} 
-				</if>
-				<if test=" imgUid != null and imgUid != '' ">
-					and imgUid=#{imgUid} 
-				</if>
-				<if test=" createDate != null and createDate != '' ">
-					and createDate=#{createDate} 
-				</if>
+			<if test=" id != null and id != '' ">
+				and id=#{id} 
+			</if>
+			<if test=" userid != null and userid != '' ">
+				and userid=#{userid} 
+			</if>
+			<if test=" imgUid != null and imgUid != '' ">
+				and imgUid=#{imgUid} 
+			</if>
+			<if test=" createDate != null and createDate != '' ">
+				and createDate=#{createDate} 
+			</if>
 		</where>
 	</select>
 	<!-- 根据主键查询信息 -->
@@ -133,7 +129,6 @@
 		<include refid="colomnResult" /> 
 		<![CDATA[
 			from wechat_user_favorite_t where 
-			
 			   	 id=#{id} 
 		]]>
 		

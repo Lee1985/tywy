@@ -22,7 +22,7 @@ public class WeChatMenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/toWechatWebsite")
 	public String toWechatWebsiteView() {
-		return "/wechat_official_website";
+		return "wechat_official_website";
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class WeChatMenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/toWechatAlbum")
 	public String toWechatAlbum() {
-		return "/wechat/index";
+		return "wechat/index";
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class WeChatMenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/toWechatContact")
 	public String toWechatContactView(HttpServletRequest request, HttpServletResponse response) {
-		return "/wechat/contact";
+		return "wechat/contact";
 	}
 
 }

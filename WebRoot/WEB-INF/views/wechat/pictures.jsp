@@ -39,7 +39,7 @@
 			</div>
 			<div class="picture_box">
 				<c:forEach items="${albums}" var="item">
-					<a href="javaScript:void(0)" onclick="toZone('${item.id}')">
+					<a href="javaScript:void(0)" onclick="toZone('${item.id}','${item.albumName}')">
 						<img src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" alt="${item.albumName}" />
 						<p>${item.albumName}</p>
 					</a>
@@ -84,8 +84,8 @@
 		});
 	</script>
 	<script type="text/javascript">
-		function toZone(id) {
-			window.location.href="./toDiffArea.do?parentid=" + id;
+		function toZone(id, albumName) {
+			window.location.href="./toDiffArea.do?parentid=" + id + "&albumName=" + albumName;
 		}
 		function toWechatContact() {
 			window.location.href="./toWechatContact.do";
