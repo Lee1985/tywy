@@ -65,7 +65,7 @@ public class WechatUserFavoriteTController extends BaseController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", info.getUserid());
 		map.put("sort", "createDate");
-		if (info.getSortFlag() !=null&&info.getSortFlag() == 2) {
+		if (info.getSortFlag() != null && info.getSortFlag() == 2) {
 			map.put("order", "asc");
 		} else {
 			map.put("order", "desc");
@@ -205,17 +205,20 @@ public class WechatUserFavoriteTController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/batchDeleteFavourite")
-	public void batchDeleteFavourite(HttpServletRequest request, HttpServletResponse response, List<String> idList) {
+	public void batchDeleteFavourite(HttpServletRequest request, HttpServletResponse response,
+			WechatUserFavoriteT favorite) {
 		int result = -1;
 		String msg = "";
-		if (idList == null) {
+		if (favorite.getIds() == null) {
 			writeJsonObject(response, result, "请求参数为空", null);
 		}
 		try {
-
-			List<WechatUserFavoriteT> favoriteTs = service.selectByIds(idList);
-			if (favoriteTs != null && favoriteTs.size() == idList.size()) {
-				result = service.batchDelete(idList);
+			// array转List<String>
+			List<String> idListOld = Arrays.asList(favorite.getIds().split("-"));
+			
+			List<WechatUserFavoriteT> favoriteTs = service.selectByIds(idListOld);
+			if (favoriteTs != null && favoriteTs.size() == idListOld.size()) {
+				result = service.batchDelete(idListOld);
 				if (result > 0) {
 					msg = "操作成功";
 				} else {

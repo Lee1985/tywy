@@ -164,6 +164,37 @@
 					}
 				}
 			}
+			
+			//点击收藏/取消收藏按钮
+			$(".sc_text").on("click",
+			function() {
+				var len = $(".single_select input:checked").length;
+				//判断是否需要调用后台接口服务
+				if (len > 0) {
+					//获取选中图片主键list
+					var idList = new Array();
+					$(".single_select input:checked").each(
+					function(){
+					    idList.push($(this).attr('id'));
+					});
+					//id用-拼接
+					var str = idList.join("-");
+					
+					var url = './batchDeleteFavourite.do';//收藏接口
+					var userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+					$.post(url, {
+						ids : str,
+						userid : userid
+					}, function(data) {
+						//提示消息
+						console.log(data.msg);
+						window.location.href="./toCollection.do?userid=" + userid;
+					}, 'json');
+				} else {
+					//提示消息，请选择需要收藏的图片
+					alert('请选择需要收藏的图片');
+				}
+			});
 		});
 	</script>
 </html>
