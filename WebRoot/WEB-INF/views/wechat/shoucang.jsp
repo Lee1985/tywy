@@ -120,7 +120,7 @@
 			
 			//全选所有日期
 			$(".select_all").on("click",function() {
-				$(".single_select,.single_all").find("input[name='single']").prop("checked", $(this).find("input").prop("checked"));
+				$(".single_select,.single_all").find("input[name^='single']").prop("checked", $(this).find("input").prop("checked"));
 				if ($(this).find("input").prop("checked")) {
 					$(".select_all label").text("取消全选");
 				} else {
