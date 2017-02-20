@@ -1,13 +1,11 @@
 $(document).ready(function () {
     var index = 0;//默认初始化的slide下标
-    //获取参数
-    //var hash = location.hash.replace("#", "");
-    var hash = $('#id').val();
+    var sear = window.location.search;//获取浏览器URL参数
+    var hash = sear.substr(4,32);
     var dom = $("#"+hash);
     if(-1 != $(dom).index()){
         index = $(dom).index();//获取当前页面要显示的第一张图片的下标
     }
-
 
     var len = $(".swiper-slide").length;
     _initGalleryInfo(index, len, dom);

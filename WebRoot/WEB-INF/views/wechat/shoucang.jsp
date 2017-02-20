@@ -93,9 +93,9 @@
 			//点击编辑时
 			$(".edit_text").on("click",
 			function() {
-				//          	$(this).parents(".edit_box").slideUp();
+				//$(this).parents(".edit_box").slideUp();
 				$(".single_all,.single_select,.sc_box.show_box,.sc_operate").show();
-				//          	$(".sc_box.show_box").slideDown();
+				//$(".sc_box.show_box").slideDown();
 			});
 			
 			//点击排序

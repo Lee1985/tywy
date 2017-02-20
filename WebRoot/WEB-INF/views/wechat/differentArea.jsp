@@ -21,7 +21,7 @@
 	<body class="gray_bg">
 		<main>
            <ul class="piclist_box">
-           	<c:forEach items="${albums}" var="item">
+           	<c:forEach items="${albums}" var="item" varStatus="status">
            		<li>
 	           		<a href="javaScript:void(0)" onclick="toDetail('${item.id}','${item.parentid}')">
 	           			<img class="lazy" alt="" width="10" height="10"  
@@ -136,7 +136,7 @@
 		});
 		
 		function toDetail(id, parentid) {
-			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid;
+			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid + "&title=${title}";
 		}
 	</script>
 </html>

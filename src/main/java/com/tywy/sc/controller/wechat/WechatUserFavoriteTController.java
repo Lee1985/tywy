@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -58,6 +59,10 @@ public class WechatUserFavoriteTController extends BaseController {
 			model.addAttribute("resultList", null);
 			model.addAttribute("flag", "-1");
 			return "wechat/shoucang";
+		}
+
+		if (info.getSortFlag() == null) {
+			info.setSortFlag(1);// 默认升序排列
 		}
 
 		List<Map<String, Object>> resultList = new ArrayList<>();
@@ -138,33 +143,39 @@ public class WechatUserFavoriteTController extends BaseController {
 
 		try {
 			// array转List<String>
-			List<String> idListOld = Arrays.asList(favorite.getIds().split("-"));
-			favorite.setIdList(idListOld);
+			List<String> list = Arrays.asList(favorite.getIds().split("-"));
+			favorite.setIdList(list);
 
-			List<String> idListNew = new ArrayList<>();
 			String userid = favorite.getUserid();
 
 			List<WechatUserFavoriteT> favoriteTs = service.selectAll(favorite);
 			if (CommonUtils.isCollectionNotEmpty(favoriteTs)) {
-				if (idListOld.size() == favoriteTs.size()) {
+				if (list.size() == favoriteTs.size()) {
 					writeJsonObject(response, 1, "您已经收藏这些图片", null);
 				} else {
+					List<String> idListOld = new ArrayList<String>();
+					List<String> idListNew = new ArrayList<String>();
 					// 增量更新
 					for (WechatUserFavoriteT wechatUserFavoriteT : favoriteTs) {
 						idListNew.add(wechatUserFavoriteT.getImgUid());
 					}
 
-					boolean flag = false;
-					// 去掉已经收收藏的图片
-					flag = idListOld.removeAll(idListNew);
+					Iterator<String> it = list.iterator();
+					while (it.hasNext()) {
+						String string = it.next();
+						idListOld.add(string);
+					}
 
-					if (CommonUtils.isCollectionNotEmpty(idListOld) && flag) {
+					// 去掉已经收收藏的图片
+					idListOld.removeAll(idListNew);
+
+					if (CommonUtils.isCollectionNotEmpty(idListOld)) {
 						result = insertNewFavourite(userid, idListOld);
 					}
 				}
 			} else {
 				// 完全新增
-				result = insertNewFavourite(userid, idListOld);
+				result = insertNewFavourite(userid, list);
 			}
 			if (result > 0) {
 				msg = "操作成功";
@@ -227,6 +238,50 @@ public class WechatUserFavoriteTController extends BaseController {
 					msg = "操作成功";
 				} else {
 					msg = "操作失败";
+				}
+			}
+			writeJsonObject(response, result, msg, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 收藏/取消收藏
+	 * 
+	 * @param request
+	 * @param response
+	 * @param favorite
+	 */
+
+	@RequestMapping(value = "/doFavourite")
+	public void doFavourite(HttpServletRequest request, HttpServletResponse response, WechatUserFavoriteT favorite) {
+		int result = -1;
+		String msg = "";
+		if (favorite == null) {
+			writeJsonObject(response, result, "请求参数为空", null);
+		}
+
+		String userid = favorite.getUserid();
+		String imgUid = favorite.getImgUid();
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("userid", userid);
+		map.put("imgUid", imgUid);
+		try {
+			// 判断图示是否被收藏
+			int count = service.selectCount(map);
+			if (count > 0) {
+				msg = "您已经给收藏该图片";
+			} else {
+				map.put("id", UUIDUtil.getUUID());
+				map.put("createDate", DateUtils.toString(new Date(), "yyyy-MM-dd HH:mm:ss"));
+				result = service.insert(map);
+				if (result > 0) {
+					msg = "操作成功";
+				} else {
+					msg = "操作失败";
+					System.err.println("----用户【" + userid + "】收藏图片id【" + imgUid + "】失败----");
 				}
 			}
 			writeJsonObject(response, result, msg, null);

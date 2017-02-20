@@ -146,9 +146,11 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转详情
 	 */
 	@RequestMapping(value = "/toGallery")
-	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String id,
-			String parentid) {
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
+			String title) {
 
+		model.addAttribute("title", title);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
 		map.put("isDelete", "0");
@@ -176,8 +178,6 @@ public class WeChatAlbumController extends BaseController {
 		}
 
 		model.addAttribute("albums", albums);
-		model.addAttribute("id", id);
-
 		return "wechat/gallery";
 	}
 

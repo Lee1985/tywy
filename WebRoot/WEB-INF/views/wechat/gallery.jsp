@@ -16,25 +16,19 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/swiper.min.css"/>
-		<title>客房专区_图集</title>
+		<title>${title}_图集</title>
 	</head>
 	<body>
-		<!--header-->
-		<!--<header>
-			<h1 class="title"><a href="javascript:history.go(-1);" class="back">返回</a>客房专区<a href="javasript:;" class="more"></a></h1>
-		</header>-->
-		<!--header-->
 		<!--main-->
-		<input type="hidden" id="id" name="id" value="${id}">
 		<main>
            	<div class="gallery-mask" id="gallery_mask">
 			    <div class="swiper-container" id="swiper_wrapper">
 			        <div class="swiper-wrapper">
-				        <c:forEach items="${albums}" var="item">
-				            <div class="swiper-slide" id="${item.orderList}">
+				        <c:forEach items="${albums}" var="item" varStatus="status">
+				            <div class="swiper-slide" id="${item.id}">
 				                <div class="swiper-pic">
-				                	<img alt="" id="${item.orderList}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
-				                		 data-desc="${item.description}">
+				                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
+				                		 imgUid="${item.id}" data-desc="${item.description}">
 				                    <div class="swiper-lazy-preloader"></div>
 				                </div>
 				            </div>
@@ -48,7 +42,7 @@
 			            <div class="gallery-bottom-page"><span id="page"></span><span id="img_desc"></span></div>
 			        </div>
 			    </div>
-		</div>
+			</div>
 		</main>
 		<!--main-->
 		<div class="sc_share">
@@ -83,7 +77,16 @@
 			});
 			//点击收藏按钮
 			$(".scang").on("click",function(){
-				$(this).toggleClass("selected");
+				//$(this).toggleClass("selected");
+				var url = './doFavourite.do';//收藏接口
+				var imgUid= $(".swiper-slide.swiper-slide-active").find('img').attr('imgUid');//获取图片的id
+				var userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+				$.post(url, {
+					imgUid : imgUid,
+					userid : userid
+				}, function(data) {
+					alert(data.msg);
+				}, 'json');
 			});
 			$(".share").on("click",function(){
 				$("#div_share_notice").css('display','block');
