@@ -2,6 +2,7 @@ package com.tywy.sc.controller.wechat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,11 +66,6 @@ public class WechatUserFavoriteTController extends BaseController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", info.getUserid());
 		map.put("sort", "createDate");
-		if (info.getSortFlag() != null && info.getSortFlag() == 2) {
-			map.put("order", "asc");
-		} else {
-			map.put("order", "desc");
-		}
 		List<WechatUserFavoriteT> favouriteList = service.selectAll(map);
 		if (favouriteList != null && favouriteList.size() > 0) {
 
@@ -106,6 +102,11 @@ public class WechatUserFavoriteTController extends BaseController {
 				mapNew.put("createdate", entry.getKey());
 				mapNew.put("entity", entry.getValue());
 				resultList.add(mapNew);
+			}
+
+			// 降序排列
+			if (info.getSortFlag() == 2) {
+				Collections.reverse(resultList);
 			}
 		}
 
@@ -145,19 +146,21 @@ public class WechatUserFavoriteTController extends BaseController {
 
 			List<WechatUserFavoriteT> favoriteTs = service.selectAll(favorite);
 			if (CommonUtils.isCollectionNotEmpty(favoriteTs)) {
-				// 增量更新
-				for (WechatUserFavoriteT wechatUserFavoriteT : favoriteTs) {
-					idListNew.add(wechatUserFavoriteT.getImgUid());
-				}
+				if (idListOld.size() == favoriteTs.size()) {
+					writeJsonObject(response, 1, "您已经收藏这些图片", null);
+				} else {
+					// 增量更新
+					for (WechatUserFavoriteT wechatUserFavoriteT : favoriteTs) {
+						idListNew.add(wechatUserFavoriteT.getImgUid());
+					}
 
-				boolean flag = false;
-				// 去掉已经收收藏的图片
-				if (CommonUtils.isCollectionNotEmpty(idListNew)) {
+					boolean flag = false;
+					// 去掉已经收收藏的图片
 					flag = idListOld.removeAll(idListNew);
-				}
 
-				if (CommonUtils.isCollectionNotEmpty(idListOld) && flag) {
-					result = insertNewFavourite(userid, idListOld);
+					if (CommonUtils.isCollectionNotEmpty(idListOld) && flag) {
+						result = insertNewFavourite(userid, idListOld);
+					}
 				}
 			} else {
 				// 完全新增
@@ -216,7 +219,7 @@ public class WechatUserFavoriteTController extends BaseController {
 		try {
 			// array转List<String>
 			List<String> idListOld = Arrays.asList(favorite.getIds().split("-"));
-			
+
 			List<WechatUserFavoriteT> favoriteTs = service.selectByIds(idListOld);
 			if (favoriteTs != null && favoriteTs.size() == idListOld.size()) {
 				result = service.batchDelete(idListOld);
