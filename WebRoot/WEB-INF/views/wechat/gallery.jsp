@@ -15,6 +15,7 @@
 		<meta name="format-detection" content="email=no" />
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
+		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/swiper.min.css"/>
 		<title>${title}_图集</title>
 	</head>
@@ -49,26 +50,12 @@
 			<div class="scang"></div>
 			<div class="share"></div>
 		</div>
-		
-		<div id="div_share_notice" style="display: none; 
-			    right: 0;
-			    bottom: 0;
-			    z-index: 904;
-			    position: absolute;
-			    left: 50%;
-			    top: 50% !important;
-			    transform: translateY(-95%);
-			    color: #fff;">
-            <h3>立刻分享吧！</h3>
-            <div>
-                <p>分享此给您的朋友吧~！</p>
-            </div>
-		</div>
 	</body>
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/imggallery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function(){
 			//点击窗口图片描述隐藏
@@ -85,14 +72,17 @@
 					imgUid : imgUid,
 					userid : userid
 				}, function(data) {
-					alert(data.msg);
+					layer.open({
+						content: data.msg,
+						time: 2
+					});
 				}, 'json');
 			});
 			$(".share").on("click",function(){
-				$("#div_share_notice").css('display','block');
-			});
-			$("#div_share_notice").on("click",function(){
-				$("#div_share_notice").css('display','none');
+				layer.open({
+					content: '赶快点击右上角，分享给您的朋友吧！',
+					time: 2
+				});
 			});
 		});
 	</script>

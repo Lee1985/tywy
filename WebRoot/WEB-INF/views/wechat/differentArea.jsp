@@ -16,6 +16,7 @@
 		<meta name="format-detection" content="email=no" />
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
+		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
 		<title>${title}</title>
 	</head>
 	<body class="gray_bg">
@@ -57,6 +58,7 @@
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
 			//获取列表图片高度
@@ -125,12 +127,18 @@
 						userid : userid
 					}, function(data) {
 						//提示消息
-						console.log(data.msg);
+						layer.open({
+							content: data.msg,
+							time: 2
+						});
 						window.location.href="./toCollection.do?userid=" + userid;
 					}, 'json');
 				} else {
 					//提示消息，请选择需要收藏的图片
-					alert('请选择需要收藏的图片');
+					layer.open({
+						content: '请选择需要收藏的图片',
+						time: 2
+					});
 				}
 			});
 		});
