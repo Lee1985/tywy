@@ -21,6 +21,9 @@ public class ConfigLoadListener implements ServletContextListener {
             CfgConstant.APPID = prop.getProperty("wechat_pub_appID").trim();
             CfgConstant.APPSECRET = prop.getProperty("wechat_pub_appsecret").trim();
             CfgConstant.TOKEN = prop.getProperty("wechat_pub_token").trim();
+            CfgConstant.DEFAULT_HQ_NAME = prop.getProperty("default_hq_name").trim();
+            CfgConstant.DEFAULT_HQ_POINT_LNG = prop.getProperty("default_hq_point_lng").trim();
+            CfgConstant.DEFAULT_HQ_POINT_LAT = prop.getProperty("default_hq_point_lat").trim();
         } catch (IOException e) {
             e.printStackTrace();
         }

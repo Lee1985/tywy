@@ -28,7 +28,7 @@
 	</div>
 </div>	
 <div class="address">
-	<div class="address_title"><span class="selected">吉林</span><span>天津</span></div>
+	<div class="address_title"><span class="selected">吉林</span><span>江苏</span></div>
 	<div class="address_detail">
 		<h3 class="address_name">吉林省天雅万印毯业科技有限公司</h3>
 		<ul>

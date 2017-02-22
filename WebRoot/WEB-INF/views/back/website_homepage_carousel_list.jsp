@@ -34,7 +34,6 @@
 	  
 	  $('#editBtn').click(function(){
 		  doEdit(function(row){
-			  console.log(row);
 			  $('#addImg').hide();			  
 			  $('#imgShow').attr('src','downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath);
 			  $('#imgShow').show();

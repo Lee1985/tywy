@@ -8,4 +8,8 @@ import com.tywy.sc.data.model.WebsiteCategoryT;
  */
 public interface WebsiteCategoryTDao extends BaseDao<WebsiteCategoryT>{
 	public String sqlNameSpace=WebsiteCategoryTDao.class.getName();
+
+	public Integer selectMaxOrderList();
+
+	public Integer updateOrderList(Integer orderList);
 }

@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta content="webkit" name="renderer" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<meta id="viewport" name="viewport" content="width=1200">

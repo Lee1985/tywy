@@ -81,7 +81,7 @@ public class WebsiteNewsTController extends BaseController {
 			picMap.put(pictureInfo.getUuid(), pictureInfo);
 		}
 		List<WebsiteCategoryT> categoryList = websiteCategoryTService.selectByIds(categoryIdList);
-		if(picList == null || picList.isEmpty()){
+		if(categoryList == null || categoryList.isEmpty()){
 			return pageInfo;
 		}
 		Map<String,String> categoryMap = new HashMap<String,String>();

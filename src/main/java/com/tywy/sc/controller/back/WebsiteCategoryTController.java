@@ -33,8 +33,8 @@ public class WebsiteCategoryTController extends BaseController {
 	private WebsiteCategoryTService websiteCategoryTService;
 
 	@RequestMapping(value = "system/websiteCategoryTList")
-	public String websiteCategoryTList(HttpServletRequest request,HttpServletResponse response) {
-		request.setAttribute("code", "news");
+	public String websiteCategoryTList(HttpServletRequest request,HttpServletResponse response,String code) {
+		request.setAttribute("code", code);
 		return "back/website_category_list";
 	}
 
@@ -47,7 +47,6 @@ public class WebsiteCategoryTController extends BaseController {
 		PageInfo<WebsiteCategoryT> pageInfo = new PageInfo<WebsiteCategoryT>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
-		info.setCode("news");
 		info.setIsDelete(0);
 		info.setSort("orderList");
 		info.setOrder("asc");
@@ -72,7 +71,6 @@ public class WebsiteCategoryTController extends BaseController {
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
-			info.setCode("news");
 			info.setCreateDate(new Date());
 			info.setIsDelete(0);
 			result = websiteCategoryTService.insert(info);
@@ -83,7 +81,7 @@ public class WebsiteCategoryTController extends BaseController {
 		}
 		return getJsonResult(result, "操作成功",msg);
 	}
-
+	
 	@RequestMapping(value = "system/websiteCategoryTAjaxDelete")
 	@ResponseBody
 	public Map<String,Object> websiteCategoryTAjaxDelete(HttpServletRequest request,
@@ -107,7 +105,7 @@ public class WebsiteCategoryTController extends BaseController {
 		try {
 			result = websiteCategoryTService.update(info);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		return getJsonResult(result,"操作成功", "删除失败！");

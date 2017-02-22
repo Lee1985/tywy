@@ -36,11 +36,13 @@ public class WechatElectronicAlbumTServiceImpl extends BaseServiceImpl<WechatEle
 		info.setIsDelete("0");
 		info.setCreateDate(new Date());
 		info.setUpdateDate(new Date());
-		Integer maxOrderList = wechatElectronicAlbumTDao.selectMaxOrderList();
-		if(maxOrderList == null){
-			info.setOrderList(1);
-		}else{
-			info.setOrderList(maxOrderList + 1); 
+		if(info.getOrderList() == null){
+			Integer maxOrderList = wechatElectronicAlbumTDao.selectMaxOrderList();
+			if(maxOrderList == null){
+				info.setOrderList(1);
+			}else{
+				info.setOrderList(maxOrderList + 1); 
+			}
 		}
 		return wechatElectronicAlbumTDao.insert(info);
 	}

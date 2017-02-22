@@ -62,5 +62,11 @@ public class CfgConstant {
 	 * 新增临时素材
 	 */
 	public static String ADD_MEDIA_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=_ACCESS_TOKEN&type=_TYPE";
+	
+	public static String DEFAULT_HQ_NAME = "";
+	
+	public static String DEFAULT_HQ_POINT_LNG = "";
+	
+	public static String DEFAULT_HQ_POINT_LAT = "";
 
 }

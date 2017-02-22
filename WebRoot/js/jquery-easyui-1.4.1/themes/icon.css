@@ -79,6 +79,9 @@
 .icon-lock_open{
 	background:url('icons/lock_open.png') no-repeat center center;
 }
+.icon-settings{
+	background:url('icons/settings.png') no-repeat center center;
+}
 
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;

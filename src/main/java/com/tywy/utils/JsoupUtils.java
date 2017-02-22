@@ -33,6 +33,11 @@ public class JsoupUtils {
 			Element el = elIter.next();
 			el.removeAttr("style");
 		}
+		els = doc.getElementsByTag("span");
+		for(Iterator<Element> elIter = els.iterator();elIter.hasNext();){
+			Element el = elIter.next();
+			el.removeAttr("style");
+		}
 		String text = doc.html();
 		return text;
 	}

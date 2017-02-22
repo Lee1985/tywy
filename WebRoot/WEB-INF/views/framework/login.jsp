@@ -12,8 +12,8 @@
 <html>
 <head>
 <title>天雅管理系统</title>
+<meta content="webkit" name="renderer" />
 <meta charset="utf-8" />
-<meta name="renderer" content="webkit|ie-stand|ie-comp">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <link href="css/com.css" rel="stylesheet" />
 <%@ include file="/WEB-INF/views/common/style.jsp"%>

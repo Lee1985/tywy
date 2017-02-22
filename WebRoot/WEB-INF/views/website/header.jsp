@@ -17,5 +17,5 @@
 		<li><a href="classicCase.do">经典案例</a></li>
 		<li><a href="map.do">天雅销售</a></li>
 	</ul>
-	<div class="search_box"><input type="search" placeholder="站内搜索" /><span></span></div>
+	<!-- <div class="search_box"><input type="search" placeholder="站内搜索" /><span></span></div> -->
 </div>

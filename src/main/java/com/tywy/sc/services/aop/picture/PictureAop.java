@@ -64,6 +64,23 @@ public class PictureAop {
         				Method fieldSetMet = entityClass.getMethod(fieldSetName,field.getType());
         				fieldSetMet.invoke(entity, pictureInfo.getUrlPath());
         			}
+        		}else if(an instanceof ConfigPictureKey){
+        			if(args[i] == null){
+        				continue;
+        			}
+        			StreamVO stream = (StreamVO)args[i];
+        			if(stream == null){
+        				continue;
+        			}
+        			SystemPictureInfo pictureInfo = insertPictureInfo(stream);
+        			if(pictureInfo != null){
+        				Object entity = args[0];
+        				Class entityClass = entity.getClass();
+        				Field field = entityClass.getDeclaredField("configValue");        				
+        				String fieldSetName = parSetName(field.getName());
+        				Method fieldSetMet = entityClass.getMethod(fieldSetName,field.getType());
+        				fieldSetMet.invoke(entity, pictureInfo.getUrlPath());
+        			}
         		}
         	}
         }

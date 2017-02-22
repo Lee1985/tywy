@@ -26,6 +26,7 @@
 	  $('#addBtn').click(function(){
 		  doAdd(function(){
 			  $('#status').combobox('select', 1);
+			  $('#codeLabel').val('${code}');
 		  });
 	  });
 	  
@@ -107,7 +108,7 @@ div#rMenu {
 <body>
 	<div style="width:100%;height:100%">
 		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
-			data-options="url:'system/websiteCategoryTAjaxPage.do', iconCls:'icon-save', 
+			data-options="url:'system/websiteCategoryTAjaxPage.do?code=${code }', iconCls:'icon-save', 
 			rownumbers:true, pagination:true, singleSelect:true, 
 			toolbar:'#toolbar',rowStyler:function(index,row){   
 	          if (row.status==0){   
@@ -130,11 +131,15 @@ div#rMenu {
 			<div class="ftitle">请完善以下信息！</div>
 			<form id="fm" name="fm" method="post" action="system/websiteCategoryTAjaxSave.do">
 				<div class="fitem">
-					<label><font color="red">*</font>新闻类别:</label>
+					<label><font color="red">*</font>类别名称:</label>
 					<input id="name" name="name" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'"/>
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="codeLabel" name="code" value="${code}"/>
 				</div>
+				<div class="fitem">
+                      <label>排序:</label>
+                      <input id="orderListLabel" name="orderList" style="width: 200px" class="easyui-numberbox" data-options="min:1"/>
+                </div>
 				<div class="fitem">
 					<label>状态:</label>
 					<select id="status" name="status" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto',editable:false">
@@ -146,7 +151,7 @@ div#rMenu {
 		</div>
 		<div id="toolbar">
 			<div>
-				新闻类别: <input id="nameInput" class="easyui-textbox"
+				类别名称: <input id="nameInput" class="easyui-textbox"
 					style="width:180px"> <a href="javascript:void(0)"
 					onclick="searchData()" class="easyui-linkbutton"
 					iconCls="icon-search">搜索</a>
