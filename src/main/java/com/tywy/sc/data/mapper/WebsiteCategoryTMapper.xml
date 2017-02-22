@@ -7,7 +7,7 @@
 	<resultMap id="colomnResult" type="com.tywy.sc.data.model.WebsiteCategoryT">
 		<id property="id" column="id" />
 		<result property="code" column="code" />
-		<result property="name" column="name" />
+		<result property="categoryName" column="categoryName" />
 		<result property="status" column="status" />
 		<result property="orderList" column="orderList" />
 		<result property="createDate" column="createDate" />
@@ -20,7 +20,7 @@
 		<![CDATA[
 	     id,
 	     code,
-	     name,
+	     categoryName,
 	     status,
 	     orderList,
 	     createDate,
@@ -34,7 +34,7 @@
 	   <trim prefix="(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">id,</if>
 			     <if test="code!=null">code,</if>
-			     <if test="name!=null">name,</if>
+			     <if test="categoryName!=null">categoryName,</if>
 			     <if test="status!=null">status,</if>
 			     <if test="orderList!=null">orderList,</if>
 			     <if test="createDate!=null">createDate,</if>
@@ -45,7 +45,7 @@
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
 			     <if test="code!=null">#{code},</if>
-			     <if test="name!=null">#{name},</if>
+			     <if test="categoryName!=null">#{categoryName},</if>
 			     <if test="status!=null">#{status},</if>
 			     <if test="orderList!=null">#{orderList},</if>
 			     <if test="createDate!=null">#{createDate},</if>
@@ -60,7 +60,7 @@
 	   <set>
 			     <if test="id!=null">id=#{id},</if>
 			     <if test="code!=null">code=#{code},</if>
-			     <if test="name!=null">name=#{name},</if>
+			     <if test="categoryName!=null">categoryName=#{categoryName},</if>
 			     <if test="status!=null">status=#{status},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
@@ -90,8 +90,8 @@
 				<if test=" code != null and code != '' ">
 					and code=#{code} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name like CONCAT('%','${name}','%')
+				<if test=" categoryName != null and categoryName != '' ">
+					and categoryName like CONCAT('%','${categoryName}','%')
 				</if>
 				<if test=" status != null ">
 					and status=#{status} 
@@ -128,8 +128,8 @@
 				<if test=" code != null and code != '' ">
 					and code=#{code} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name like CONCAT('%','${name}','%')
+				<if test=" categoryName != null and categoryName != '' ">
+					and categoryName like CONCAT('%','${categoryName}','%')
 				</if>
 				<if test=" status != null ">
 					and status=#{status} 
@@ -165,8 +165,8 @@
 				<if test=" code != null and code != '' ">
 					and code=#{code} 
 				</if>
-				<if test=" name != null and name != '' ">
-					and name=#{name} 
+				<if test=" categoryName != null and categoryName != '' ">
+					and categoryName=#{categoryName} 
 				</if>
 				<if test=" status != null and status != '' ">
 					and status=#{status} 
@@ -224,7 +224,7 @@
 		<set>
 			     <if test="id!=null">id=#{id},</if>
 			     <if test="code!=null">code=#{code},</if>
-			     <if test="name!=null">name=#{name},</if>
+			     <if test="categoryName!=null">categoryName=#{categoryName},</if>
 			     <if test="status!=null">status=#{status},</if>
 			     <if test="orderList!=null">orderList=#{orderList},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>

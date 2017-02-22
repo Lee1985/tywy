@@ -22,9 +22,11 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 	private java.lang.String createUser; // 创建者
 	private java.util.Date createDate; // 上传时间
 	private java.lang.String isDelete; // 是否删除0否1是
+	private String imgUuid;
 	
 	private String createDateStr;
 	private String isHomePage;
+	private SystemPictureInfo systemPictureInfo;
 	
 	/**
      * 获取属性
@@ -203,6 +205,22 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 
 	public void setIsHomePage(String isHomePage) {
 		this.isHomePage = isHomePage;
+	}
+
+	public String getImgUuid() {
+		return imgUuid;
+	}
+
+	public void setImgUuid(String imgUuid) {
+		this.imgUuid = imgUuid;
+	}
+
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
 	}
 
 	@Override

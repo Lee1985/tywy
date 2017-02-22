@@ -32,7 +32,7 @@ $(function(){
 			 //header的处理
 			 var footerMenus = '';
 			 $.each(data,function(key,value){
-				 footerMenus += '<li><a href="news.do?categoryId=' + value.id + '">' + value.name + '</a></li>';
+				 footerMenus += '<li><a href="news.do?categoryId=' + value.id + '">' + value.categoryName + '</a></li>';
 			 });
 			 $('#newsFooter').append(footerMenus);
 		 }		 

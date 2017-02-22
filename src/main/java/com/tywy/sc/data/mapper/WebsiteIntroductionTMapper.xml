@@ -15,6 +15,7 @@
 		<result property="createDate" column="createDate" />
 		<result property="isDelete" column="isDelete" />
 		<result property="isHomePage" column="isHomePage" />
+		<result property="imgUuid" column="imgUuid" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -28,7 +29,8 @@
 	     createUser,
 	     createDate,
 	     isDelete,
-	     isHomePage
+	     isHomePage,
+	     imgUuid
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -44,6 +46,7 @@
 			     <if test="createDate!=null">createDate,</if>
 			     <if test="isDelete!=null">isDelete,</if>
 			     <if test="isHomePage!=null">isHomePage,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -54,7 +57,9 @@
 			     <if test="description!=null">#{description},</if>
 			     <if test="createUser!=null">#{createUser},</if>
 			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="isDelete!=null">isDelete,</if>
 			     <if test="isHomePage!=null">#{isHomePage},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
 		</trim>
 	</insert>
 
@@ -71,6 +76,7 @@
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 			     <if test="isHomePage!=null">isHomePage=#{isHomePage},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -118,6 +124,9 @@
 				<if test=" isHomePage != null and isHomePage != '' ">
 					and isHomePage=#{isHomePage} 
 				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
 		</where>
 	</select>
 	
@@ -159,6 +168,9 @@
 				<if test=" isHomePage != null and isHomePage != '' ">
 					and isHomePage=#{isHomePage} 
 				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -198,6 +210,9 @@
 				</if>
 				<if test=" isHomePage != null and isHomePage != '' ">
 					and isHomePage=#{isHomePage} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
 				</if>
 		</where>
 	</select>
@@ -245,6 +260,7 @@
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 			     <if test="isHomePage!=null">isHomePage=#{isHomePage},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

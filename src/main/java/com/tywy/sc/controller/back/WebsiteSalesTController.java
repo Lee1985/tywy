@@ -88,7 +88,7 @@ public class WebsiteSalesTController extends BaseController {
 		}
 		Map<String,String> categoryMap = new HashMap<String,String>();
 		for(WebsiteCategoryT category : categoryList){
-			categoryMap.put(category.getId(), category.getName());
+			categoryMap.put(category.getId(), category.getCategoryName());
 		}
 		for(WebsiteSalesT entity : list){
 			entity.setCategoryName(categoryMap.get(entity.getCategoryId()));

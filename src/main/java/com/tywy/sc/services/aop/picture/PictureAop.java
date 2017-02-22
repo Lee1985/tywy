@@ -4,7 +4,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,6 +17,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.utils.UUIDUtil;
@@ -81,6 +85,36 @@ public class PictureAop {
         				Method fieldSetMet = entityClass.getMethod(fieldSetName,field.getType());
         				fieldSetMet.invoke(entity, pictureInfo.getUrlPath());
         			}
+        		}else if(an instanceof PictureList){
+        			
+        			Object obj = pjp.proceed();
+        			PageInfo pageInfo = (PageInfo)obj;
+        			List list = pageInfo.getRows();
+        			        			
+        			if(list == null || list.isEmpty()){
+        				continue;
+        			}
+        			List<String> imageUuidList = new ArrayList<String>();
+        			for(Object entity : list){
+        				imageUuidList.add(getImgUuid(entity));
+        			}
+        			List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+        			if(picList == null || picList.isEmpty()){
+        				continue;
+        			}
+        			Map<String,SystemPictureInfo> picMap = new HashMap<String,SystemPictureInfo>();
+        			for(SystemPictureInfo pictureInfo : picList){
+        				picMap.put(pictureInfo.getUuid(), pictureInfo);
+        			}
+        			for(Object entity : list){			
+        				SystemPictureInfo pic = picMap.get(getImgUuid(entity));
+        				Class entityClass = entity.getClass();
+        				Field field = entityClass.getDeclaredField("systemPictureInfo");        				
+        				String fieldSetName = parSetName(field.getName());
+        				Method fieldSetMet = entityClass.getMethod(fieldSetName,field.getType());
+        				fieldSetMet.invoke(entity, pic);
+        			}
+        			return obj;
         		}
         	}
         }
@@ -135,4 +169,23 @@ public class PictureAop {
                 + fieldName.substring(startIndex, startIndex + 1).toUpperCase()  
                 + fieldName.substring(startIndex + 1);  
     } 
+    
+    private String parGetName(String fieldName) {
+        if (null == fieldName || "".equals(fieldName)) {  
+            return null;
+        }  
+        int startIndex = 0;  
+        if (fieldName.charAt(0) == '_')  
+            startIndex = 1;  
+        return "get"  
+                + fieldName.substring(startIndex, startIndex + 1).toUpperCase()  
+                + fieldName.substring(startIndex + 1);  
+    }
+    
+    private String getImgUuid(Object entity) throws Exception{
+    	Field imgField = entity.getClass().getDeclaredField("imgUuid");
+		String fieldGetName = parGetName(imgField.getName());
+		Method fieldGetMet = entity.getClass().getMethod(fieldGetName);
+		return (String)fieldGetMet.invoke(entity);
+    }
 }

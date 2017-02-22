@@ -51,6 +51,13 @@ public class WebsiteNewsController extends BaseController{
 			categoryId = categoryList.get(0).getId();
 		}
 		
+		WebsiteCategoryT categoryInfo = websiteCategoryTService.selectById(categoryId);
+		Map<String,Object> picParams = new HashMap<String,Object>();
+		picParams.put("uuid", categoryInfo.getImgUuid());
+		SystemPictureInfo systemPictureInfo = systemPictureInfoService.selectEntity(picParams);
+		categoryInfo.setSystemPictureInfo(systemPictureInfo);
+		request.setAttribute("categoryInfo", categoryInfo);
+		
 		//新闻列表
 		WebsiteNewsT newsInfo = new WebsiteNewsT();
 		newsInfo.setIsDelete("0");

@@ -69,26 +69,20 @@
 		        					<c:when test="${status.index % 4 eq 0 }">
 		        						<ul class="owl-item">
 				                            <li>
-				                                <div title="${pic.imageName }" rel="gallery" class="boxer">
-				                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
-				                                </div>
+				                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
 				                            </li>
 		        					</c:when>
 		        					<c:otherwise>
 		        						<c:choose>
 		        							<c:when test="${status.count % 4 eq 0 || status.count eq list.size()}">
-					        					   <li>
-						                                <div title="${pic.imageName }" rel="gallery" class="boxer">
-						                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
-						                                </div>
+					        						<li>
+						                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
 						                           </li>
 						                        </ul>
 		        							</c:when>
 		        							<c:otherwise>
 		        								<li>
-					                                <div title="${pic.imageName }" rel="gallery" class="boxer">
-					                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
-					                                </div>
+					                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
 					                            </li>				                   				
 		        							</c:otherwise>
 		        						</c:choose>

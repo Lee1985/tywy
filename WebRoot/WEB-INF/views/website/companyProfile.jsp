@@ -32,7 +32,8 @@
 		</header>
 		<!--header end-->
 	<!--banner-->
-		<div class="banner banner_bg1">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${introduction.systemPictureInfo.urlPath }" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<c:forEach items="${introductionList }" var="introduce">

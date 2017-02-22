@@ -86,7 +86,7 @@ public class WebsiteNewsTController extends BaseController {
 		}
 		Map<String,String> categoryMap = new HashMap<String,String>();
 		for(WebsiteCategoryT category : categoryList){
-			categoryMap.put(category.getId(), category.getName());
+			categoryMap.put(category.getId(), category.getCategoryName());
 		}
 		for(WebsiteNewsT entity : list){
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());

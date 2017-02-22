@@ -15,7 +15,7 @@ import com.tywy.sc.base.entity.BaseEntity;
 public class WebsiteCategoryT extends BaseEntity implements Serializable {
 	private java.lang.String id; // 主键
 	private java.lang.String code; // 类型代码
-	private java.lang.String name; // 类型名称
+	private java.lang.String categoryName; // 类型名称
 	private java.lang.Integer status; // 状态（1-启用，0-禁用）
 	private java.lang.Integer orderList; // 排序
 	private java.util.Date createDate; // 创建时间
@@ -24,6 +24,8 @@ public class WebsiteCategoryT extends BaseEntity implements Serializable {
 	private java.lang.String description; // 描述
 	
 	private String createDateStr;
+	private SystemPictureInfo systemPictureInfo;
+	
 	/**
      * 获取主键属性
      *
@@ -60,24 +62,14 @@ public class WebsiteCategoryT extends BaseEntity implements Serializable {
 		this.code = code;
 	}
 	
-	/**
-     * 获取类型名称属性
-     *
-     * @return name
-     */
-	public java.lang.String getName() {
-		return name;
+	public java.lang.String getCategoryName() {
+		return categoryName;
 	}
-	
-	/**
-	 * 设置类型名称属性
-	 *
-	 * @param name
-	 */
-	public void setName(java.lang.String name) {
-		this.name = name;
+
+	public void setCategoryName(java.lang.String categoryName) {
+		this.categoryName = categoryName;
 	}
-	
+
 	/**
      * 获取状态（1-启用，0-禁用）属性
      *
@@ -197,13 +189,21 @@ public class WebsiteCategoryT extends BaseEntity implements Serializable {
 		this.createDateStr = createDateStr;
 	}
 
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
+	}
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("WebsiteCategoryT");
         sb.append("{id=").append(id);
         sb.append(", code=").append(code);
-        sb.append(", name=").append(name);
+        sb.append(", name=").append(categoryName);
         sb.append(", status=").append(status);
         sb.append(", orderList=").append(orderList);
         sb.append(", createDate=").append(createDate);

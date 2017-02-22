@@ -68,7 +68,7 @@
 				<div class="map_sitemap">
 					<ul class="sitemap_name clearfix">
 						<c:forEach items="${salesCateList }" var="category" varStatus="status">
-							<li <c:if test="${status.count eq 1 }">class="selected"</c:if> data-categoryid="${category.id }">${category.name }</li>
+							<li <c:if test="${status.count eq 1 }">class="selected"</c:if> data-categoryid="${category.id }">${category.categoryName }</li>
 						</c:forEach>
 					</ul>
 					<div class="sitemap_detail">

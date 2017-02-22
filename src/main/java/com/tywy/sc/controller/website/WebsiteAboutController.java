@@ -98,6 +98,10 @@ public class WebsiteAboutController extends BaseController{
 			id = list.get(0).getId();
 		}
 		WebsiteIntroductionT info = websiteIntroductionTService.selectById(id);
+		Map<String,Object> picParams = new HashMap<String,Object>();
+		picParams.put("uuid", info.getImgUuid());
+		SystemPictureInfo systemPictureInfo = systemPictureInfoService.selectEntity(picParams);
+		info.setSystemPictureInfo(systemPictureInfo);		
 		info.setDescription(JsoupUtils.removeStyle(info.getDescription()));
 		request.setAttribute("introduction", info);
 		return "website/companyProfile";
