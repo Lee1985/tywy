@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SystemMenuService extends BaseService<SystemMenu> {
+	
     public List<SystemMenu> selectAllByPid(String pid);
 
     public List<SystemMenu> selectAllByPid(Integer pid);

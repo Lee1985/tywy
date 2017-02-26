@@ -47,7 +47,7 @@
 		<!--main-->
 		<main>
 			<div class="main">
-				<div class="company_profile">
+				<div class="company_profile" style="background: url('downFileResult.do?urlPath=${introduction.iconUrl}');">
 					<h1 class="title2">${introduction.introduceName }</h1>
 					<div class="c_detail">
 						${introduction.description }

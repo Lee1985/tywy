@@ -74,4 +74,8 @@ public interface BaseService<T> {
     T selectEntity(Map<String, Object> info);
 
     List<T> selectByIds(List<String> idList);
+    
+    public void setOrderList(T info) throws Exception;
+    
+    public void updateOrderList(T info) throws Exception;
 }

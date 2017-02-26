@@ -69,11 +69,11 @@
 				</div>
 				<div class="case_list clearfix">
 					<c:forEach items="${list }" var="picture">
-						<a title="${picture.imageName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+						<div title="${picture.imageName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
 							<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }" alt="" />
 							<p class="case_name">${picture.imageName}</p>
 							<p class="case_number">${picture.serialNumber}</p>
-						</a>
+						</div>
 					</c:forEach>
 				</div>
 				<section id="page_container" class="page-container">

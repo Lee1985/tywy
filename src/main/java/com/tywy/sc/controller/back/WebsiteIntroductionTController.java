@@ -1,6 +1,5 @@
 package com.tywy.sc.controller.back;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -45,37 +44,44 @@ public class WebsiteIntroductionTController extends BaseController {
 			Integer rows) {
 		PageInfo<WebsiteIntroductionT> pageInfo = new PageInfo<WebsiteIntroductionT>();
 		info.setIsDelete("0");
+		info.setSort("orderList");
+		info.setOrder("asc");
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		websiteIntroductionTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
-
-	@RequestMapping(value = "system/websiteIntroductionTAjaxAll")
-	@ResponseBody
-	public List<WebsiteIntroductionT> websiteIntroductionTAjaxAll(HttpServletRequest request,
-			HttpServletResponse response, WebsiteIntroductionT info, Integer page,
-			Integer rows) {
-		List<WebsiteIntroductionT> results= websiteIntroductionTService.selectAll(info);
-		return results; 
-	}
 	
 	@RequestMapping(value = "system/websiteIntroductionTAjaxSave")
 	@ResponseBody
 	public Map<String,Object> websiteIntroductionTAjaxSave(HttpServletRequest request,
-			HttpServletResponse response, WebsiteIntroductionT info,StreamVO streamVO,String operType) {
+			HttpServletResponse response, WebsiteIntroductionT info,StreamVO streamVO,String operType,String iconOperType) {
 		int result = 0;
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
+			Map<String,Object> iconMap = streamVO.getMap();
+			iconMap.put("prefix", "icon");
 			info.setCreateUser(getSessionUser(request).getId());
-			result = websiteIntroductionTService.insertWithImage(info,streamVO);
+			result = websiteIntroductionTService.insertWithImage(info,streamVO,iconMap);
 			msg = "保存失败！";
 		} else {
 			//根据opertyp判断是否需要上传
 			if(StringUtils.isBlank(operType)){
-				result = websiteIntroductionTService.update(info);
+				if(StringUtils.isBlank(iconOperType)){
+					result = websiteIntroductionTService.update(info);
+				}else{
+					Map<String,Object> iconMap = streamVO.getMap();
+					iconMap.put("prefix", "icon");
+					result = websiteIntroductionTService.updateWithImage(info,null,iconMap);
+				}				
 			}else{
-				result = websiteIntroductionTService.updateWithImage(info,streamVO);
+				if(StringUtils.isBlank(iconOperType)){
+					result = websiteIntroductionTService.updateWithImage(info,streamVO,null);
+				}else{
+					Map<String,Object> iconMap = streamVO.getMap();
+					iconMap.put("prefix", "icon");
+					result = websiteIntroductionTService.updateWithImage(info,streamVO,iconMap);
+				}
 			}
 			msg = "修改失败！";
 		}

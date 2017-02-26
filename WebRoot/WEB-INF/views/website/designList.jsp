@@ -60,11 +60,15 @@
 							<c:choose>
 								<c:when test="${status.count eq 1 }">
 									<div class="gray_bg"></div>
-									<a title="${picture.designName }" rel="gallery" class="boxer design_left" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>									
+									<div title="${picture.designName }" rel="gallery" class="boxer design_left" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+										<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/>
+									</div>									
 								</c:when>
 								<c:when test="${status.count eq 2 }">
 									<div class="design_title">设计图册</div>
-									<a title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>		
+									<div title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+										<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/>
+									</div>		
 								</c:when>
 								<c:otherwise>
 									<a style="display: none;" title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>

@@ -78,15 +78,6 @@ public class WebsiteHomepageBrandTController extends BaseController {
 		}
 		return pageInfo;
 	}
-
-	@RequestMapping(value = "system/websiteHomepageBrandTAjaxAll")
-	@ResponseBody
-	public List<WebsiteHomepageBrandT> websiteHomepageBrandTAjaxAll(HttpServletRequest request,
-			HttpServletResponse response, WebsiteHomepageBrandT info, Integer page,
-			Integer rows) {
-		List<WebsiteHomepageBrandT> results= websiteHomepageBrandTService.selectAll(info);
-		return results; 
-	}
 	
 	@RequestMapping(value = "system/websiteHomepageBrandTAjaxSave")
 	@ResponseBody

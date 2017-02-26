@@ -37,6 +37,34 @@
 	</head>
 
 	<body>
+			<form id="fm" name="fm" method="post" action="system/websiteCompanyQualificationNavTAjaxSave.do">
+				<div class="easyui-panel" title="导航图片" style="width:300px;height:220px;padding:10px;" data-options="iconCls:'icon-filter',closable:false">
+					<div class="fitem">
+						<div style="float: left;margin-top: 25px;"><font color="red">*</font>导航图片:</div>
+						<div id="showImage" class="showImage" style="width:160px;height:90px;border:1px solid;margin-left:70px;cursor:pointer;text-align:center;" >
+							<!-- <img id="imgShow" class="imgShow" src="images/add.png" style="width:50px;height:50px;"/> -->
+							<c:choose>
+								<c:when test="${empty configValue}">
+									<img id="addImg" class="addImg" src="images/add.png" style="width:50px;height:50px;padding-top: 20px;"/>
+									<img id="imgShow" class="imgShow" src="" style="display:none;width:100%;height:100%;"/>		
+								</c:when>
+								<c:otherwise>
+									<img id="addImg" class="addImg" src="images/add.png" style="width:50px;height:50px;padding-top: 20px;display: none;"/>
+									<img id="imgShow" class="imgShow" src="downFileResult.do?urlPath=${configValue}" style="width:100%;height:100%;"/>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div style="width:160px;margin-left:70px;text-align:center;" >建议比例(16:9)</div>
+						<!-- <img id="imgShow" class="imgShow" style="margin-left: 40px;cursor:pointer;background-color:#434343" src="images/add.png" /> -->
+						<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
+						<input type="hidden" id="idLabel" name="id" />
+						<input type="hidden" id="operType" name="operType">
+					</div>
+					<div style="width:100%;text-align: center; height: 50px; " >
+						<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="uploadAndSaveNav()" style="width:90px;padding-bottom: 0;">保存</a>
+					</div>
+				</div>
+			</form>
 			<h1 id="try-it-out">企业资质的</em>图册维护,支持文件夹,建议比例3:2</h1>
 			<div id="dropzone">
 				<form action="/upload" class="dropzone dz-clickable dz-started" id="uploadForm" method="post">
@@ -245,6 +273,71 @@
 						e.stopPropagation();								
 					});
 				});
+				
+				var nav_stream = singleCommonUpload('website_company_qualification_nav',function(file){
+				      var inputs = ''; 
+					  for(var prop in file){
+						  var value = file[prop];
+						  if(prop == 'id'){
+							  continue;
+						  }
+						  if($('input[name="' + prop + '"]').size() <= 0){
+							  inputs += '<input type="hidden" id="'+prop+'" name="'+prop+'" value="'+value+'" />';
+						  }else{
+							  $('input[name="' + prop + '"]').remove();
+							  inputs += '<input type="hidden" id="'+prop+'" name="'+prop+'" value="'+value+'" />';
+						  }
+					  }  
+					  $('#fm').append(inputs);
+					  saveNav();	
+				});
+				
+				function uploadAndSaveNav(){
+					var operType = $('#operType').val();
+					if(operType == ''){
+						//不上传图片,直接进行操作
+						if(!navValidation()){
+							return false;
+						}
+						saveNav();
+						return false;	
+					}
+					if(!validation()){
+						return false;
+					}
+					nav_stream.upload();
+				}
+				
+				function saveNav(){
+				  $('#fm').form('submit', {
+				    dataType: 'json',
+				    success: function(result) {
+				      var result = eval('(' + result + ')');
+				      layer.close(index);
+				      if (result.success) {
+				    	  $.messager.alert('成功信息', '保存导航图片成功!', 'info');
+				      } else {
+				        $.messager.alert('错误信息', result.msg, 'error');
+				        return false;
+				      }
+				    }
+				  });
+				}
+				
+				function navValidation(){
+					var src = $('#imgShow').attr('src');
+					if (src == '') {
+				        $.messager.alert('错误信息', '请上传图片!', 'error');
+				        return false;
+				    }
+					var rr = $('#fm').form('enableValidation').form('validate');
+				    if (rr) {
+				    	index = layer.load('操作中...请等待！', 0);
+				    } else {
+				        return false;
+				    }
+				    return true;
+				}
 		</script>
 	</body>
 </html>

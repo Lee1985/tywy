@@ -17,6 +17,7 @@ import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WebsiteCompanyQualificationT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
+import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCompanyQualificationTService;
 import com.tywy.sc.services.WebsiteIntroductionTService;
@@ -35,6 +36,9 @@ public class WebsiteAboutController extends BaseController{
 	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
 	
+	@Resource
+	private ConfigInfoService configInfoService;
+	
 	@RequestMapping(value = "companyProfile")
 	public String companyProfile(HttpServletRequest request,HttpServletResponse response) {
 		return "website/companyProfile";
@@ -43,6 +47,9 @@ public class WebsiteAboutController extends BaseController{
 	@RequestMapping(value = "companyQualification")
 	public String companyQualification(HttpServletRequest request,HttpServletResponse response,
 			WebsiteCompanyQualificationT info, Integer page,Integer rows) {
+		
+		String configValue = configInfoService.getConfigValueByKey("website_company_qualification_nav");
+		request.setAttribute("configValue", configValue);
 		
 		Map<String,Object> introParams = new HashMap<String,Object>();
 		introParams.put("status", "1");

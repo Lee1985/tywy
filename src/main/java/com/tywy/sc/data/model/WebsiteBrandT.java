@@ -25,6 +25,7 @@ public class WebsiteBrandT extends BaseEntity implements Serializable {
 	private java.lang.String createUser; // 创建者
 	
 	private String createDateStr;
+	private SystemPictureInfo systemPictureInfo;
 	/**
      * 获取属性
      *
@@ -212,6 +213,14 @@ public class WebsiteBrandT extends BaseEntity implements Serializable {
 
 	public void setCreateDateStr(String createDateStr) {
 		this.createDateStr = createDateStr;
+	}
+
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
 	}
 
 	@Override

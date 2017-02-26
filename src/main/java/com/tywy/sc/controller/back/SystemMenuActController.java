@@ -19,6 +19,7 @@ import com.tywy.utils.UUIDUtil;
 
 @Controller
 public class SystemMenuActController extends BaseController {
+	
     @Resource
     private SystemMenuActService service;
 

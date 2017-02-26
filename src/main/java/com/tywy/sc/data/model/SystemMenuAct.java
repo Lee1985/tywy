@@ -14,6 +14,7 @@ import com.tywy.sc.base.entity.BaseEntity;
  */
 @SuppressWarnings("serial")
 public class SystemMenuAct extends BaseEntity implements Serializable {
+	
     private java.lang.String id; //
     private java.lang.String menuId; // 菜单编号
     private java.lang.String actName; // 动作名称

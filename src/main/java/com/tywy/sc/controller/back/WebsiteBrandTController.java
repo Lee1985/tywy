@@ -1,6 +1,5 @@
 package com.tywy.sc.controller.back;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +16,7 @@ import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.WebsiteBrandT;
 import com.tywy.sc.services.WebsiteBrandTService;
-import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.stream.util.StreamVO;
 
 /**
  * 
@@ -46,8 +46,8 @@ public class WebsiteBrandTController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
-		info.setSort("createDate");
-		info.setOrder("desc");
+		info.setSort("orderList");
+		info.setOrder("asc");
 		websiteBrandTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -64,18 +64,20 @@ public class WebsiteBrandTController extends BaseController {
 	@RequestMapping(value = "system/websiteBrandTAjaxSave")
 	@ResponseBody
 	public Map<String,Object> websiteBrandTAjaxSave(HttpServletRequest request,
-			HttpServletResponse response, WebsiteBrandT info) {
+			HttpServletResponse response, WebsiteBrandT info,StreamVO streamVO,String operType) {
 		int result = 0;
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
-			info.setIsDelete("0");
-			info.setCreateDate(new Date());
 			info.setCreateUser(getSessionUser(request).getId());
-			result = websiteBrandTService.insert(info);
+			result = websiteBrandTService.insertWithImage(info,streamVO);
 			msg = "保存失败！";
 		} else {
-			result = websiteBrandTService.update(info);
+			//根据opertyp判断是否需要上传
+			if(StringUtils.isBlank(operType)){
+				result = websiteBrandTService.update(info);
+			}else{
+				result = websiteBrandTService.updateWithImage(info,streamVO);
+			}
 			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功",msg);

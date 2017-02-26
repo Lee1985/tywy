@@ -39,7 +39,8 @@
 		</header>
 		<!--header end-->
 		<!--banner-->
-		<div class="banner banner_bg6">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${brand.systemPictureInfo.urlPath }" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<c:forEach items="${brandList }" var="brandMenu">
@@ -69,20 +70,26 @@
 		        					<c:when test="${status.index % 4 eq 0 }">
 		        						<ul class="owl-item">
 				                            <li>
-				                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
+				                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
+				                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+				                                </div>
 				                            </li>
 		        					</c:when>
 		        					<c:otherwise>
 		        						<c:choose>
 		        							<c:when test="${status.count % 4 eq 0 || status.count eq list.size()}">
 					        						<li>
-						                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
+						                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
+						                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+						                                </div>
 						                           </li>
 						                        </ul>
 		        							</c:when>
 		        							<c:otherwise>
 		        								<li>
-					                                <a title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/></a>
+					                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
+					                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+					                                </div>
 					                            </li>				                   				
 		        							</c:otherwise>
 		        						</c:choose>

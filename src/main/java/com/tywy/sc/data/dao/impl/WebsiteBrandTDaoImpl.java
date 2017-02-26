@@ -14,4 +14,9 @@ public class WebsiteBrandTDaoImpl extends BaseDaoImpl<WebsiteBrandT> implements 
 	public WebsiteBrandTDaoImpl(){
 		setSql_name_space(sqlNameSpace);
 	}
+
+	@Override
+	public Integer selectMaxOrderList() {
+		return dao.getSqlSessionTemplate().selectOne(sql_name_space + ".selectMaxOrderList");
+	}
 }

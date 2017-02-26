@@ -382,4 +382,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         return dao.getSqlSessionTemplate().selectList(sql_name_space + ".selectByIds", idList);
     }
 
+	@Override
+	public Integer selectMaxOrderList() {
+		return dao.getSqlSessionTemplate().selectOne(sql_name_space + ".selectMaxOrderList");
+	}
+
+	@Override
+	public Integer updateOrderList(Integer infoOrderList) {
+		return dao.getSqlSessionTemplate().update(sql_name_space + ".updateOrderList",infoOrderList);
+	}
+
 }

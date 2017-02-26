@@ -22,6 +22,7 @@ import com.tywy.utils.UUIDUtil;
 
 @Controller
 public class SystemMenuController {
+	
 	@Resource
 	private SystemMenuService systemMenuService;
 

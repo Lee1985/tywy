@@ -1,10 +1,13 @@
 package com.tywy.sc.base.service;
 
-import com.tywy.sc.base.BaseDao;
-import com.tywy.sc.base.page.PageInfo;
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.tywy.sc.base.BaseDao;
+import com.tywy.sc.base.page.PageInfo;
 
 public class BaseServiceImpl<T> implements BaseService<T> {
 
@@ -144,5 +147,73 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         return baseDao.selectByIds(idList);
     }
 
+	@Override
+	public void setOrderList(T t) throws Exception{
+		Object orderObj = getProperty(t,"orderList");
+		if(orderObj == null){
+			Integer maxOrderList = baseDao.selectMaxOrderList();
+			if(maxOrderList == null){
+				setProperty(t,1,"orderList");
+			}else{
+				setProperty(t,maxOrderList + 1,"orderList");
+			}
+		}
+	}
+	
+	@Override
+	public void updateOrderList(T info) throws Exception {
+		Object idObj = getProperty(info,"id");
+		T entity = selectById((String)idObj);
+		Integer infoOrderList = (Integer)getProperty(info,"orderList");
+		Integer entityOrderList = (Integer)getProperty(entity,"orderList");
+		if(infoOrderList != null && !entityOrderList.equals(infoOrderList)){
+			//序号变化了
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("orderList", infoOrderList);
+			List<T> list = selectAll(params);
+			if(list != null && !list.isEmpty()){
+				baseDao.updateOrderList(infoOrderList);
+			}
+		}
+	}
+	
+	private String parSetName(String fieldName) {
+        if (null == fieldName || "".equals(fieldName)) {  
+            return null;
+        }  
+        int startIndex = 0;  
+        if (fieldName.charAt(0) == '_')  
+            startIndex = 1;  
+        return "set"  
+                + fieldName.substring(startIndex, startIndex + 1).toUpperCase()  
+                + fieldName.substring(startIndex + 1);  
+    } 
+    
+    private String parGetName(String fieldName) {
+        if (null == fieldName || "".equals(fieldName)) {  
+            return null;
+        }  
+        int startIndex = 0;  
+        if (fieldName.charAt(0) == '_')  
+            startIndex = 1;  
+        return "get"  
+                + fieldName.substring(startIndex, startIndex + 1).toUpperCase()  
+                + fieldName.substring(startIndex + 1);  
+    }
 
+    private Object getProperty(Object entity,String propName) throws Exception{
+    	Field imgField = entity.getClass().getDeclaredField(propName);
+		String fieldGetName = parGetName(imgField.getName());
+		Method fieldGetMet = entity.getClass().getMethod(fieldGetName);
+		return fieldGetMet.invoke(entity);
+    }
+    
+    private void setProperty(Object entity,Integer value,String propName) throws Exception{
+		Field field = entity.getClass().getDeclaredField(propName);        				
+		String fieldSetName = parSetName(field.getName());
+		Method fieldSetMet = entity.getClass().getMethod(fieldSetName,field.getType());
+		fieldSetMet.invoke(entity, value);
+    }
+
+	
 }

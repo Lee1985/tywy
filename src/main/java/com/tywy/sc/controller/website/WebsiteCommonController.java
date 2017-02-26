@@ -43,6 +43,8 @@ public class WebsiteCommonController extends BaseController{
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("isDelete", "0");
 		params.put("status", "1");
+		params.put("sort", "orderList");
+		params.put("order", "asc");
 		return websiteIntroductionTService.selectAll(params);
 	}
 	
@@ -64,7 +66,7 @@ public class WebsiteCommonController extends BaseController{
 		WebsiteBrandT info = new WebsiteBrandT();
 		info.setStatus("1");
 		info.setIsDelete("0");
-		info.setSort("createDate");
+		info.setSort("orderList");
 		info.setOrder("asc");
 		return websiteBrandTService.selectAll(info);
 	}

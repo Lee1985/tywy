@@ -16,6 +16,7 @@
 		<result property="isDelete" column="isDelete" />
 		<result property="isHomePage" column="isHomePage" />
 		<result property="imgUuid" column="imgUuid" />
+		<result property="iconUrl" column="iconUrl" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -30,7 +31,8 @@
 	     createDate,
 	     isDelete,
 	     isHomePage,
-	     imgUuid
+	     imgUuid,
+	     iconUrl
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -47,6 +49,7 @@
 			     <if test="isDelete!=null">isDelete,</if>
 			     <if test="isHomePage!=null">isHomePage,</if>
 			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="iconUrl!=null">iconUrl,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -60,6 +63,7 @@
 			     <if test="isDelete!=null">isDelete,</if>
 			     <if test="isHomePage!=null">#{isHomePage},</if>
 			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="iconUrl!=null">#{iconUrl},</if>
 		</trim>
 	</insert>
 
@@ -77,6 +81,7 @@
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 			     <if test="isHomePage!=null">isHomePage=#{isHomePage},</if>
 			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -127,6 +132,9 @@
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
 				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
 		</where>
 	</select>
 	
@@ -171,6 +179,9 @@
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
 				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -213,6 +224,9 @@
 				</if>
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
 				</if>
 		</where>
 	</select>
@@ -261,10 +275,21 @@
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
 			     <if test="isHomePage!=null">isHomePage=#{isHomePage},</if>
 			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
   			#{idList}
  		</foreach>
 	</update>
+	
+	<!-- 查询最大序号  -->
+     <select id="selectMaxOrderList" resultType="int">
+           select max(orderList) from website_introduction_t
+     </select>
+     
+     <update id="updateOrderList" parameterType="int">
+           update website_introduction_t set orderList = orderList + 1 where orderList >= #{orderList}
+     </update>
+	
 </mapper> 

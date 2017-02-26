@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SystemRoleAuthorityService extends BaseService<SystemRoleAuthority> {
+	
     int saveAuthority(SystemRoleAuthority info) throws Exception;
 
     List<Map<String, Object>> selectPermissUrl(SystemUser info);

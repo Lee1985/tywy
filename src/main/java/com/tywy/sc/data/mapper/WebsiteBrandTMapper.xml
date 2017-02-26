@@ -252,4 +252,13 @@
   			#{idList}
  		</foreach>
 	</update>
+	
+	<!-- 查询最大序号  -->
+     <select id="selectMaxOrderList" resultType="int">
+           select max(orderList) from website_brand_t
+     </select>
+     
+     <update id="updateOrderList" parameterType="int">
+           update website_brand_t set orderList = orderList + 1 where orderList >= #{orderList}
+     </update>
 </mapper> 

@@ -363,5 +363,9 @@ public interface BaseDao<T> {
 
     List<T> selectByIds(List<String> idList);
 
+	Integer selectMaxOrderList();
+
+	Integer updateOrderList(Integer infoOrderList);
+
 
 }

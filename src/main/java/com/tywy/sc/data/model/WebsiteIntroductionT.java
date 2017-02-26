@@ -23,6 +23,7 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 	private java.util.Date createDate; // 上传时间
 	private java.lang.String isDelete; // 是否删除0否1是
 	private String imgUuid;
+	private String iconUrl;
 	
 	private String createDateStr;
 	private String isHomePage;
@@ -222,6 +223,14 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
 		this.systemPictureInfo = systemPictureInfo;
 	}
+	
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
 
 	@Override
     public String toString() {
@@ -239,5 +248,4 @@ public class WebsiteIntroductionT extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
-    
 }

@@ -64,6 +64,12 @@ function singleCommonUpload(model_name,complete){
 }
 
 function singleIconCommonUpload(model_name,complete){
+	var area;
+	if($('#showImage2').size() <= 0){
+		area = "iconImgShow";
+	}else{
+		area = "showImage2";
+	}
 	/**
 	 * 配置文件（如果没有默认字样，说明默认值就是注释下的值）
 	 * 但是，on*（onSelect， onMaxSizeExceed...）等函数的默认行为
@@ -71,9 +77,9 @@ function singleIconCommonUpload(model_name,complete){
 	 */
 	var config = {
 			customered:true,
-			browseFileId : "iconImgShow", /** 选择文件的ID, 默认: i_select_files */
+			browseFileId : area, /** 选择文件的ID, 默认: i_select_files */
 			browseFileBtn : "<div></div>", /** 显示选择文件的样式, 默认: `<div>请选择文件</div>` */
-			dragAndDropArea: "iconImgShow", /** 拖拽上传区域，Id（字符类型"i_select_files"）或者DOM对象, 默认: `i_select_files` */
+			dragAndDropArea: area, /** 拖拽上传区域，Id（字符类型"i_select_files"）或者DOM对象, 默认: `i_select_files` */
 			dragAndDropTips: "<div></div>", /** 拖拽提示, 默认: `<span>把文件(文件夹)拖拽到这里</span>` */
 			autoUploading:false,
 			extFilters:['.bmp','.jpg','.jpeg','.png','.gif'],
@@ -92,10 +98,15 @@ function singleIconCommonUpload(model_name,complete){
 				var reader = new FileReader();
 		        reader.readAsDataURL(dat.file);
 		        reader.onload = function(evt) {
-	          		var img = $('#iconImgShow');
+		        	var img = $('#iconImgShow');
 	          		img.attr('src', reader.result);
 	          		img.attr('alt', file.name);
 	          		$('#iconOperType').val('edit');
+	          		if($('#showImage2').size() > 0){
+	          			img.css("width","100%");
+	          			img.css("height","100%");
+	          			img.css("padding-top","0");
+	          		}
 	            }
 			},onComplete : function(file) {
 			  var msg = eval('(' + file.msg + ')');

@@ -65,18 +65,28 @@
 	  $('#addBtn').click(function(){
 		  doAdd(function(){
 			  $('#imgShow').attr('src','');
+			  $('#iconImgShow').attr('src','images/add.png');
+			  $('#iconImgShow').css("width","50px");
+			  $('#iconImgShow').css("height","50px");
+			  $('#iconImgShow').css("padding-top","20px");
 			  $('#addImg').show();
 			  $('#imgShow').hide();
-			  $('#status').combobox('select', 1);			  
+			  $('#status').combobox('select', 1);
 			  editor.html('');
 		  });
 	  });
 	  
 	  $('#editBtn').click(function(){
-		  doEdit(function(row){
-			  $('#addImg').hide();			  
+		  doEdit(function(row){ 
+			  $('#addImg').hide();
 			  $('#imgShow').attr('src','downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath);
 			  $('#imgShow').show();
+			  $('#iconImgShow').attr('src','downFileResult.do?urlPath=' + row.iconUrl);
+			  $('#iconImgShow').css("width","100%");
+			  $('#iconImgShow').css("height","100%");
+			  $('#iconImgShow').css("padding-top","0");
+			  $('#operType').val('');
+			  $('#iconOperType').val('');
 			  editor.html(row.description);
 		  });
 	  });
@@ -105,6 +115,13 @@
 			var url = 'downFileResult.do?urlPath=' + row.systemPictureInfo.urlPath;
 			return "<img src="+ url +" style=\"height:90px;width:160px;background-color:#434343\"/>";	
 		}		
+	}
+	
+	function formatIcon(value,row){
+		if(row.systemPictureInfo){
+			var url = 'downFileResult.do?urlPath=' + row.iconUrl;
+			return "<img src="+ url +" style=\"height:90px;width:160px\"/>";	
+		}
 	}
 </script>
 <style type="text/css">
@@ -167,6 +184,8 @@ div#rMenu {
 				<tr>
 					<th data-options="field:'urlPath',align:'center',sortable:true,formatter:formatImg" style="width: 20%;">导航图片</th>
 					<th data-options="field:'introduceName',align:'center',sortable:true" style="width: 20%;">类别名称</th>
+					<th data-options="field:'iconUrl',align:'center',sortable:true,formatter:formatIcon" style="width: 20%;">页面图片</th>
+					<th data-options="field:'orderList',align:'center',sortable:true" style="width: 10%;">排序</th>
 					<th data-options="field:'status',align:'center',sortable:true,formatter:formatStatus" style="width: 10%;">状态</th>
 					<th data-options="field:'createDateStr',align:'center',sortable:true" style="width: 20%;">上传时间</th>
 				</tr>
@@ -190,12 +209,25 @@ div#rMenu {
 					<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="imgUuidLabel" name="imgUuid">
+					<input type="hidden" id="iconUrlLabel" name="iconUrl">
 					<input type="hidden" id="operType" name="operType">
+					<input type="hidden" id="iconOperType" name="iconOperType">
 				</div>
-				<div class="fitem">
+				<div class="fitem"> 
 					<label><font color="red">*</font>类别名称:</label>
 					<input id="introduceNameLabel" name="introduceName" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,25]'"/>
 				</div>
+				<div class="fitem">
+					<div style="float: left;margin-top: 25px;"><font color="red">*</font>页面图片:</div>
+					<div id="showImage2" class="showImage" style="width:160px;height:90px;border:1px solid;margin-left:70px;cursor:pointer;text-align:center;" >
+						<img id="iconImgShow" class="iconImgShow" style="width:50px;height:50px;padding-top: 20px;" src="images/add.png" />
+					</div>
+					<div style="width:160px;margin-left:70px;text-align:center;" >建议尺寸(1200*663)</div>
+				</div>
+				<div class="fitem">
+                      <label>排序:</label>
+                      <input id="orderListLabel" name="orderList" style="width: 200px" class="easyui-numberbox" data-options="min:1"/>
+                </div>
 				<div class="fitem">
 					<label>状态:</label>
 					<select id="status" name="status" class="easyui-combobox" style="width:100px;" 
@@ -230,6 +262,22 @@ div#rMenu {
 	<script type="text/javascript">
 	
 	var index;
+	  
+	  var iconStream  = singleIconCommonUpload('website_introduction_page',function(file){
+		 var inputs = '';
+		  for(var prop in file){
+			  var value = file[prop];
+			  if($('input[name="map[\'icon_' + prop + '\']"]').size() <= 0){
+				  inputs += '<input type="hidden" id="map[\'icon_'+prop+'\']" name="map[\'icon_'+prop+'\']" value="'+value+'" />';
+			  }else{
+				  $('input[name="map[\'icon_' + prop + '\']"]').remove();
+				  inputs += '<input type="hidden" id="map[\'icon_'+prop+'\']" name="map[\'icon_'+prop+'\']" value="'+value+'" />';
+			  }
+		  }
+		  $('#fm').append(inputs);
+		  save();
+	  });
+	  
 	  var stream = singleCommonUpload('website_introduction_nav',function(file){
 	      var inputs = ''; 
 		  for(var prop in file){
@@ -245,23 +293,40 @@ div#rMenu {
 			  }
 		  }  
 		  $('#fm').append(inputs);
-		  save();	
-	});
-	
+		  //save();
+		  var iconOperType = $('#iconOperType').val();
+		  if(iconOperType == ''){
+			//不上传图标
+			save();
+		  }else{
+			//上传图标
+			iconStream.upload();	  
+		  }
+		  
+	  });
+	  
 	function uploadAndSave(){
 		var operType = $('#operType').val();
+		var iconOperType = $('#iconOperType').val();
 		if(operType == ''){
-			//不上传图片,直接进行操作
+			if(iconOperType == ''){
+				//不上传图片,直接进行操作
+				if(!validation()){
+					return false;
+				}
+				save();
+				return false;	
+			}else{
+				//上传图标
+				iconStream.upload();
+			}					
+		}else{
 			if(!validation()){
 				return false;
 			}
-			save();
-			return false;	
+			stream.upload();
 		}
-		if(!validation()){
-			return false;
-		}
-		stream.upload();
+		
 	}
 	
 	function save(){
@@ -286,6 +351,11 @@ div#rMenu {
 		var src = $('#imgShow').attr('src');
 		if (src == '') {
 	        $.messager.alert('错误信息', '请上传图片!', 'error');
+	        return false;
+	    }
+		var iconSrc = $('#iconImgShow').attr('src');
+		if (iconSrc == '') {
+	        $.messager.alert('错误信息', '请上传图标!', 'error');
 	        return false;
 	    }
 		var rr = $('#fm').form('enableValidation').form('validate');

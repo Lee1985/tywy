@@ -1651,14 +1651,14 @@
 			
 			// check the file been uploaded?
 			if (this.uploadInfo) {
-				var unique = uploader.get("name") + "_" + uploader.get("size");
+				/*var unique = uploader.get("name") + "_" + uploader.get("size");
 				for (var i in this.uploadInfo) {
 					var key = this.uploadInfo[i].file.get("name") + "_" + this.uploadInfo[i].file.get("size");
 					if (key === unique) {
 						var ignore = this.get("onRepeatedFile") ? this.get("onRepeatedFile")(info) : this.onRepeatedFile(info);
 						if (!ignore) return !1;
 					}
-				}
+				}*/
 			}
 				
 			if(!bStreaming && size > 2147483648){this.uploadError({status:100, statusText:"Flash最大只能上传2G的文件!"});return !1;}

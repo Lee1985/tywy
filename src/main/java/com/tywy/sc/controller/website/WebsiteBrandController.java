@@ -42,7 +42,7 @@ public class WebsiteBrandController extends BaseController{
 		WebsiteBrandT brandInfo = new WebsiteBrandT();
 		brandInfo.setStatus("1");
 		brandInfo.setIsDelete("0");
-		brandInfo.setSort("createDate");
+		brandInfo.setSort("orderList");
 		brandInfo.setOrder("asc");
 		List<WebsiteBrandT> brandList = websiteBrandTService.selectAll(brandInfo);
 		request.setAttribute("brandList", brandList);
@@ -53,6 +53,12 @@ public class WebsiteBrandController extends BaseController{
 		//品牌
 		WebsiteBrandT brand = websiteBrandTService.selectById(id);
 		brand.setContent(JsoupUtils.removeStyle(brand.getContent()));
+		
+		Map<String,Object> imageParams = new HashMap<String,Object>();
+		imageParams.put("uuid", brand.getImgUuid());
+		SystemPictureInfo systemPictureInfo = systemPictureInfoService.selectEntity(imageParams);
+		brand.setSystemPictureInfo(systemPictureInfo);
+		
 		request.setAttribute("brand", brand);
 		
 		//品牌相册

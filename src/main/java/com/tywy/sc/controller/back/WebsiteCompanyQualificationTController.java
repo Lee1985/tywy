@@ -1,6 +1,7 @@
 package com.tywy.sc.controller.back;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
+import com.tywy.sc.data.model.ConfigInfo;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WebsiteCompanyQualificationT;
+import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCompanyQualificationTService;
 import com.tywy.utils.FileTool;
+import com.tywy.utils.UUIDUtil;
 import com.tywy.utils.stream.util.StreamVO;
 
 /**
@@ -39,9 +43,16 @@ public class WebsiteCompanyQualificationTController extends BaseController {
 	
 	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
+	
+	@Resource
+	private ConfigInfoService configInfoService;
 
 	@RequestMapping(value = "system/websiteCompanyQualificationTList")
 	public String websiteCompanyQualificationTList(HttpServletRequest request,HttpServletResponse response) {
+		
+		String configValue = configInfoService.getConfigValueByKey("website_company_qualification_nav");
+		request.setAttribute("configValue", configValue);
+		
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("isDelete", "0");
 		params.put("status", "1");
@@ -85,15 +96,6 @@ public class WebsiteCompanyQualificationTController extends BaseController {
 		websiteCompanyQualificationTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
-
-	@RequestMapping(value = "system/websiteCompanyQualificationTAjaxAll")
-	@ResponseBody
-	public List<WebsiteCompanyQualificationT> websiteCompanyQualificationTAjaxAll(HttpServletRequest request,
-			HttpServletResponse response, WebsiteCompanyQualificationT info, Integer page,
-			Integer rows) {
-		List<WebsiteCompanyQualificationT> results= websiteCompanyQualificationTService.selectAll(info);
-		return results; 
-	}
 	
 	@RequestMapping(value = "system/websiteCompanyQualificationTAjaxSave")
 	@ResponseBody
@@ -129,5 +131,40 @@ public class WebsiteCompanyQualificationTController extends BaseController {
 			// TODO: handle exception
 		}
 		return getJsonResult(result,"操作成功", "删除失败！");
+	}
+	
+	@RequestMapping(value = "system/websiteCompanyQualificationNavTAjaxSave")
+	@ResponseBody
+	public Map<String,Object> websiteCompanyQualificationNavTAjaxSave(HttpServletRequest request,
+			HttpServletResponse response, WebsiteCompanyQualificationT info,StreamVO streamVO,String operType) {
+		int result = 0;
+		String msg = "";
+		Map<String,Object> imageParams = new HashMap<String,Object>();
+		imageParams.put("configKey", "website_company_qualification_nav");
+		ConfigInfo configImageInfo = configInfoService.selectEntity(imageParams);
+		if (configImageInfo == null) {
+			configImageInfo = new ConfigInfo();
+			configImageInfo.setId(UUIDUtil.getUUID());
+			configImageInfo.setConfigKey("website_company_qualification_nav");
+			configImageInfo.setCreateDate(new Date());
+			configImageInfo.setCreateUser(getSessionUser(request).getId());
+			configImageInfo.setIsDelete("0");
+			configImageInfo.setStatus("1");
+			result = configInfoService.insertWithImage(configImageInfo,streamVO);
+			msg = "保存失败！";
+			if(result <= 0){
+				return getJsonResult(result, "操作成功",msg);
+			}
+		} else {
+			//根据opertyp判断是否需要上传
+			if(StringUtils.isNotBlank(operType)){
+				result = configInfoService.updateWithImage(configImageInfo,streamVO);
+				if(result <= 0){
+					msg = "修改失败！";
+					return getJsonResult(result, "操作成功",msg);
+				}
+			}
+		}
+		return getJsonResult(result, "操作成功",msg);
 	}
 }
