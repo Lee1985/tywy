@@ -42,7 +42,8 @@
 		</header>
 		<!--header end-->
 	<!--banner-->
-		<div class="banner banner_bg8">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${caseInfo.systemPictureInfo.urlPath}" class="banner_img">
 		</div>
 		<!--banner-->
 		<!--main-->
@@ -69,7 +70,7 @@
 				</div>
 				<div class="case_list clearfix">
 					<c:forEach items="${list }" var="picture">
-						<div title="${picture.imageName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+						<div title="${picture.imageName}<div class='pingtu'><h3 class='ping_title'><span>平面图</span></h3><img src='downFileResult.do?urlPath=${picture.iconUrl}' /></div>" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
 							<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }" alt="" />
 							<p class="case_name">${picture.imageName}</p>
 							<p class="case_number">${picture.serialNumber}</p>

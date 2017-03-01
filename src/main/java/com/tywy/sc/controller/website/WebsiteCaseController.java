@@ -53,7 +53,7 @@ public class WebsiteCaseController extends BaseController{
 		WebsiteCaseT info = new WebsiteCaseT();
 		info.setStatus("1");
 		info.setIsDelete("0");
-		info.setSort("createDate");
+		info.setSort("orderList");
 		info.setOrder("asc");
 		List<WebsiteCaseT> caseList = websiteCaseTService.selectAll(info);
 		request.setAttribute("caseList", caseList);
@@ -61,6 +61,12 @@ public class WebsiteCaseController extends BaseController{
 		if(StringUtils.isBlank(caseId)){
 			caseId = caseList.get(0).getId();
 		}
+		WebsiteCaseT currentCase = websiteCaseTService.selectById(caseId);		
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("uuid", currentCase.getImgUuid());
+		SystemPictureInfo systemPictureInfo = systemPictureInfoService.selectEntity(params);
+		currentCase.setSystemPictureInfo(systemPictureInfo);
+		request.setAttribute("caseInfo", currentCase);
 		
 		if(page == null || page < 1){
 			page = 1;

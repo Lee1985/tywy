@@ -1,14 +1,21 @@
-function singleCommonUpload(model_name,complete){
+function singleCommonUpload(model_name,complete,area,fm){
 	/**
 	 * 配置文件（如果没有默认字样，说明默认值就是注释下的值）
 	 * 但是，on*（onSelect， onMaxSizeExceed...）等函数的默认行为
 	 * 是在ID为i_stream_message_container的页面元素中写日志
 	 */
+	if(!area || $.trim(area) == ''){
+		area = 'showImage';
+	}
+	if(!fm && $.trim(fm) == ''){
+		fm = 'fm';
+	}
+	
 	var config = {
 			customered:true,
-			browseFileId : "showImage", /** 选择文件的ID, 默认: i_select_files */
+			browseFileId : area, /** 选择文件的ID, 默认: i_select_files */
 			browseFileBtn : "<div></div>", /** 显示选择文件的样式, 默认: `<div>请选择文件</div>` */
-			dragAndDropArea: "showImage", /** 拖拽上传区域，Id（字符类型"i_select_files"）或者DOM对象, 默认: `i_select_files` */
+			dragAndDropArea: area, /** 拖拽上传区域，Id（字符类型"i_select_files"）或者DOM对象, 默认: `i_select_files` */
 			dragAndDropTips: "<div></div>", /** 拖拽提示, 默认: `<span>把文件(文件夹)拖拽到这里</span>` */
 			//filesQueueId : "showImage", /** 文件上传容器的ID, 默认: i_stream_files_queue */
 			//messagerId : "showImage",
@@ -34,23 +41,22 @@ function singleCommonUpload(model_name,complete){
 			},
 			onAddTask: function(file, dat) {
 				// 图片回显
-				console.log(dat.file);
 				var reader = new FileReader();
 		        reader.readAsDataURL(dat.file);
 		        reader.onload = function(evt) {
-	          		var img = $('#imgShow');
+	          		var img = $('#'+fm).find('#imgShow');
 	          		img.attr('src', reader.result);
 	          		img.attr('alt', file.name);
 	          		img.attr('width', '120px');
-	          		$('#operType').val('edit');
+	          		$('#'+fm).find('#operType').val('edit');
 	            }
-		        $('#addImg').hide();
-		        $('#imgShow').show();
+		        $('#'+fm).find('#addImg').hide();
+		        $('#'+fm).find('#imgShow').show();
 			},onComplete : function(file) {
 			  var msg = eval('(' + file.msg + ')');	
 			  file.suffix = file.name.substring(file.name.lastIndexOf('.'),file.name.length);			  
 			  file.urlPath = msg.urlPath;
-			  var imgSrc = $("#imgShow").attr("src");
+			  var imgSrc = $('#'+fm).find("#imgShow").attr("src");
 			  getImageWidth(imgSrc,function(w,h){
 				  file.fwidth = w;
 				  file.fheight = h;

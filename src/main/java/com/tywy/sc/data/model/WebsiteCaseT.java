@@ -26,6 +26,8 @@ public class WebsiteCaseT extends BaseEntity implements Serializable {
 	private java.lang.String isDelete; // 
 	
 	private String createDateStr;
+	private SystemPictureInfo systemPictureInfo;
+	
 	/**
      * 获取属性
      *
@@ -231,6 +233,22 @@ public class WebsiteCaseT extends BaseEntity implements Serializable {
 
 	public void setCreateDateStr(String createDateStr) {
 		this.createDateStr = createDateStr;
+	}
+
+	public SystemPictureInfo getSystemPictureInfo() {
+		return systemPictureInfo;
+	}
+
+	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
+		this.systemPictureInfo = systemPictureInfo;
+	}
+
+	public java.lang.String getSerial_number() {
+		return serial_number;
+	}
+
+	public void setSerial_number(java.lang.String serial_number) {
+		this.serial_number = serial_number;
 	}
 
 	@Override

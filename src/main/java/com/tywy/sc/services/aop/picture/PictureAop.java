@@ -88,9 +88,14 @@ public class PictureAop {
         		}else if(an instanceof PictureList){
         			
         			Object obj = pjp.proceed();
-        			PageInfo pageInfo = (PageInfo)obj;
-        			List list = pageInfo.getRows();
-        			        			
+        			List list = new ArrayList();
+        			if(obj instanceof PageInfo){
+        				PageInfo pageInfo = (PageInfo)obj;
+            			list = pageInfo.getRows();
+        			}else{
+        				list = (List)obj;
+        			}
+        			
         			if(list == null || list.isEmpty()){
         				continue;
         			}

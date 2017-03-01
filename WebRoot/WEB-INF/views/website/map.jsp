@@ -172,12 +172,18 @@
 	   					if(value.fax && $.trim(value.fax) != ''){
 	   						content += '传真：' + value.fax + '<br/>';
 	   					}
-  		   			 	var infoWindow = new BMap.InfoWindow(content, opts);
-  		   			 	var pointCollection = new BMap.PointCollection(areaPoints, options);  // 初始化PointCollection
-  		 	        	pointCollection.addEventListener('click', function (e) {
-  		 	          		map.openInfoWindow(infoWindow,e.point); //开启信息窗口
-  		 	        	});
-  		 	        	map.addOverlay(pointCollection);
+	   					var pointIcon = new BMap.Icon("resource/website/img/points/point_25x25.png", new BMap.Size(25,25));
+	   					var marker = new BMap.Marker(areaPoint,{icon:pointIcon});
+	   					map.addOverlay(marker);
+	   					marker.addEventListener("mouseover",function(e){
+	   						var infoWindow = new BMap.InfoWindow(content, opts);
+	   						var p = e.target;
+	   						var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		   					map.openInfoWindow(infoWindow,point);
+	   					});
+	   					marker.addEventListener("mouseout",function(e){
+	   						map.closeInfoWindow();
+	   					});
 	   				});
 	   			}
 	   		 }

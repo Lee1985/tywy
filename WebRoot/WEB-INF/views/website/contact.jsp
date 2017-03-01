@@ -15,16 +15,10 @@
 		<!--reset css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/common.css"/>
 		<!--reset css-->
-		<!--轮播图 css-->
-		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.bxslider.css"/>
-		<!--轮播图 css-->
 		<!--function css-->
 		<link rel="stylesheet" type="text/css" href="resource/website/css/style.css"/>
 		<!--function css-->
 		<script src="resource/website/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="resource/website/js/jquery.fs.boxer.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="resource/website/js/lightbox.js" type="text/javascript" charset="utf-8"></script>
-		<script src="resource/website/js/owl.carousel.js" type="text/javascript" charset="utf-8"></script>
 		<title>天雅地毯</title>
 	</head>
 	<body>
@@ -36,7 +30,8 @@
 		    <jsp:include page="header.jsp" flush="true"/>
 		</header>
 		<!--header end-->
-		<div class="banner banner_bg2">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${imageValue}" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<li><a href="map.do">销售网络</a></li>
@@ -50,7 +45,7 @@
 			<div class="main">
 				<div class="contact_box">
 					<h2 class="title">联系我们<span>Contact us</span></h2>
-					<div class="contact_text">天雅地毯用优质的服务作为连接广大客户朋友供求之间的全新情感纽带，树立天雅地毯的品牌形象。企业的进步离不开倾听客户的宝贵意见，在使用我们产品过程中如有任何意见或建议，欢迎来电、来函或E-mail给我公司，我们将不胜感激，我们会不断改进和完善。请随时保持与我们的联系，我们竭诚为您服务！</div>
+					<div class="contact_text">${contentValue }</div>
 				    <ul class="contact_method clearfix">
 				    	<li>
 				    		<img src="resource/website/img/icon_00.png" alt="" />
@@ -59,7 +54,7 @@
 				    	</li>
 				    	<li>
 				    		<img src="resource/website/img/icon_10.png" alt="" />
-				    		<p class="c_name">电话:0437-6227733</p>
+				    		<p class="c_name">电话:${telValue }</p>
 				    		<p class="c_time">每天8:30-17:00</p>
 				    	</li>
 				    	<li class="contact">

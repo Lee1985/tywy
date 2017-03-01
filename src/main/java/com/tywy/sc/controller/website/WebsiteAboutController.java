@@ -91,6 +91,22 @@ public class WebsiteAboutController extends BaseController{
 	
 	@RequestMapping(value = "contact")
 	public String contact(HttpServletRequest request,HttpServletResponse response) {
+		//导航图片
+		String imageValue = configInfoService.getConfigValueByKey("contact_us_nav");
+		request.setAttribute("imageValue", imageValue);
+		
+		//qq
+		String qqValue = configInfoService.getConfigValueByKey("contact_us_qq");
+		request.setAttribute("qqValue", qqValue);
+		
+		//电话
+		String telValue = configInfoService.getConfigValueByKey("contact_us_tel");
+		request.setAttribute("telValue", telValue);
+		
+		//描述
+		String contentValue = configInfoService.getConfigValueByKey("contact_us_content");
+		request.setAttribute("contentValue", JsoupUtils.removeStyle(contentValue));
+		
 		return "website/contact";
 	}
 	

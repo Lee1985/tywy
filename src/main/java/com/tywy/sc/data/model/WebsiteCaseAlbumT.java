@@ -1,6 +1,8 @@
 package com.tywy.sc.data.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import com.tywy.sc.base.entity.BaseEntity;
 
 /**
@@ -23,8 +25,12 @@ public class WebsiteCaseAlbumT extends BaseEntity implements Serializable {
 	private java.lang.String updateUser; // 修改用户
 	private java.lang.String status; // 状态
 	private java.lang.String isDelete; // 删除标记
+	private String iconUrl;
 	
 	private SystemPictureInfo systemPictureInfo;
+	
+	private String updateDateStr;
+	
 	/**
      * 获取主键ID属性
      *
@@ -247,6 +253,23 @@ public class WebsiteCaseAlbumT extends BaseEntity implements Serializable {
 
 	public void setSystemPictureInfo(SystemPictureInfo systemPictureInfo) {
 		this.systemPictureInfo = systemPictureInfo;
+	}
+
+	public String getUpdateDateStr() {
+		updateDateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(updateDate);
+		return updateDateStr;
+	}
+
+	public void setUpdateDateStr(String updateDateStr) {
+		this.updateDateStr = updateDateStr;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
 	}
 
 	@Override

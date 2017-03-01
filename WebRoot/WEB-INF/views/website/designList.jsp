@@ -42,7 +42,8 @@
 		</header>
 		<!--header end-->
 	<!--banner-->
-		<div class="banner banner_bg7">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${imageConfigUrl }" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<li class="selected"><a href="designList.do">设计图册</a></li>

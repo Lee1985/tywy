@@ -1,6 +1,7 @@
 package com.tywy.sc.controller.back;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteDesignTService;
 import com.tywy.utils.FileTool;
+import com.tywy.utils.UUIDUtil;
 import com.tywy.utils.stream.util.StreamVO;
 
 /**
@@ -54,6 +56,12 @@ public class WebsiteDesignTController extends BaseController {
 			return "back/website_design_list";
 		}
 		request.setAttribute("configInfo", configInfo);
+		
+		params = new HashMap<String,Object>();
+		params.put("configKey", "website_design_nav");
+		ConfigInfo imageConfigInfo = configService.selectEntity(params);
+		request.setAttribute("imageConfigInfo", imageConfigInfo);
+		
 		return "back/website_design_list";
 	}
 	
@@ -65,7 +73,13 @@ public class WebsiteDesignTController extends BaseController {
 		if(configInfo == null){
 			return "back/website_design_list";
 		}
-		request.setAttribute("configInfo", configInfo);		
+		request.setAttribute("configInfo", configInfo);	
+		
+		params = new HashMap<String,Object>();
+		params.put("configKey", "website_design_nav");
+		ConfigInfo imageConfigInfo = configService.selectEntity(params);
+		request.setAttribute("imageConfigInfo", imageConfigInfo);
+		
 		return "back/website_design_edit";
 	}
 	
@@ -156,5 +170,63 @@ public class WebsiteDesignTController extends BaseController {
 		}
 
 		return getJsonResult(result,"操作成功", "删除失败！");
+	}
+	
+	@RequestMapping(value="system/websiteDesignTAjaxSaveSettings")
+	@ResponseBody
+	public Map<String,Object> websiteDesignTAjaxSaveSettings(HttpServletRequest request,
+			HttpServletResponse response,StreamVO streamVO,String operType,String configValue){
+		int result = 0;
+		String msg = "";
+		
+		Map<String,Object> imageParams = new HashMap<String,Object>();
+		imageParams.put("configKey", "website_design_nav");
+		ConfigInfo configImageInfo = configService.selectEntity(imageParams);
+		if (configImageInfo == null) {
+			configImageInfo = new ConfigInfo();
+			configImageInfo.setId(UUIDUtil.getUUID());
+			configImageInfo.setConfigKey("website_design_nav");
+			configImageInfo.setCreateDate(new Date());
+			configImageInfo.setCreateUser(getSessionUser(request).getId());
+			configImageInfo.setIsDelete("0");
+			configImageInfo.setStatus("1");
+			result = configService.insertWithImage(configImageInfo,streamVO);
+			msg = "保存失败！";
+			if(result <= 0){
+				return getJsonResult(result, "操作成功",msg);
+			}
+		} else {
+			//根据opertyp判断是否需要上传
+			if(StringUtils.isNotBlank(operType)){
+				result = configService.updateWithImage(configImageInfo,streamVO);
+				if(result <= 0){
+					msg = "修改失败！";
+					return getJsonResult(result, "操作成功",msg);
+				}
+			}
+		}
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("configKey", "website_design_content");
+		ConfigInfo configInfo = configService.selectEntity(params);
+		if (configInfo == null) {
+			configInfo = new ConfigInfo();
+			configInfo.setId(UUIDUtil.getUUID());
+			configInfo.setConfigKey("website_design_content");
+			configInfo.setConfigValue(configValue);
+			configInfo.setCreateDate(new Date());
+			configInfo.setCreateUser(getSessionUser(request).getId());
+			configInfo.setIsDelete("0");
+			configInfo.setStatus("1");
+			result = configService.insert(configInfo);
+			msg = "保存失败！";
+			
+		} else {
+			configInfo.setConfigValue(configValue);
+			result = configService.update(configInfo);
+			msg = "修改失败！";
+		}
+		
+		return getJsonResult(result, "操作成功",msg);
 	}
 }

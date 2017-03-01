@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%
 	String path = request.getContextPath();
@@ -37,7 +39,8 @@
 		</header>
 		<!--header end-->
 	<!--banner-->
-		<div class="banner banner_bg7">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${imageConfigUrl }" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<li><a href="designList.do">设计图册</a></li>
@@ -49,21 +52,22 @@
 		<!--main-->
 		<main>
 			<div class="main">
-				<div class="team_box">
-					<p>天雅知道，色彩，设计决定了整个外观和空间的感觉。为了确保我们的设计看起来更精湛，天雅使用的打印其技术是世界上最先进的数码印花技术。这完美的数码印刷技术能够将精心设计的图案和细节完美的呈现。</p>
-					<p>公司设有设计研发中心，具有最大、最专业的设计团队，并与意大利顶级设计公司长期深度合作，拥有多项图案设计专利，不断推出国际最新趋势的印花地毯设计。</p>
-				</div>
+				<div class="team_box">${configContent }</div>
 				<div class="person_box">
 					<h2 class="title team_title">TEAM<span>MEM BERS</span></h2>
-					<div class="big_box"><img src="resource/website/img/biglimg0.png" alt="" /></div>
+					<c:if test="${!empty designMemberList }">
+						<div class="big_box"><img src="downFileResult.do?urlPath=${(fn:length(designMemberList))>0?designMemberList[0].systemPictureInfo.urlPath:''}" alt="" /></div>
+					</c:if>	
 					<ul>
-						<li class="smallimg1 selected"><img src="resource/website/img/smallimg0.png" alt="" /></li>
-						<li class="smallimg2"><img src="resource/website/img/smallimg1.png" alt="" /></li>
-						<li class="smallimg3"><img src="resource/website/img/smallimg2.png" alt="" /></li>
-						<li class="smallimg4"><img src="resource/website/img/smallimg3.png" alt="" /></li>
-						<li class="smallimg5"><img src="resource/website/img/smallimg4.png" alt="" /></li>
-						<li class="smallimg6"><img src="resource/website/img/smallimg5.png" alt="" /></li>
-						<li class="smallimg7"><img src="resource/website/img/smallimg6.png" alt="" /></li>
+						<c:forEach items="${designMemberList }" var="member" varStatus="status">
+							<li class="smallimg${status.count }  <c:if test="${status.count eq 1 }">selected</c:if>"><img src="downFileResult.do?urlPath=${member.systemPictureInfo.urlPath }" alt="" /></li>
+							<!-- <li class="smallimg2"><img src="resource/website/img/smallimg1.png" alt="" /></li>
+							<li class="smallimg3"><img src="resource/website/img/smallimg2.png" alt="" /></li>
+							<li class="smallimg4"><img src="resource/website/img/smallimg3.png" alt="" /></li>
+							<li class="smallimg5"><img src="resource/website/img/smallimg4.png" alt="" /></li>
+							<li class="smallimg6"><img src="resource/website/img/smallimg5.png" alt="" /></li>
+							<li class="smallimg7"><img src="resource/website/img/smallimg6.png" alt="" /></li> -->
+						</c:forEach>						
 					</ul>
 				</div>
 			</div>
@@ -85,7 +89,7 @@
 			$(".person_box ul li").on("click",function(){
 				var indexs=$(this).index();
 				$(this).addClass("selected").siblings().removeClass("selected");
-				$(".big_box img").attr("src","resource/website/img/biglimg"+indexs+".png");
+				$(".big_box img").attr("src",$(this).find('img').attr('src'));
 			});
 	});
 	</script>

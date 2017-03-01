@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>天雅设计管理</title>
+<title>联系我们管理</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -39,6 +39,50 @@
 	height: 150px;
 	position: relative;
 }	
+</style>
+<style type="text/css">
+.ztree li span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0;
+	vertical-align: top;
+	*vertical-align: middle
+}
+
+div#rMenu {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	text-align: left;
+	padding: 2px;
+}
+</style>
+<style type="text/css">
+#fm {
+	margin: 0;
+	padding: 10px 5px;
+}
+
+.ftitle {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 65px;
+}
+
+.fitem input {
+	width: 280px;
+}
 </style>
 
 <script type="text/javascript">
@@ -82,7 +126,7 @@ KindEditor.ready(function(K) {
 </script>
 </head>
 <body>
-	<form id="fm" name="fm" method="post" action="system/websiteDesignTAjaxSaveSettings.do">
+	<form id="fm" name="fm" method="post" action="system/websiteContactAjaxSaveSettings.do">
 		<input type="hidden" name="configKey" id="configKeyLabel" value="website_design_content"/>
 		<input type="hidden" name="id" id="idLabel" value="${configInfo.id }"/>
 		<div class="easyui-panel" title="通用设置" style="width:100%;height:400px;padding:10px;" data-options="iconCls:'icon-filter',closable:false,tools:'#two'">
@@ -90,22 +134,32 @@ KindEditor.ready(function(K) {
 				<div style="float: left;margin-top: 25px;"><font color="red">*</font>导航图片:</div>
 				<div id="showImage" class="showImage" style="width:160px;height:90px;border:1px solid;margin-left:70px;cursor:pointer;text-align:center;" >
 					<c:choose>
-						<c:when test="${empty imageConfigInfo.configValue }">
+						<c:when test="${empty imageValue }">
 							<img id="addImg" class="addImg" src="images/add.png" style="width:50px;height:50px;padding-top: 20px;"/>
 							<img id="imgShow" class="imgShow" src="" style="display:none;width:100%;height:100%;"/>
 						</c:when>
 						<c:otherwise>
 							<img id="addImg" class="addImg" src="images/add.png" style="width:50px;height:50px;padding-top: 20px;display: none;"/>
-							<img id="imgShow" class="imgShow" src="downFileResult.do?urlPath=${imageConfigInfo.configValue}" style="width:100%;height:100%;"/>
+							<img id="imgShow" class="imgShow" src="downFileResult.do?urlPath=${imageValue}" style="width:100%;height:100%;"/>
 						</c:otherwise>
 					</c:choose>
-					
 				</div>
 				<div style="width:160px;margin-left:70px;text-align:center;" >建议比例(16:9)</div>
 				<input type="hidden" id="operType" name="operType">
 			</div>
+			
 			<div class="fitem">
-				<label>描述内容:</label><textarea id="descriptionLabel" name="configValue" style="width:100%;height:145px;">${configInfo.configValue }</textarea></textarea>
+				<label><font color="red">*</font>在线QQ:</label>
+				<input id="qqValueLabel" name="qqValue" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'" value="${qqValue }" />
+			</div>
+			
+			<div class="fitem">
+				<label><font color="red">*</font>联系电话:</label>
+				<input id="telValueLabel" name="telValue" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'" value="${telValue }" />
+			</div>
+			
+			<div class="fitem">
+				<label>描述内容:</label><textarea id="descriptionLabel" name="contentValue" style="width:100%;height:145px;">${contentValue }</textarea></textarea>
 			</div>
 		</div>
     	<div id="two">
@@ -157,7 +211,7 @@ KindEditor.ready(function(K) {
 	      var result = eval('(' + result + ')');
 	      layer.close(index);
 	      if (result.success) {
-	    	  location.href = basePath + "system/websiteDesignTList.do";
+	    	  location.href = basePath + "system/websiteContactInfo.do";
 	      } else {
 	        $.messager.alert('错误信息', result.msg, 'error');
 	        return false;

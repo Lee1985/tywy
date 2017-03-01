@@ -56,13 +56,12 @@ public class WebsiteCategoryTServiceImpl extends BaseServiceImpl<WebsiteCategory
 	@Override
 	@Pictureable
 	public int insertWithImage(WebsiteCategoryT info, @PictureKey StreamVO streamVO) {
-		info.setId(UUIDUtil.getUUID());
-		Integer maxOrderList = websiteCategoryTDao.selectMaxOrderList();
-		if(maxOrderList == null){
-			info.setOrderList(1);
-		}else{
-			info.setOrderList(maxOrderList + 1);
+		try {
+			setOrderList(info);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		info.setId(UUIDUtil.getUUID());
 		info.setCreateDate(new Date());
 		info.setIsDelete(0);
 		return websiteCategoryTDao.insert(info);
@@ -71,6 +70,11 @@ public class WebsiteCategoryTServiceImpl extends BaseServiceImpl<WebsiteCategory
 	@Override
 	@Pictureable
 	public int updateWithImage(WebsiteCategoryT info, @PictureKey StreamVO streamVO) {
+		try {
+			updateOrderList(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return update(info);
 	}
 	

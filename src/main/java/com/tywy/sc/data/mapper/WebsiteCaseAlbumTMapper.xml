@@ -17,6 +17,7 @@
 		<result property="updateUser" column="updateUser" />
 		<result property="status" column="status" />
 		<result property="isDelete" column="isDelete" />
+		<result property="iconUrl" column="iconUrl" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -32,7 +33,8 @@
 	     updateDate,
 	     updateUser,
 	     status,
-	     isDelete
+	     isDelete,
+	     iconUrl
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -50,6 +52,7 @@
 			     <if test="updateUser!=null">updateUser,</if>
 			     <if test="status!=null">status,</if>
 			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="iconUrl!=null">iconUrl,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -64,6 +67,7 @@
 			     <if test="updateUser!=null">#{updateUser},</if>
 			     <if test="status!=null">#{status},</if>
 			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="iconUrl!=null">#{iconUrl},</if>
 		</trim>
 	</insert>
 
@@ -82,6 +86,7 @@
 			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
 			     <if test="status!=null">status=#{status},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -135,6 +140,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
 		</where>
 	</select>
 	
@@ -182,6 +190,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -227,6 +238,9 @@
 				</if>
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
+				</if>
+				<if test=" iconUrl != null and iconUrl != '' ">
+					and iconUrl=#{iconUrl} 
 				</if>
 		</where>
 	</select>
@@ -276,6 +290,7 @@
 			     <if test="updateUser!=null">updateUser=#{updateUser},</if>
 			     <if test="status!=null">status=#{status},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="iconUrl!=null">iconUrl=#{iconUrl},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

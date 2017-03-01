@@ -1,14 +1,13 @@
 package com.tywy.sc.controller.back;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +18,7 @@ import com.tywy.sc.data.model.ConfigInfo;
 import com.tywy.sc.data.model.WebsiteCaseT;
 import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.WebsiteCaseTService;
-import com.tywy.utils.UUIDUtil;
+import com.tywy.utils.stream.util.StreamVO;
 
 /**
  * 
@@ -56,36 +55,29 @@ public class WebsiteCaseTController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
-		info.setSort("createDate");
+		info.setSort("orderList");
 		info.setOrder("asc");
 		websiteCaseTService.selectAll(info, pageInfo);
 		return pageInfo;
-	}
-
-	@RequestMapping(value = "system/websiteCaseTAjaxAll")
-	@ResponseBody
-	public List<WebsiteCaseT> websiteCaseTAjaxAll(HttpServletRequest request,
-			HttpServletResponse response, WebsiteCaseT info, Integer page,
-			Integer rows) {
-		List<WebsiteCaseT> results = websiteCaseTService.selectAll(info);
-		return results; 
 	}
 	
 	@RequestMapping(value = "system/websiteCaseTAjaxSave")
 	@ResponseBody
 	public Map<String,Object> websiteCaseTAjaxSave(HttpServletRequest request,
-			HttpServletResponse response, WebsiteCaseT info) {
+			HttpServletResponse response, WebsiteCaseT info,StreamVO streamVO,String operType) {
 		int result = 0;
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
-			info.setId(UUIDUtil.getUUID());
 			info.setCreateUser(getSessionUser(request).getId());
-			info.setCreateDate(new Date());
-			info.setIsDelete("0");
-			result = websiteCaseTService.insert(info);
+			result = websiteCaseTService.insertWithImage(info,streamVO);
 			msg = "保存失败！";
 		} else {
-			result = websiteCaseTService.update(info);
+			//根据opertyp判断是否需要上传
+			if(StringUtils.isBlank(operType)){
+				result = websiteCaseTService.update(info);
+			}else{
+				result = websiteCaseTService.updateWithImage(info,streamVO);
+			}
 			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功",msg);
