@@ -40,10 +40,10 @@
 			toolbar:'#toolbar'">
 			<thead>
 				<tr>
-					<th data-options="field:'name',width:150,align:'center',sortable:true">姓名</th>
-					<th data-options="field:'mobile',width:60,align:'center',sortable:true">联系方式</th>
-					<th data-options="field:'content',width:200,align:'center',sortable:true">留言内容</th>
-					<th data-options="field:'createDate',width:125,align:'center',sortable:true">留言时间</th>
+					<th data-options="field:'name',align:'center',sortable:true" width="10%">姓名</th>
+					<th data-options="field:'mobile',align:'center',sortable:true" width="10%">联系方式</th>
+					<th data-options="field:'content',align:'center',sortable:true" width="30%">留言内容</th>
+					<th data-options="field:'createDate',align:'center',sortable:true" width="15%">留言时间</th>
 				</tr>
 			</thead>
 		</table>

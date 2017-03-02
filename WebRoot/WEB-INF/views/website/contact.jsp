@@ -81,12 +81,12 @@
 		<div class="mask1">
 			<div class="poup_box1">
 				<h1 class="title">留言</h1>
-				<form class="select_box">
+				<form class="select_box" method="post" action="contactSubmit.do">
 					<!--联系方式-->
 					<div class="form_box">
 						<div class="form_title">联系姓名</div>
 						<div class="form_detail">
-							<input type="text" id="name" placeholder="姓名" />
+							<input type="text" id="name" name="name" placeholder="姓名" />
 						</div>
 					</div>
 					<!--联系方式-->
@@ -94,7 +94,7 @@
 					<div class="form_box">
 						<div class="form_title">联系方式</div>
 						<div class="form_detail">
-							<input type="text" id="tel" placeholder="手机号" />
+							<input type="text" id="tel" name="mobile" placeholder="手机号" />
 						</div>
 					</div>
 					<!--联系地址-->
@@ -102,11 +102,12 @@
 					<div class="form_box">
 						<div class="form_title">留言內容</div>
 						<div class="form_detail">
-							<textarea name="" rows="" cols=""></textarea>
+							<textarea id="content" name="content" rows="" cols=""></textarea>
 						</div>
 					</div>
 					<!--留言框-->
-					<div class="submit">提交</div>
+					<div class="submit" style="display: inline-block;">提交</div>
+					<div class="cancel" style="display: inline-block;">取消</div>
 				</form>
 			</div>
 		</div>
@@ -133,11 +134,42 @@
 			});
 			$(".contact").on("click",function(){
 				$(".mask1").show();
-				$("html,body").css("overflow","hidden");
+				$("html,body").css({overflow:"hidden",height:h});
 			});
 			$(".submit").on("click",function(){
+				if($.trim($('#name').val()) == ''){
+					alert('请输入您的姓名!')
+					return false;
+				}
+				if($.trim($('#tel').val()) == ''){
+					alert('请输入您的联系方式!')
+					return false;
+				}
+				if($.trim($('#content').val()) == ''){
+					alert('请输入您的留言内容!')
+					return false;
+				}
+				
+				var ajaxOptions = {
+	    		 url: 'contactSubmit.do',
+	    		 data:{name:$('#name').val(),mobile:$('#tel').val(),content:$('#content').val()},
+	    		 type: 'post',
+	    		 async: false,
+	    		 dataType: 'json',
+	    		 success: function(data) {
+	    			 alert('留言成功,感谢您的反馈!');
+	    			 $(".mask1").hide();
+	 				 $("html,body").css({overflow:"auto",height:"auto"});
+	    		 }
+	    		};
+	    		$.ajax(ajaxOptions);
+				
+				//$(".mask1").hide();
+				//$("html,body").css({overflow:"auto",height:"auto"});
+			});
+			$(".cancel").on("click",function(){
 				$(".mask1").hide();
-				$("html,body").css("overflow","auto");
+				$("html,body").css({overflow:"auto",height:"auto"});
 			});
 			//彈出層
 		});

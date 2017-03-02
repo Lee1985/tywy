@@ -218,7 +218,7 @@ div#rMenu {
 			<script type="text/javascript">
 	
 			var index;
-			  var stream = singleCommonUpload('website_introduction_nav',function(file){
+			  var stream = singleCommonUpload('website_news_nav',function(file){
 			      var inputs = ''; 
 				  for(var prop in file){
 					  var value = file[prop];

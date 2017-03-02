@@ -102,6 +102,14 @@ public class WebsiteNewsController extends BaseController{
 		request.setAttribute("categoryList", categoryList);
 		
 		WebsiteNewsT newsinfo = websiteNewsTService.selectById(id);
+		
+		WebsiteCategoryT categoryInfo = websiteCategoryTService.selectById(newsinfo.getCatagoryId());
+		Map<String,Object> picParams = new HashMap<String,Object>();
+		picParams.put("uuid", categoryInfo.getImgUuid());
+		SystemPictureInfo systemPictureInfo = systemPictureInfoService.selectEntity(picParams);
+		categoryInfo.setSystemPictureInfo(systemPictureInfo);
+		request.setAttribute("categoryInfo", categoryInfo);
+		
 		newsinfo.setContent(JsoupUtils.removeStyle(newsinfo.getContent()));
 		request.setAttribute("newsInfo", newsinfo);
 		

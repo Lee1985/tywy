@@ -1,6 +1,7 @@
 package com.tywy.sc.services.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ public class WebsiteCategoryTServiceImpl extends BaseServiceImpl<WebsiteCategory
 		return super.selectAll(info, pageInfo);
 	}
 	
+	@Override
+	@Pictureable
+	public List<WebsiteCategoryT> selectAll(@PictureList WebsiteCategoryT info) {
+		return super.selectAll(info);
+	}
+
 	@Override
 	public int insert(WebsiteCategoryT info) {
 		try {

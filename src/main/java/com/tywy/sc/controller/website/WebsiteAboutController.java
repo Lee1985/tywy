@@ -1,6 +1,8 @@
 package com.tywy.sc.controller.website;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WebsiteCompanyQualificationT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
+import com.tywy.sc.data.model.WebsiteMessageT;
 import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCompanyQualificationTService;
 import com.tywy.sc.services.WebsiteIntroductionTService;
+import com.tywy.sc.services.WebsiteMessageTService;
 import com.tywy.utils.FileTool;
 import com.tywy.utils.JsoupUtils;
+import com.tywy.utils.UUIDUtil;
 
 @Controller
 public class WebsiteAboutController extends BaseController{
@@ -38,6 +44,9 @@ public class WebsiteAboutController extends BaseController{
 	
 	@Resource
 	private ConfigInfoService configInfoService;
+	
+	@Resource
+	private WebsiteMessageTService websiteMessageTService;
 	
 	@RequestMapping(value = "companyProfile")
 	public String companyProfile(HttpServletRequest request,HttpServletResponse response) {
@@ -128,5 +137,20 @@ public class WebsiteAboutController extends BaseController{
 		info.setDescription(JsoupUtils.removeStyle(info.getDescription()));
 		request.setAttribute("introduction", info);
 		return "website/companyProfile";
+	}
+	
+	@RequestMapping(value = "contactSubmit")
+	@ResponseBody
+	public Map<String,Object> contactSubmit(HttpServletRequest request,
+			HttpServletResponse response, WebsiteMessageT info) {
+		int result = 0;
+		try {
+			info.setId(UUIDUtil.getUUID());
+			info.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			result = websiteMessageTService.insert(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getJsonResult(result,"操作成功", "操作失败！");
 	}
 }

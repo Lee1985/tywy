@@ -102,10 +102,10 @@
 					and id=#{id} 
 				</if>
 				<if test=" name != null and name != '' ">
-					and name=#{name} 
+					and name like CONCAT('%','${name}','%')
 				</if>
 				<if test=" mobile != null and mobile != '' ">
-					and mobile=#{mobile} 
+					and mobile like CONCAT('%','${mobile}','%')
 				</if>
 				<if test=" content != null and content != '' ">
 					and content=#{content} 

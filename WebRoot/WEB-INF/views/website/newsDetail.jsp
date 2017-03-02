@@ -34,11 +34,12 @@
 		</header>
 		<!--header end-->
 		<!--banner-->
-		<div class="banner banner_bg3">
+		<div class="banner">
+			<img alt="" src="downFileResult.do?urlPath=${categoryInfo.systemPictureInfo.urlPath }" class="banner_img">
 			<div class="nav_bg">
 				<ul class="navigation">
 					<c:forEach items="${categoryList}" var="category" varStatus="status">
-						<li <c:if test="${categoryId eq  category.id}">class="selected"</c:if>><a href="news.do?categoryId=${category.id }">${category.name }</a></li>
+						<li <c:if test="${categoryId eq  category.id}">class="selected"</c:if>><a href="news.do?categoryId=${category.id }">${category.categoryName }</a></li>
 					</c:forEach>
 				</ul>
 			</div>

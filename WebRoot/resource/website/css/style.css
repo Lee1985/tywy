@@ -97,7 +97,9 @@ input[type="text"]::-webkit-input-placeholder { color: #999999; font-size: 16px;
 input[type="text"]:-moz-placeholder {  color: #999999; font-size: 16px;} 
 input[type="text"]::-moz-placeholder {  color: #999999;font-size: 16px; } 
 input[type="text"]:-ms-input-placeholder { color: #999999; font-size: 16px;}
-div.submit{width: 300px; height: 50px; line-height: 50px;font-size: 18px; text-align: center; border: 1px solid #74191d; background-color: #74191d; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; -ms-border-radius: 8px; color: #FFFFFF; cursor: pointer; margin: auto;}
+div.submit{width: 115px; height: 50px; line-height: 50px;font-size: 18px; text-align: center; border: 1px solid #74191d; background-color: #74191d; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; -ms-border-radius: 8px; color: #FFFFFF; cursor: pointer; margin: auto;}
+div.cancel{width: 115px; height: 50px; line-height: 50px;font-size: 18px; text-align: center; border: 1px solid #999999; background-color: #FFFFFF; border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; -ms-border-radius: 8px; color: #000000; cursor: pointer; margin: auto;}
+
 /*弹出框*/
 /*联系我们*/
 
