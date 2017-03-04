@@ -23,7 +23,7 @@
 		<li><a href="contact.do">联系我们</a></li>
 	</ul>
 	<div class="code_box">
-		<img src="resource/website/img/weinxin.png" alt="微信二维码" />
+		<img src="resource/website/img/weinxin.jpg" alt="微信二维码" width="200" height="200"/>
 		<p>微信公众号</p>
 	</div>
 </div>	

@@ -53,12 +53,27 @@
 		<c:forEach items="${brandList }" var="brand" varStatus="status">
 			<div class="brand_box box" <c:if test="${status.count eq brandList.size() }">style="margin-bottom:98px;"</c:if> >
 				<div class="brand_left"><img src="downFileResult.do?urlPath=${brand.systemPictureInfo.urlPath }"/></div>
-				<div class="brand_right">
-					<h2 class="title0">
-						<img src="downFileResult.do?urlPath=${brand.iconUrl }"/>
-						${brand.brandName }
-						<span>${brand.engText }</span>
-					</h2>
+				<div class="brand_right" style="text-align: center;">
+					<c:choose>
+						<c:when test="${empty brand.targetUrl }">
+							<a href="javascript:void(0);" style="width: 100%;">
+								<h2 class="title0">
+									<img src="downFileResult.do?urlPath=${brand.iconUrl }"/>
+									${brand.brandName }
+									<span>${brand.engText }</span>
+								</h2>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${brand.targetUrl }" style="width: 100%;">
+								<h2 class="title0">
+									<img src="downFileResult.do?urlPath=${brand.iconUrl }"/>
+									${brand.brandName }
+									<span>${brand.engText }</span>
+								</h2>
+							</a>
+						</c:otherwise>
+					</c:choose>
 					<div class="box_detail">
 						${brand.description }
 					</div>

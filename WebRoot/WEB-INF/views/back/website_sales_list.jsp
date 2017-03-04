@@ -204,7 +204,6 @@ div#rMenu {
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="longitudeLabel" name="longitude" />
 					<input type="hidden" id="latitudeLabel" name="latitude" />
-					<input type="hidden" id="isHq" name="isHq" />
 				</div>
 				<div class="fitem">
 					<label><font color="red">*</font>所在城市:</label>
