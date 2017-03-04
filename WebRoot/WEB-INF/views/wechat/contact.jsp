@@ -63,13 +63,13 @@
 		});
 		
 		function toWechatContact() {
-			window.location.href="./toWechatContact.do";
+			window.location.href="./toWechatContact.do?userid=${userid}";
 		}
 		function toWechatWebsite() {
-			window.location.href="./toWechatWebsite.do";
+			window.location.href="./toWechatWebsite.do?userid=${userid}";
 		}
 		function toWelcomeIndex() {
-			window.location.href="./welcomeIndex.do";
+			window.location.href="./welcomeIndex.do?userid=${userid}";
 		}
 	</script>
 </html>

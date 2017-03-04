@@ -11,17 +11,21 @@ public class CfgConstant {
 	 */
 	public static String APPSECRET = "";
 	/**
-	 * 静默授权并自动跳转到回调页snsapi_base
+	 * 静默授权并自动跳转到回调页snsapi_base 弹出授权页面 snsapi_userinfo
 	 */
-	public static String _SCOPE = "snsapi_base";
+	public static String _SCOPE = "snsapi_userinfo";
 	/**
 	 * 获取GET_AUTHORIZE_URL接口
 	 */
 	public static String GET_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=_APPID&redirect_uri=_REDIRECT_URI&response_type=code&scope=_SCOPE&state=STATE#wechat_redirect";
 	/**
+	 * 获取GET_AUTH_OPENID_URL接口
+	 */
+	public static String GET_AUTH_OPENID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+	/**
 	 * 获取GET_CALLBACK_URL接口
 	 */
-	public static String GET_CALLBACK_URL = "http://www.tycarpet.com/tywy/callback";
+	public static String GET_CALLBACK_URL = "http://www.tycarpet.com/tywy/weixin/oauth";
 	/**
 	 * 获取ACCESS_TOKEN接口
 	 */
@@ -62,17 +66,16 @@ public class CfgConstant {
 	 * 新增临时素材
 	 */
 	public static String ADD_MEDIA_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=_ACCESS_TOKEN&type=_TYPE";
-	
+
 	/**
 	 * 转客服的标志Y
 	 */
 	public static String TRANSFER_CUSTOMER_SERVICE = "Y";
-	
+
 	public static String DEFAULT_HQ_NAME = "";
-	
+
 	public static String DEFAULT_HQ_POINT_LNG = "";
-	
+
 	public static String DEFAULT_HQ_POINT_LAT = "";
-	
 
 }

@@ -118,6 +118,7 @@ public class WechatUserFavoriteTController extends BaseController {
 		model.addAttribute("resultList", resultList);
 		model.addAttribute("flag", "1");
 		model.addAttribute("sortFlag", info.getSortFlag());
+		model.addAttribute("userid", info.getUserid());
 		return "wechat/shoucang";
 	}
 

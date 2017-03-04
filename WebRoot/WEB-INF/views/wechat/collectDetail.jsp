@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/swiper.min.css"/>
-		<title>${title}_图集</title>
+		<title>${title}</title>
 	</head>
 	<body>
 		<!--main-->
@@ -25,16 +25,14 @@
            	<div class="gallery-mask" id="gallery_mask">
 			    <div class="swiper-container" id="swiper_wrapper">
 			        <div class="swiper-wrapper">
-				        <c:forEach items="${albums}" var="item" varStatus="status">
-				            <div class="swiper-slide" id="${item.id}">
-				                <div class="swiper-pic">
-				                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
-				                		 imgUid="${item.id}" data-desc="${item.description}">
-				                    <div class="swiper-lazy-preloader"></div>
-				                </div>
-				            </div>
-			            	<div class="clearfix"></div>
-						</c:forEach>
+			            <div class="swiper-slide" id="${albums.id}">
+			                <div class="swiper-pic">
+			                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${albums.urlPath}" class="swiper-lazy" 
+			                		 imgUid="${albums.id}" data-desc="${albums.description}">
+			                    <div class="swiper-lazy-preloader"></div>
+			                </div>
+			            </div>
+		            	<div class="clearfix"></div>
 			        </div>
 			    </div>
 

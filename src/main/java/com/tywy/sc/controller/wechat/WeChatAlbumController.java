@@ -45,10 +45,10 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转电子相册
 	 */
 	@RequestMapping(value = "/welcomeIndex")
-	public String welcomeIndex(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String welcomeIndex(HttpServletRequest request, HttpServletResponse response, Model model, String userid) {
 
 		// 当前登陆用户的id
-		model.addAttribute("openid", "o_rsSv19Shjb9U71kWm8QmWdfh_E");
+		model.addAttribute("userid", userid);
 
 		// 获取轮播图
 		Map<String, Object> map = new HashMap<>();
@@ -105,7 +105,10 @@ public class WeChatAlbumController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/toDiffArea")
-	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid) {
+	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
+			String userid) {
+
+		model.addAttribute("userid", "userid");
 
 		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
@@ -145,7 +148,10 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转详情
 	 */
 	@RequestMapping(value = "/toGallery")
-	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid) {
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
+			String userid) {
+
+		model.addAttribute("userid", userid);
 
 		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
@@ -178,6 +184,42 @@ public class WeChatAlbumController extends BaseController {
 
 		model.addAttribute("albums", albums);
 		return "wechat/gallery";
+	}
+
+	/**
+	 * 跳转详情
+	 */
+	@RequestMapping(value = "/toCollectionDetail")
+	public String toCollectionDetail(HttpServletRequest request, HttpServletResponse response, Model model, String id,
+			String userid) {
+
+		model.addAttribute("title", "收藏详情");
+		model.addAttribute("userid", userid);
+
+		WechatAlbumListT albums = listTService.selectById(id);
+
+		List<String> imageUuidList = new ArrayList<String>();
+		imageUuidList.add(albums.getImgUuid());
+
+		if (imageUuidList == null || imageUuidList.isEmpty()) {
+			model.addAttribute("albums", albums);
+			return "wechat/gallery";
+		}
+
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if (picList == null || picList.isEmpty()) {
+			model.addAttribute("albums", albums);
+			return "wechat/gallery";
+		}
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		SystemPictureInfo pic = picMap.get(albums.getImgUuid());
+		albums.setSystemPictureInfo(pic);
+
+		model.addAttribute("albums", albums);
+		return "wechat/collectDetail";
 	}
 
 }

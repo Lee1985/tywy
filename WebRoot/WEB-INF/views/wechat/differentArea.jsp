@@ -121,7 +121,11 @@
 					var str = idList.join("-");
 					
 					var url = './batchAddFavourite.do';//收藏接口
-					var userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+					var userid ="${userid}";
+					if (userid!=null&&userid!="") {
+					} else {
+						userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+					}
 					$.post(url, {
 						ids : str,
 						userid : userid
@@ -144,7 +148,7 @@
 		});
 		
 		function toDetail(id, parentid) {
-			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid ;
+			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid + "&userid=${userid}";
 		}
 	</script>
 </html>

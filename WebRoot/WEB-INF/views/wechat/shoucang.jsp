@@ -16,7 +16,6 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
-		<!-- <link rel="stylesheet" type="text/css" href="js/wechat/lightbox2/css/lightbox.min.css"> -->
 		<title>我的收藏</title>
 	</head>
 	<body class="gray_bg">
@@ -47,7 +46,7 @@
 					<ul class="piclist_box1">
 						<c:forEach items="${item.entity}" var="entity">
 							<li>
-								<a href="javascript:;">
+								<a href="javascript:;" onclick="doDetail('${entity.imgUid}')">
 									<img class="lazy"  alt="" width="10" height="10"  data-original="downFileResult.do?urlPath=${entity.album.urlPath}" alt="" />
 								</a>
 								<p>${entity.album.serialNumber}</p>
@@ -59,9 +58,6 @@
 					</ul>
 				</div>
 			</c:forEach>
-			<div id="" style=""> 
-				<img alt="" src="">
-			</div>
 		</main>
 		<!--main-->
 		<!--footer-->
@@ -81,7 +77,6 @@
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
-	<!-- <script src="js/wechat/lightbox2/js/lightbox-plus-jquery.min.js" charset="utf-8"></script> -->
 	<script type="text/javascript">
 		$(function() {
 			
@@ -113,8 +108,11 @@
 				} else {
 					sortFlag = 1;
 				}
-				var url = './toCollection.do';//排序接口
-				var userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+				var userid='${userid}';
+				if (userid!=null&&userid!="") {
+				} else {
+					userid="o_rsSv19Shjb9U71kWm8QmWdfh_E";
+				}
 				window.location.href="./toCollection.do?userid=" + userid + "&sortFlag=" + sortFlag;
 				
 			});
@@ -199,7 +197,11 @@
 					var str = idList.join("-");
 					
 					var url = './batchDeleteFavourite.do';//收藏接口
-					var userid = 'o_rsSv19Shjb9U71kWm8QmWdfh_E';//当前用户,当前写死
+					var userid='${userid}';
+					if (userid!=null&&userid!="") {
+					} else {
+						userid="o_rsSv19Shjb9U71kWm8QmWdfh_E";
+					}
 					$.post(url, {
 						ids : str,
 						userid : userid
@@ -220,5 +222,14 @@
 				}
 			});
 		});
+		
+		function doDetail(id) {
+			var userid='${userid}';
+			if (userid!=null&&userid!="") {
+			} else {
+				userid="o_rsSv19Shjb9U71kWm8QmWdfh_E";
+			}
+			window.location.href="./toCollectionDetail.do?id=" + id + "&userid="+userid;
+		}
 	</script>
 </html>

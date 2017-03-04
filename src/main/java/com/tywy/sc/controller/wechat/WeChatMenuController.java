@@ -26,7 +26,8 @@ public class WeChatMenuController extends BaseController {
 	 * 跳转网站
 	 */
 	@RequestMapping(value = "/toWechatWebsite")
-	public String toWechatWebsiteView() {
+	public String toWechatWebsiteView(HttpServletRequest request, HttpServletResponse response,String userid) {
+		request.setAttribute("userid", userid);
 		return "wechat_official_website";
 	}
 
@@ -34,7 +35,8 @@ public class WeChatMenuController extends BaseController {
 	 * 跳转电子相册欢迎页
 	 */
 	@RequestMapping(value = "/toWechatAlbum")
-	public String toWechatAlbum() {
+	public String toWechatAlbum(HttpServletRequest request, HttpServletResponse response,String userid) {
+		request.setAttribute("userid", userid);
 		return "wechat/index";
 	}
 
@@ -42,7 +44,9 @@ public class WeChatMenuController extends BaseController {
 	 * 跳转联系我们
 	 */
 	@RequestMapping(value = "/toWechatContact")
-	public String toWechatContactView(HttpServletRequest request, HttpServletResponse response) {
+	public String toWechatContactView(HttpServletRequest request, HttpServletResponse response,String userid) {
+		
+		request.setAttribute("userid", userid);
 
 		// 公司名称
 		String companyValue = configInfoService.getConfigValueByKey("contact_us_wechat_company");

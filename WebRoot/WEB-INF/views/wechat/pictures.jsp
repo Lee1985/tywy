@@ -81,24 +81,23 @@
 		    	var hei2=$(".footer").height();
 		    	$("main").height(hei+hei1+hei2-10);
 		    });
-		    console.log("--->"+'${sessionScope.SESSION_WECHAT_OPENID}');
 		});
 	</script>
 	<script type="text/javascript">
 		function toZone(id, albumName) {
-			window.location.href="./toDiffArea.do?parentid=" + id ;
+			window.location.href="./toDiffArea.do?parentid=" + id + "&userid=${userid}";
 		}
 		function toWechatContact() {
-			window.location.href="./toWechatContact.do";
+			window.location.href="./toWechatContact.do?userid=${userid}";
 		}
 		function toWechatWebsite() {
-			window.location.href="./index.do";
+			window.location.href="./index.do?userid=${userid}";
 		}
 		function toWelcomeIndex() {
-			window.location.href="./welcomeIndex.do";
+			window.location.href="./welcomeIndex.do?userid=${userid}";
 		}
 		function toCollection() {
-			window.location.href="./toCollection.do?userid=${openid}";
+			window.location.href="./toCollection.do?userid=${userid}";
 		}
 	</script>	
 </html>

@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tywy.constant.CfgConstant;
 
 /**
@@ -17,21 +20,53 @@ import com.tywy.constant.CfgConstant;
  * @Description: 微信授权请求处理类
  * @date 2016-11-17 16:48:35
  */
-@WebServlet("/wxlogin")
+@WebServlet("/weixin/oauth")
 public class WXloginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6688395005435952973L;
+	private static final Logger log = LoggerFactory.getLogger(WXloginServlet.class);
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String requestUrl = CfgConstant.GET_AUTHORIZE_URL;
-		requestUrl = requestUrl.replace("_APPID", CfgConstant.APPID);
-		requestUrl = requestUrl.replace("_SECRET", CfgConstant.APPSECRET);
-		requestUrl = requestUrl.replace("_SCOPE", CfgConstant._SCOPE);// 静默授权并自动跳转到回调页snsapi_base
-		requestUrl = requestUrl.replace("_REDIRECT_URI", URLEncoder.encode(CfgConstant.GET_CALLBACK_URL));// 回调地址
+	/**
+	 * 微信授权回调
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("微信授权请求requestUrl:" + requestUrl);
-		resp.sendRedirect(requestUrl);
+		String code = request.getParameter("code");
+
+		if (null != code && !"".equals(code)) {
+			log.info("==============[OAuthServlet]获取网页授权code不为空，code=" + code);
+			// 根据code换取openId
+			OAuthInfo oa = getOAuthOpenId(CfgConstant.APPID, CfgConstant.APPSECRET, code);
+			if (!"".equals(oa) && null != oa) {
+				request.setAttribute("userid", oa.getOpenid());
+				request.getRequestDispatcher("/WEB-INF/views/wechat/index.jsp").forward(request, response);
+			} else {
+				log.info("==============[OAuthServlet]获取网页授权openId失败！");
+			}
+		} else {
+			log.info("==============[OAuthServlet]获取网页授权code失败！");
+		}
 	}
 
+	/**
+	 * 根据code取得openId
+	 * 
+	 * @param appid公众号的唯一标识
+	 * @param secret公众号的appsecret密钥
+	 * @param code为换取access_token的票据
+	 */
+	private OAuthInfo getOAuthOpenId(String appid, String secret, String code) {
+
+		String requestUrl = CfgConstant.GET_AUTH_OPENID_URL.replace("APPID", appid).replace("SECRET", secret)
+				.replace("CODE", code);
+
+		String result = NetWorkCenter.doGet(requestUrl, null);
+
+		return JSONUtil.toBean(result, OAuthInfo.class);
+	}
+	
+	public static void main(String[] args) {
+		String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
+		System.out.println(string);
+	}
 }

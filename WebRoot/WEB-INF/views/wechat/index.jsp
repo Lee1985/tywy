@@ -24,8 +24,12 @@
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		function toIndex() {
-			// window.location.href="./wxlogin";
-			window.location.href="./welcomeIndex.do";
+			var userid="${userid}";
+			if (userid!=null&&userid!="") {
+			} else {
+				userid="o_rsSv19Shjb9U71kWm8QmWdfh_E";
+			}
+			window.location.href="./welcomeIndex.do?userid=" + userid;
 		}
 	</script>	
 </html>
