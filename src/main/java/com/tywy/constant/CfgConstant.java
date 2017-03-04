@@ -21,7 +21,7 @@ public class CfgConstant {
 	/**
 	 * 获取GET_CALLBACK_URL接口
 	 */
-	public static String GET_CALLBACK_URL = "http://mywechatpublhl.tunnel.2bdata.com/tywy/callback";
+	public static String GET_CALLBACK_URL = "http://www.tycarpet.com/tywy/callback";
 	/**
 	 * 获取ACCESS_TOKEN接口
 	 */
@@ -63,10 +63,16 @@ public class CfgConstant {
 	 */
 	public static String ADD_MEDIA_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=_ACCESS_TOKEN&type=_TYPE";
 	
+	/**
+	 * 转客服的标志Y
+	 */
+	public static String TRANSFER_CUSTOMER_SERVICE = "Y";
+	
 	public static String DEFAULT_HQ_NAME = "";
 	
 	public static String DEFAULT_HQ_POINT_LNG = "";
 	
 	public static String DEFAULT_HQ_POINT_LAT = "";
+	
 
 }

@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tywy.constant.CfgConstant;
 import com.tywy.constant.MessageConstanct;
+import com.tywy.constant.SessionConstants;
 import com.tywy.sc.base.service.BaseServiceImpl;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.data.model.WechatPubReplyT;
@@ -70,6 +71,11 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				break;
 			case MessageConstanct.REQ_MESSAGE_TYPE_EVENT:// 推送
 				respMessage = this.todoEventTask(xmlEntity);
+				break;
+			default:
+				// 当前登陆的用户放入Session
+				request.getSession(true).setAttribute(SessionConstants.SESSION_WECHAT_OPENID,
+						xmlEntity.getFromUserName());
 				break;
 			}
 		}
@@ -176,8 +182,8 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 		String respMessage = null;
 		switch (type) {
 		case 2:
-			respMessage = new FormatXmlUtil().formatCustomerAnswer(xmlEntity.getFromUserName(),
-					xmlEntity.getToUserName());
+			respMessage = new FormatXmlUtil().formatTextAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(),
+					content);
 			break;
 		case 3:
 			content = StringUtils.isBlank(content) ? MessageConstanct.SEARCH_WELCOME_WORDS : content;
@@ -195,35 +201,42 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 	 * @return
 	 */
 	private String todoTextTask(ReceiveXmlVO xmlEntity) {
-		String respMessage = null;
-		String serialNumber = xmlEntity.getContent();
+		String content = xmlEntity.getContent();
 		String from = xmlEntity.getFromUserName();
 		String to = xmlEntity.getToUserName();
 
-		// 根据serialNumber精确查找
-		Map<String, Object> map = new HashMap<>();
-		map.put("serialNumber", serialNumber);
-		List<WechatAlbumListT> list = albumService.selectAll(map);
-		if (list != null && list.size() > 0) {
-			WechatAlbumListT album = list.get(0);
+		String respMessage = null;
+		// 判断接入客服 Y
+		if (CfgConstant.TRANSFER_CUSTOMER_SERVICE.equals(content)) {
+			respMessage = new FormatXmlUtil().formatCustomerAnswer(xmlEntity.getFromUserName(),
+					xmlEntity.getToUserName());
+			logger.debug("-----------------转接客服--回复消息:{}-----------------", respMessage);
+		} else {
+			// 根据serialNumber精确查找
+			Map<String, Object> map = new HashMap<>();
+			map.put("serialNumber", content);
+			List<WechatAlbumListT> list = albumService.selectAll(map);
+			if (list != null && list.size() > 0) {
+				WechatAlbumListT album = list.get(0);
 
-			String mediaId = album.getMediaId();
-			if (StringUtils.isNotEmpty(mediaId) && album.getEffectDate() != null) {
-				// 1.1.检查微信的临时文件是否过期
-				if (new Date().compareTo(album.getEffectDate()) > 0) {
-					// 如果临时文件过期重新上传临时文件
+				String mediaId = album.getMediaId();
+				if (StringUtils.isNotEmpty(mediaId) && album.getEffectDate() != null) {
+					// 1.1.检查微信的临时文件是否过期
+					if (new Date().compareTo(album.getEffectDate()) > 0) {
+						// 如果临时文件过期重新上传临时文件
+						mediaId = resendWechatMedia(album);
+					}
+				} else {
+					// 1.2.上传临时文件
 					mediaId = resendWechatMedia(album);
 				}
-			} else {
-				// 1.2.上传临时文件
-				mediaId = resendWechatMedia(album);
-			}
 
-			respMessage = new FormatXmlUtil().formatImgAnswer(from, to, mediaId);
-		} else {
-			respMessage = new FormatXmlUtil().formatTextAnswer(from, to, MessageConstanct.SEARCH_IMG_NONE_WORDS);
+				respMessage = new FormatXmlUtil().formatImgAnswer(from, to, mediaId);
+			} else {
+				respMessage = new FormatXmlUtil().formatTextAnswer(from, to, MessageConstanct.SEARCH_IMG_NONE_WORDS);
+			}
+			logger.debug("-----------------搜索图片--回复消息:{}-----------------", respMessage);
 		}
-		logger.debug("-----------------搜索图片--回复消息:{}-----------------", respMessage);
 		return respMessage;
 	}
 

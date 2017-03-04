@@ -81,6 +81,7 @@
 		    	var hei2=$(".footer").height();
 		    	$("main").height(hei+hei1+hei2-10);
 		    });
+		    console.log("--->"+'${sessionScope.SESSION_WECHAT_OPENID}');
 		});
 	</script>
 	<script type="text/javascript">
