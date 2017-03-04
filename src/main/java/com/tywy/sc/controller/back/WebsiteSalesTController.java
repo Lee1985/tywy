@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tywy.constant.CfgConstant;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.ConfigInfo;
@@ -61,6 +60,13 @@ public class WebsiteSalesTController extends BaseController {
 		if(configInfo != null){
 			request.setAttribute("configInfo", configInfo);
 		}
+		
+		//设置总部
+		Map<String,Object> hqParams = new HashMap<String,Object>();
+		hqParams.put("isHq", '1');
+		WebsiteSalesT hqInfo = websiteSalesTService.selectEntity(hqParams);
+		request.setAttribute("hqInfo", hqInfo);
+		
 		return "back/website_sales_list";
 	}
 	
@@ -73,6 +79,7 @@ public class WebsiteSalesTController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
+		info.setIsHq("0");
 		websiteSalesTService.selectAll(info, pageInfo);
 		List<WebsiteSalesT> list = pageInfo.getRows();
 		if(list == null || list.isEmpty()){
@@ -221,10 +228,9 @@ public class WebsiteSalesTController extends BaseController {
 	@ResponseBody
 	public Map<String,Object> websiteSalesGenerateMap(HttpServletRequest request,HttpServletResponse response) {
 		
-		WebsiteSalesT hqInfo = new WebsiteSalesT();
-		hqInfo.setArea(CfgConstant.DEFAULT_HQ_NAME);
-		hqInfo.setLongitude(CfgConstant.DEFAULT_HQ_POINT_LNG);
-		hqInfo.setLatitude(CfgConstant.DEFAULT_HQ_POINT_LAT);
+		Map<String,Object> hqParams = new HashMap<String,Object>();
+		hqParams.put("isHq", '1');
+		WebsiteSalesT hqInfo = websiteSalesTService.selectEntity(hqParams);
 		Map<String,Object> areaMap = new HashMap<String,Object>();
 		areaMap.put("hqInfo", hqInfo);
 		

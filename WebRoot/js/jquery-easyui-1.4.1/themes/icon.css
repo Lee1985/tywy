@@ -83,6 +83,10 @@
 	background:url('icons/settings.png') no-repeat center center;
 }
 
+.icon-hq{
+	background:url('icons/hq.png') no-repeat center center;
+}
+
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
 }

@@ -22,6 +22,7 @@
 		<result property="createUser" column="createUser" />
 		<result property="createDate" column="createDate" />
 		<result property="isDelete" column="isDelete" />
+		<result property="isHq" column="isHq" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -42,7 +43,8 @@
 	     description,
 	     createUser,
 	     createDate,
-	     isDelete
+	     isDelete,
+	     isHq
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -65,6 +67,7 @@
 			     <if test="createUser!=null">createUser,</if>
 			     <if test="createDate!=null">createDate,</if>
 			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="isHq!=null">isHq,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -84,6 +87,7 @@
 			     <if test="createUser!=null">#{createUser},</if>
 			     <if test="createDate!=null">#{createDate},</if>
 			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="isHq!=null">#{isHq},</if>
 		</trim>
 	</insert>
 
@@ -107,6 +111,7 @@
 			     <if test="createUser!=null">createUser=#{createUser},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="isHq!=null">isHq=#{isHq},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -175,6 +180,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" isHq != null and isHq != '' ">
+					and isHq=#{isHq} 
+				</if>
 		</where>
 	</select>
 	
@@ -237,6 +245,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" isHq != null and isHq != '' ">
+					and isHq=#{isHq} 
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -298,6 +309,9 @@
 				<if test=" isDelete != null and isDelete != '' ">
 					and isDelete=#{isDelete} 
 				</if>
+				<if test=" isHq != null and isHq != '' ">
+					and isHq=#{isHq} 
+				</if>
 		</where>
 	</select>
 	<!-- 根据主键查询信息 -->
@@ -351,6 +365,7 @@
 			     <if test="createUser!=null">createUser=#{createUser},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
 			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="isHq!=null">isHq=#{isHq},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

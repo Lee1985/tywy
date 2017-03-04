@@ -27,6 +27,8 @@ public class ComboDataController extends BaseController{
 		category.setCode(code);
 		category.setStatus(1);
 		category.setIsDelete(0);
+		category.setSort("orderList");
+		category.setOrder("asc");
 		return websiteCategoryTService.selectAll(category);
 	}
 
