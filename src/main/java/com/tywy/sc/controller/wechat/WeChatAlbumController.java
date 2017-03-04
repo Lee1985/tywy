@@ -102,14 +102,13 @@ public class WeChatAlbumController extends BaseController {
 	 * @param response
 	 * @param model
 	 * @param parentid
-	 * @param albumName
 	 * @return
 	 */
 	@RequestMapping(value = "/toDiffArea")
-	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
-			String albumName) {
+	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid) {
 
-		model.addAttribute("title", albumName);
+		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
+		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
@@ -146,11 +145,11 @@ public class WeChatAlbumController extends BaseController {
 	 * 跳转详情
 	 */
 	@RequestMapping(value = "/toGallery")
-	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
-			String title) {
+	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid) {
 
-		model.addAttribute("title", title);
-		
+		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
+		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
 		map.put("isDelete", "0");

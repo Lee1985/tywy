@@ -144,7 +144,7 @@
 		});
 		
 		function toDetail(id, parentid) {
-			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid + "&title=${title}";
+			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid ;
 		}
 	</script>
 </html>

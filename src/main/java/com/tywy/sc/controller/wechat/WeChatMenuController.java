@@ -1,5 +1,6 @@
 package com.tywy.sc.controller.wechat;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.services.ConfigInfoService;
 
 /**
  * @author Liuheli
@@ -16,6 +18,9 @@ import com.tywy.sc.base.controller.BaseController;
  */
 @Controller
 public class WeChatMenuController extends BaseController {
+
+	@Resource
+	private ConfigInfoService configInfoService;
 
 	/**
 	 * 跳转网站
@@ -38,6 +43,23 @@ public class WeChatMenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/toWechatContact")
 	public String toWechatContactView(HttpServletRequest request, HttpServletResponse response) {
+
+		// 公司名称
+		String companyValue = configInfoService.getConfigValueByKey("contact_us_wechat_company");
+		request.setAttribute("companyValue", companyValue);
+
+		// 公司地址
+		String addressValue = configInfoService.getConfigValueByKey("contact_us_wechat_address");
+		request.setAttribute("addressValue", addressValue);
+
+		// 公司网址
+		String websiteValue = configInfoService.getConfigValueByKey("contact_us_wechat_website");
+		request.setAttribute("websiteValue", websiteValue);
+
+		// 描述
+		String contentValue = configInfoService.getConfigValueByKey("contact_us_wechat_content");
+		request.setAttribute("contentValue", contentValue);
+
 		return "wechat/contact";
 	}
 

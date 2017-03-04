@@ -19,28 +19,21 @@
 		<title>联系我们</title>
 	</head>
 	<body class="gray_bg">
-		<!--header-->
-		<!--<header>
-			<h1 class="title"><a href="javascript:history.go(-1);" class="back">返回</a>联系我们<a href="javasript:;" class="more"></a></h1>
-		</header>-->
-		<!--header-->
 		<!--main-->
 		<main class="contact_bg">
 			<!--<div class="banner"><img src="images/wechat/contact_banner.png" alt="" /></div>-->
 			<div class="contact_box">
 				<div class="address_box">
-					<h2>吉林省天雅万印毯业科技有限公司</h2>
+					<h2>${companyValue }</h2>
 					<ul>
-						<li>地址：中国吉林省东丰县药业大街98号</li>
-						<li>销售服务热线：<a href="tel:0437-6227733">0437-6227733</a></li>
-						<li>邮箱：<a href="mailto:tianyanq2@126.com">tianyanq2@126.com</a></li>
-						<li>网址：<a href="http://www.tycarpet.com" target="_blank"></a>http://www.tycarpet.com</li>
+						<li>地址：${addressValue }</li>
+						<li>网址：<a href="${websiteValue }" target="_blank"></a>${websiteValue }</li>
 					</ul>
 				</div>
 				<div class="address_box">
-					<h2>天津天雅万印毯业科技有限公司</h2>
+					<h2></h2>
 					<ul>
-						<li>地址：中国天津东丽区荒草坨北地毯仓库</li>
+						<li>${contentValue }</li>
 					</ul>
 				</div>
 				<div class="online_box">

@@ -16,6 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
+		<!-- <link rel="stylesheet" type="text/css" href="js/wechat/lightbox2/css/lightbox.min.css"> -->
 		<title>我的收藏</title>
 	</head>
 	<body class="gray_bg">
@@ -58,6 +59,9 @@
 					</ul>
 				</div>
 			</c:forEach>
+			<div id="" style=""> 
+				<img alt="" src="">
+			</div>
 		</main>
 		<!--main-->
 		<!--footer-->
@@ -77,6 +81,7 @@
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/wechat/lightbox2/js/lightbox-plus-jquery.min.js" charset="utf-8"></script> -->
 	<script type="text/javascript">
 		$(function() {
 			

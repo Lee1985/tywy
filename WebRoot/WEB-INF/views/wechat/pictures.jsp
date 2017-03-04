@@ -85,7 +85,7 @@
 	</script>
 	<script type="text/javascript">
 		function toZone(id, albumName) {
-			window.location.href="./toDiffArea.do?parentid=" + id + "&albumName=" + albumName;
+			window.location.href="./toDiffArea.do?parentid=" + id ;
 		}
 		function toWechatContact() {
 			window.location.href="./toWechatContact.do";
