@@ -30,6 +30,7 @@
 			  $('#addImg').show();
 			  $('#imgShow').hide();
 			  $('#status').combobox('select', 1);
+			  $('#caseIdLabel').val('${caseId}');
 		  });
 	  });
 	  
@@ -164,6 +165,7 @@ div#rMenu {
 					<!-- <img id="imgShow" class="imgShow" style="margin-left: 40px;cursor:pointer;background-color:#434343" src="images/add.png" /> -->
 					<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
 					<input type="hidden" id="idLabel" name="id" />
+					<input type="hidden" id="caseIdLabel" name="caseId" />
 					<input type="hidden" id="imgUuidLabel" name="imgUuid">
 					<input type="hidden" id="iconUrlLabel" name="iconUrl">
 					<input type="hidden" id="operType" name="operType">

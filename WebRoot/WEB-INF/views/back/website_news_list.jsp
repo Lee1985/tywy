@@ -71,7 +71,7 @@
 			  $('#categoryIdLabel').combobox({
 			    url:'system/comboCategoryByCode.do?code=news',
 			    valueField:'id',
-			    textField:'name',
+			    textField:'categoryName',
 			    onLoadSuccess:function(){
 					var data = $('#categoryIdLabel').combobox('getData');
 					if(data!=''){
@@ -88,7 +88,7 @@
 		  $('#categoryIdLabel').combobox({
 		    url:'system/comboCategoryByCode.do?code=news',
 		    valueField:'id',
-		    textField:'name'
+		    textField:'categoryName'
 		  });
 		  doEdit(function(row){
 			  $('#addImg').hide();			  

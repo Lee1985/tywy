@@ -30,6 +30,8 @@ public class WebsiteSalesT extends BaseEntity implements Serializable {
 	private java.lang.String isDelete; // 是否删除0否1是
 	
 	private String categoryName;
+	private String isHq; 
+	
 	/**
      * 获取属性
      *
@@ -322,6 +324,14 @@ public class WebsiteSalesT extends BaseEntity implements Serializable {
 
 	public void setLongitude(java.lang.String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getIsHq() {
+		return isHq;
+	}
+
+	public void setIsHq(String isHq) {
+		this.isHq = isHq;
 	}
 
 	@Override

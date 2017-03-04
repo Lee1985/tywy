@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tywy.constant.CfgConstant;
 import com.tywy.sc.base.controller.BaseController;
 import com.tywy.sc.data.model.WebsiteCategoryT;
 import com.tywy.sc.data.model.WebsiteSalesT;
@@ -73,10 +72,9 @@ public class WebsiteSalesNetController extends BaseController{
 	@ResponseBody
 	public Map<String,Object> websiteSalesGenerateMap(HttpServletRequest request,HttpServletResponse response) {
 		
-		WebsiteSalesT hqInfo = new WebsiteSalesT();
-		hqInfo.setArea(CfgConstant.DEFAULT_HQ_NAME);
-		hqInfo.setLongitude(CfgConstant.DEFAULT_HQ_POINT_LNG);
-		hqInfo.setLatitude(CfgConstant.DEFAULT_HQ_POINT_LAT);
+		Map<String,Object> hqParams = new HashMap<String,Object>();
+		hqParams.put("isHq", '1');
+		WebsiteSalesT hqInfo = websiteSalesTService.selectEntity(hqParams);
 		Map<String,Object> areaMap = new HashMap<String,Object>();
 		areaMap.put("hqInfo", hqInfo);
 		

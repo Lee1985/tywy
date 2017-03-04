@@ -38,12 +38,18 @@ public class WebsiteCaseAlbumTServiceImpl extends BaseServiceImpl<WebsiteCaseAlb
 	@Override
 	@Pictureable
 	public int insertWithImage(WebsiteCaseAlbumT info, @PictureKey StreamVO streamVO, @PictureIconKey Map<String,Object> iconMap) {
-		info.setId(UUIDUtil.getUUID());
-		info.setCreateDate(new Date());
-		info.setUpdateDate(new Date());
-		info.setStatus("1");
-		info.setIsDelete("0");
-		return websiteCaseAlbumTDao.insert(info);
+		int result = 0;
+		try {
+			info.setId(UUIDUtil.getUUID());
+			info.setCreateDate(new Date());
+			info.setUpdateDate(new Date());
+			info.setStatus("1");
+			info.setIsDelete("0");
+			result = websiteCaseAlbumTDao.insert(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override

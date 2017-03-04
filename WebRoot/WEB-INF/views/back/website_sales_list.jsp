@@ -63,30 +63,33 @@
 </script>
 <script type="text/javascript">
 	$(function() {
-		
 	  $('#addBtn').click(function(){
 		  doAdd(function(){
 			  $('#statusLabel').combobox('select', 1);
 			  $('#categoryIdLabel').combobox({
 			    url:'system/comboCategoryByCode.do?code=district',
 			    valueField:'id',
-			    textField:'name',
+			    textField:'categoryName',
 			    onLoadSuccess:function(){
 					var data = $('#categoryIdLabel').combobox('getData');
 					if(data!=''){
 						var id = data[0].id;
-						$('#categoryIdLabel').combobox('select',id);
+						$('#categoryIdLabel').combobox('select','');
 					}
 				}
 			  });
 		  });
 	  });
 	  
+	  $('#hqBtn').click(function(){
+		  $('#hq_dlg').dialog('open').dialog('setTitle', '总部设置');
+	  });
+	  
 	  $('#editBtn').click(function(){
 		  $('#categoryIdLabel').combobox({
 		    url:'system/comboCategoryByCode.do?code=district',
 		    valueField:'id',
-		    textField:'name'
+		    textField:'categoryName'
 		  });
 		  doEdit();
 	  });
@@ -201,6 +204,7 @@ div#rMenu {
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="longitudeLabel" name="longitude" />
 					<input type="hidden" id="latitudeLabel" name="latitude" />
+					<input type="hidden" id="isHq" name="isHq" />
 				</div>
 				<div class="fitem">
 					<label><font color="red">*</font>所在城市:</label>
@@ -250,6 +254,7 @@ div#rMenu {
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-lock" plain="true" id="lockBtn">禁用</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="mapBtn">生成地图</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-settings" plain="true" id="settingsBtn">通用设置</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-hq" plain="true" id="hqBtn">总部设置</a>
 			</div>
 		</div>
 		<div id="dlg-buttons">
@@ -277,7 +282,6 @@ div#rMenu {
 								<img id="imgShow" class="imgShow" src="downFileResult.do?urlPath=${configImageInfo.configValue}" style="width:100%;height:100%;"/>
 							</c:otherwise>
 						</c:choose>
-						
 					</div>
 					<div style="width:160px;margin-left:70px;text-align:center;" >建议比例(16:9)</div>
 					<input type="file" id="up_img" name="uploadFile" style="display: none;"/>
@@ -290,11 +294,55 @@ div#rMenu {
 					<label>描述内容:</label> <textarea id="contentHtml" name="configValue">${configInfo.configValue}</textarea>
 				</div>
 			</form>
-			
 		</div>
 		<div id="settings_dlg-buttons">
 			<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="uploadAndSaveSettings()" style="width:90px">确定</a> 
 			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#settings_dlg').dialog('close')" style="width:90px">取消</a>
+		</div>
+		
+		<div id="hq_dlg" class="easyui-dialog"
+			data-options="iconCls:'icon-save',resizable:true,modal:true"
+			style="width:400px;padding:10px 20px" closed="true"
+			buttons="#hq_dlg-buttons">
+			<div class="ftitle">请完善以下信息！</div>
+			<form id="hqFm" name="hqFm" method="post" action="system/websiteSalesTAjaxSave.do">
+				<div class="fitem">
+					<label><font color="red">*</font>公司名称:</label>
+					<input id="company" name="company" value="${hqInfo.company}" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,15]'"/>
+					<input type="hidden" id="idLabel" name="id" value="${hqInfo.id }" />
+					<input type="hidden" id="longitudeLabel" name="longitude" />
+					<input type="hidden" id="latitudeLabel" name="latitude" />
+					<input type="hidden" id="isHq" name="isHq" value="1" />
+				</div>
+				<div class="fitem">
+					<label><font color="red">*</font>所在城市:</label>
+					<input id="areaLabel" name="area" style="width: 100px" class="easyui-textbox" value="${hqInfo.area }" data-options="required:true,validType:'length[1,15]'"/>市
+				</div>
+				<div class="fitem">
+					<label>负责人:</label>
+					<input id="contactLabel" name="contact" style="width: 200px" value="${hqInfo.contact }" class="easyui-textbox"/>
+				</div>
+				<div class="fitem">
+					<label>手机号:</label>
+					<input id="mobileLabel" name="mobile" value="${hqInfo.mobile }" style="width: 200px" class="easyui-textbox"/>
+				</div>
+				<div class="fitem">
+					<label>邮箱:</label>
+					<input id="emailLabel" name="email" value="${hqInfo.email }" style="width: 200px" class="easyui-textbox"/>
+				</div>
+				<div class="fitem">
+					<label>地址:</label>
+					<input id="adressLabel" name="adress" value="${hqInfo.adress }" style="width: 200px" class="easyui-textbox"/>
+				</div>
+				<div class="fitem">
+					<label>传真:</label>
+					<input id="faxLabel" name="fax" value="${hqInfo.fax }" style="width: 200px" class="easyui-textbox"/>
+				</div>
+			</form>
+		</div>
+		<div id="hq_dlg-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="getPointAndSaveHq()" style="width:90px">确定</a> 
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#hq_dlg').dialog('close')" style="width:90px">取消</a>
 		</div>
 	</div>
 	<script type="text/javascript" src="js/stream/js/stream-v1.js"></script>
@@ -413,6 +461,38 @@ div#rMenu {
 		        return false;
 		    }
 		    return true;
+		}
+		
+		function saveHq(){
+		  $('#hqFm').form('submit', {
+		    dataType: 'json',
+		    success: function(result) {
+		      var result = eval('(' + result + ')');
+		      layer.close(index);
+		      if (result.success) {
+		        $('#hq_dlg').dialog('close'); // close the dialog
+		        $('#dg').datagrid('reload'); // reload the menu data
+		      } else {
+		        $.messager.alert('错误信息', result.msg, 'error');
+		        return false;
+		      }
+		    }
+		  });
+		}
+		
+		function getPointAndSaveHq(){
+			var myGeo = new BMap.Geocoder();
+			var cityName = $('#hqFm').find('#areaLabel').val();
+   			myGeo.getPoint(cityName, function(point){
+   				if (point) {	   					
+   					$('#hqFm').find('#longitudeLabel').val(point.lng);
+   					$('#hqFm').find('#latitudeLabel').val(point.lat);
+   					saveHq();
+   				}else{
+   					$.messager.alert('错误信息', '您填写的所在城市没有解析到坐标!', 'error');
+   					return false;
+   				}
+   			}, cityName);
 		}
 	</script>
 </body>

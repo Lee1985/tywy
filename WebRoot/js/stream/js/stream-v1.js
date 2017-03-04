@@ -1620,7 +1620,6 @@
 				//单文件上传处理,进行文件的替换
 				this.uploadInfo = {};
 				for (c = 0; c < a.length; c++){
-					debugger;
 					this.waiting = [];
 					this.validateFile(a[c]) && this.addStreamTask(a[c]);
 				}

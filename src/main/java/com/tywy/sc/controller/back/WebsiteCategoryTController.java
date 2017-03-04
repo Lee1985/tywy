@@ -55,7 +55,7 @@ public class WebsiteCategoryTController extends BaseController {
 		websiteCategoryTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
-
+	
 	@RequestMapping(value = "system/websiteCategoryTAjaxAll")
 	@ResponseBody
 	public List<WebsiteCategoryT> websiteCategoryTAjaxAll(HttpServletRequest request,
