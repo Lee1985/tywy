@@ -108,7 +108,7 @@ public class WeChatAlbumController extends BaseController {
 	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
 			String userid) {
 
-		model.addAttribute("userid", "userid");
+		model.addAttribute("userid", userid);
 
 		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
