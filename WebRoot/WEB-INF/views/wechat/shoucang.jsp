@@ -16,6 +16,15 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
+		<!-- <style type="text/css">
+			ul.piclist_box1 li img {
+			    width: 100%;
+			    height: 116.55px;
+			    -webkit-border-radius: 0.06rem;
+			    -moz-border-radius: 0.06rem;
+			    border-radius: 0.06rem;
+			}
+		</style> -->
 		<title>我的收藏</title>
 	</head>
 	<body class="gray_bg">
@@ -80,6 +89,8 @@
 	<script type="text/javascript">
 		$(function() {
 			
+		    $('ul.piclist_box1 li img').css('height',$('ul.piclist_box1 li img').css('width'));
+		    
 			//获取列表图片高度
 			$(window).on("load resize",function() {
 				var w = $(".piclist_box li").width();
