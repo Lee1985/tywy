@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tywy.constant.CfgConstant;
 import com.tywy.constant.MessageConstanct;
-import com.tywy.constant.SessionConstants;
 import com.tywy.sc.base.service.BaseServiceImpl;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.data.model.WechatPubReplyT;
@@ -71,11 +70,6 @@ public class WeChatCoreServiceImpl extends BaseServiceImpl<ReceiveXmlVO> impleme
 				break;
 			case MessageConstanct.REQ_MESSAGE_TYPE_EVENT:// 推送
 				respMessage = this.todoEventTask(xmlEntity);
-				break;
-			default:
-				// 当前登陆的用户放入Session
-				request.getSession(true).setAttribute(SessionConstants.SESSION_WECHAT_OPENID,
-						xmlEntity.getFromUserName());
 				break;
 			}
 		}

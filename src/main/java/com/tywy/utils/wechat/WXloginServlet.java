@@ -66,7 +66,8 @@ public class WXloginServlet extends HttpServlet {
 	}
 	
 	public static void main(String[] args) {
-		String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
+		String string = URLEncoder.encode("http://1c612825a9.iask.in:12087/tywy/weixin/oauth");
+//		String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
 		System.out.println(string);
 	}
 }
