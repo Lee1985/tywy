@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,6 @@ import com.tywy.constant.CfgConstant;
  * @Description: 微信授权请求处理类
  * @date 2016-11-17 16:48:35
  */
-@WebServlet("/weixin/oauth")
 public class WXloginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6688395005435952973L;
@@ -64,10 +62,10 @@ public class WXloginServlet extends HttpServlet {
 
 		return JSONUtil.toBean(result, OAuthInfo.class);
 	}
-	
+
 	public static void main(String[] args) {
 		String string = URLEncoder.encode("http://1c612825a9.iask.in:12087/tywy/weixin/oauth");
-//		String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
+		// String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
 		System.out.println(string);
 	}
 }

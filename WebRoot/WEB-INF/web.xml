@@ -91,6 +91,17 @@
 		<url-pattern>/coreServlet</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 微信公众号网页授权处理类 -->
+	<servlet>
+		<servlet-name>WXloginServlet</servlet-name>
+		<servlet-class>com.tywy.utils.wechat.WXloginServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WXloginServlet</servlet-name>
+		<url-pattern>/oauth</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<description>spring mvc servlet</description>
 		<servlet-name>springMvc</servlet-name>
