@@ -47,7 +47,7 @@
 					<h2 class="title">联系我们<span>Contact us</span></h2>
 					<div class="contact_text">${contentValue }</div>
 				    <ul class="contact_method clearfix">
-				    	<li>
+				    	<li onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=${qqValue}&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');">
 				    		<img src="resource/website/img/icon_00.png" alt="" />
 				    		<p class="c_name">在线客服</p>
 				    		<p class="c_time">每天8:30-17:00</p>

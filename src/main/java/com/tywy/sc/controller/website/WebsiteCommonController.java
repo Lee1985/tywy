@@ -17,6 +17,7 @@ import com.tywy.sc.data.model.WebsiteBrandT;
 import com.tywy.sc.data.model.WebsiteCaseT;
 import com.tywy.sc.data.model.WebsiteCategoryT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
+import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.WebsiteBrandTService;
 import com.tywy.sc.services.WebsiteCaseTService;
 import com.tywy.sc.services.WebsiteCategoryTService;
@@ -36,6 +37,9 @@ public class WebsiteCommonController extends BaseController{
 	
 	@Resource
 	private WebsiteCaseTService websiteCaseTService;
+	
+	@Resource
+	private ConfigInfoService configInfoService;
 	
 	@RequestMapping(value = "aboutMenu")
 	@ResponseBody
@@ -80,5 +84,14 @@ public class WebsiteCommonController extends BaseController{
 		info.setSort("createDate");
 		info.setOrder("asc");
 		return websiteCaseTService.selectAll(info);
+	}
+	
+	@RequestMapping(value = "qqServer")
+	@ResponseBody
+	public Map<String,Object> qqServer(HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> jsonMap = new HashMap<String,Object>();
+		String qqvalue = configInfoService.getConfigValueByKey("contact_us_qq");
+		jsonMap.put("qqValue", qqvalue);
+		return jsonMap;
 	}
 }

@@ -21,6 +21,7 @@ import com.tywy.sc.data.model.WebsiteHomepageBrandT;
 import com.tywy.sc.data.model.WebsiteHomepageCaseT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
 import com.tywy.sc.data.model.WebsiteNewsT;
+import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.SystemPictureInfoService;
 import com.tywy.sc.services.WebsiteCarouselTService;
 import com.tywy.sc.services.WebsiteCategoryTService;
@@ -53,6 +54,9 @@ public class WebsiteHomePageController extends BaseController{
 	
 	@Resource
 	private WebsiteIntroductionTService websiteIntroductionTService;
+	
+	@Resource
+	private ConfigInfoService configInfoService;
 	
 	@RequestMapping(value = "index")
 	public String index(HttpServletRequest request,HttpServletResponse response) {
@@ -120,6 +124,10 @@ public class WebsiteHomePageController extends BaseController{
 			entity.setSystemPictureInfo(pic);
 		}
 		request.setAttribute("brandList", brandList);
+		
+		//经典案例描述
+		String caseContent = configInfoService.getConfigValueByKey("website_case_content");
+		request.setAttribute("caseContent", JsoupUtils.removeStyle(caseContent));
 		
 		//新闻
 		PageInfo<WebsiteNewsT> newsPageInfo = new PageInfo<WebsiteNewsT>();

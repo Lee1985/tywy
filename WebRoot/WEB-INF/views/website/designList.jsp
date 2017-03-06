@@ -72,7 +72,9 @@
 									</div>		
 								</c:when>
 								<c:otherwise>
-									<a style="display: none;" title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"><img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/></a>
+									<div style="display: none;" title="${picture.designName }" rel="gallery" class="boxer design_right" href="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }">
+										<img src="downFileResult.do?urlPath=${picture.systemPictureInfo.urlPath }"/>
+									</div>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>						

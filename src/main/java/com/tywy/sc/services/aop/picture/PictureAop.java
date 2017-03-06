@@ -178,7 +178,7 @@ public class PictureAop {
     private String parGetName(String fieldName) {
         if (null == fieldName || "".equals(fieldName)) {  
             return null;
-        }  
+        }
         int startIndex = 0;  
         if (fieldName.charAt(0) == '_')  
             startIndex = 1;  

@@ -61,7 +61,7 @@
 		        						<a href="javascript:;" <c:if test="${status.index eq 0 }">class="currenthx"</c:if>>
 			                   			<div class="j_box">
 			                   				<div>
-			                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+			                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 			                   					<p>${cq.descName}</p>
 			                   				</div>
 		        					</c:when>
@@ -69,7 +69,7 @@
 		        						<c:choose>
 		        							<c:when test="${status.count % 6 eq 0 || status.count eq list.size()}">
 				        								<div>
-						                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+						                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 						                   					<p>${cq.descName}</p>
 						                   				</div>
 						                   			</div>
@@ -77,7 +77,7 @@
 		        							</c:when>
 		        							<c:otherwise>
 		        								<div>
-				                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" alt="" />
+				                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 				                   					<p>${cq.descName}</p>
 				                   				</div>				                   				
 		        							</c:otherwise>
