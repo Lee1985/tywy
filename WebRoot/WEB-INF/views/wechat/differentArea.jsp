@@ -17,26 +17,39 @@
 		<link rel="stylesheet" type="text/css" href="css/wechat/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/wechat/style.css"/>
 		<link rel="stylesheet" type="text/css" href="js/wechat/need/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="js/wechat/iscroll/iscroll.css"/>
 		<title>${title}</title>
 	</head>
 	<body class="gray_bg">
 		<main>
-           <ul class="piclist_box">
-           	<c:forEach items="${albums}" var="item" varStatus="status">
-           		<li>
-	           		<a href="javaScript:void(0)" onclick="toDetail('${item.id}','${item.parentid}')">
-	           			<img class="lazy" alt="" width="10" height="10"  
-	           				data-original="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}"  
-	           				src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" alt="" />
-	           		</a>
-           			<p>${item.serialNumber}</p>
-	           		<div class="single_select">
-	           			<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/>
-	           			<label for="${item.id}"></label>
-	           		</div>
-	           	</li>
-			</c:forEach>
-           </ul>			
+		<div id="wrapper">
+            <div id="scroller">
+                <div id="pullDown">
+                    <span class="pullDownIcon"></span>
+                    <span class="pullDownLabel">下拉刷新...</span>
+                </div>
+	            <ul class="piclist_box" id="thelist">
+	           	<c:forEach items="${albums}" var="item" varStatus="status">
+	           		<li>
+		           		<a href="javaScript:void(0)" onclick="toDetail('${item.id}','${item.parentid}')">
+		           			<img class="lazy" alt="" width="10" height="10"  
+		           				data-original="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}"  
+		           				src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" alt="" />
+		           		</a>
+	           			<p>${item.serialNumber}</p>
+		           		<div class="single_select">
+		           			<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/>
+		           			<label for="${item.id}"></label>
+		           		</div>
+		           	</li>
+				</c:forEach>
+	            </ul>			
+			  	<div id="pullUp">
+		             <span class="pullUpIcon"></span>
+		             <span class="pullUpLabel">上拉加载更多...</span>
+		        </div>
+        	</div>
+        </div>
 		</main>
 		<!--main-->
 		<!--footer-->
@@ -59,6 +72,133 @@
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/wechat/iscroll/iscroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset, generatedCount = 0;
+		var page=2;
+		var totalnum=${total};
+		var curtotal=${currtotal};
+		var parentid='${parentid}';
+		
+		function pullDownAction() {
+			setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+				/* var el, li, i;
+                el = document.getElementById('thelist');
+
+                for (i=0; i<3; i++) {
+                    li = document.createElement('li');
+                    li.innerText = 'Generated row ' + (++generatedCount);
+                    el.insertBefore(li, el.childNodes[0]);
+                } */
+				myScroll.refresh(); // Remember to refresh when contents are loaded (ie: on ajax completion)
+			},
+			1000); // <-- Simulate network congestion, remove setTimeout from production!
+		}
+	
+		function pullUpAction() {
+			setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+				if (curtotal < totalnum) {
+					$.post("./queryDiffAreAjax.do", {
+						parentid:parentid,
+						page:page,
+						pageSize:15// 默认15条
+					},function(data) {
+						totalnum=data.total;
+						curtotal+=data.albums.length;
+						page++;
+						$.each(data.albums,function(index, item){
+							if(item!=null){
+							var	str = "<li>";
+								str += "	<a href=\"javaScript:void(0)\" onclick=\"toDetail('"+item.id+"','"+item.parentid+"')\">";
+								str += "		<img class=\"lazy\" alt=\"\" width=\"10\" height=\"10\"";
+								str += "			data-original=\"downFileResult.do?urlPath="+item.systemPictureInfo.urlPath+"\"";
+								str += "			src=\"downFileResult.do?urlPath="+item.systemPictureInfo.urlPath+"\" alt=\"\" />";
+								str += "	</a>";
+								str += "	<p>"+item.serialNumber+"</p>";
+								str += "	<div class=\"single_select\">";
+								str += "		<input type=\"checkbox\" name=\"single\" id=\""+item.id+"\" value=\""+item.id+"\"/>";
+								str += "		<label for=\""+item.id+"\"></label>";
+								str += "	</div>";
+								str += "</li>";
+								$("#thelist").append(str);
+							}
+						});
+					},'json');
+				};
+				myScroll.refresh(); // Remember to refresh when contents are loaded (ie: on ajax completion)
+			},
+			1000); // <-- Simulate network congestion, remove setTimeout from production!
+		}
+	
+		function loaded() {
+            pullDownEl = document.getElementById('pullDown');
+            pullDownOffset = pullDownEl.offsetHeight;
+            pullUpEl = document.getElementById('pullUp');	
+            pullUpOffset = pullUpEl.offsetHeight;
+
+            myScroll = new iScroll('wrapper', {
+                useTransition: true,
+                topOffset: pullDownOffset,
+                onRefresh: function () {
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '下拉加载更多...';
+                    }
+                },
+                onScrollMove: function () {
+                    if (this.y > 5 && !pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '释放刷新...';
+                        this.minScrollY = 0;
+                    } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '释放刷新...';
+                        this.maxScrollY = this.maxScrollY;
+                    } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                        this.maxScrollY = pullUpOffset;
+                    }
+                },
+                onScrollEnd: function () {
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';				
+                        pullDownAction();	// Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';				
+                        pullUpAction();	// Execute custom function (ajax call?)
+                    }
+                }
+            });
+
+            setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+        }
+		
+		document.addEventListener('touchmove',
+		function(e) {
+			e.preventDefault();
+		},
+		false);
+	
+		document.addEventListener('DOMContentLoaded',
+		function() {
+			setTimeout(loaded, 200);
+		},
+		false);
+		
+		if(curtotal < 15){//小于15张图片隐藏“上拉加载”
+			$("#pullUp").css("display","none");
+		}
+	</script>
 	<script type="text/javascript">
 		$(function() {
 			//获取列表图片高度
@@ -151,4 +291,5 @@
 			window.location.href="./toGallery.do?id=" + id + "&parentid=" + parentid + "&userid=${userid}";
 		}
 	</script>
+	
 </html>

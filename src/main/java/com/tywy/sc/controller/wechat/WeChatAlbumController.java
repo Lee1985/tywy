@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.SystemPictureInfo;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.data.model.WechatElectronicAlbumT;
@@ -37,7 +42,7 @@ public class WeChatAlbumController extends BaseController {
 	@Resource
 	private WechatElectronicAlbumTService electronicService;
 	@Resource
-	private WechatAlbumListTService listTService;
+	private WechatAlbumListTService albumListService;
 	@Resource
 	private SystemPictureInfoService systemPictureInfoService;
 
@@ -96,6 +101,63 @@ public class WeChatAlbumController extends BaseController {
 	}
 
 	/**
+	 * ajax查询专区图集
+	 * 
+	 * @param request
+	 * @param response
+	 * @param info
+	 * @return
+	 */
+	@RequestMapping(value = "/queryDiffAreAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public JSONObject queryDiffAreAjax(HttpServletRequest request, HttpServletResponse response,
+			WechatAlbumListT info) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (info.getPage() == null) {
+			info.setPage(1);
+		}
+		if (info.getPageSize() == null) {
+			info.setPageSize(15);
+		}
+
+		info.setSort("updateDate");// 按照时间降序排列
+
+		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
+		pageInfo.setPage(info.getPage());
+		pageInfo.setPageSize(info.getPageSize());
+		PageInfo<WechatAlbumListT> pageList = albumListService.selectAll(info, pageInfo);
+
+		jsonObject.put("total", pageList.getTotal());
+
+		List<String> imageUuidList = new ArrayList<String>();
+		List<WechatAlbumListT> albums = pageList.getRows();
+		for (WechatAlbumListT entity : albums) {
+			imageUuidList.add(entity.getImgUuid());
+		}
+		if (imageUuidList == null || imageUuidList.isEmpty()) {
+			jsonObject.put("albums", albums);
+		}
+		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
+		if (picList == null || picList.isEmpty()) {
+			jsonObject.put("albums", albums);
+		}
+		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
+		for (SystemPictureInfo pictureInfo : picList) {
+			picMap.put(pictureInfo.getUuid(), pictureInfo);
+		}
+		for (WechatAlbumListT entity : albums) {
+			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
+			entity.setSystemPictureInfo(pic);
+		}
+
+		jsonObject.put("albums", JSONArray.toJSON(albums));
+		jsonObject.put("currtotal", albums.size());
+		return jsonObject;
+	}
+
+	/**
 	 * 跳转专区
 	 * 
 	 * @param request
@@ -105,19 +167,36 @@ public class WeChatAlbumController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/toDiffArea")
-	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
-			String userid) {
+	public String toDiffArea(HttpServletRequest request, HttpServletResponse response, Model model,
+			WechatAlbumListT info) {
 
-		model.addAttribute("userid", userid);
+		model.addAttribute("userid", info.getUserid());
+		model.addAttribute("parentid", info.getParentid());
 
-		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
+		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(info.getParentid());
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
 
-		Map<String, Object> map = new HashMap<>();
-		map.put("parentid", parentid);
-		map.put("isDelete", "0");
-		List<WechatAlbumListT> albums = listTService.selectAll(map);
+		if (info.getPage() == null) {
+			info.setPage(1);
+		}
+		if (info.getPageSize() == null) {
+			info.setPageSize(15);
+		}
+
+		info.setSort("updateDate");// 按照时间降序排列
+
+		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
+		pageInfo.setPage(info.getPage());
+		pageInfo.setPageSize(info.getPageSize());
+		PageInfo<WechatAlbumListT> pageList = albumListService.selectAll(info, pageInfo);
+
+		model.addAttribute("total", pageList.getTotal());
+
 		List<String> imageUuidList = new ArrayList<String>();
+		List<WechatAlbumListT> albums = pageList.getRows();
+
+		model.addAttribute("currtotal", albums.size());
+
 		for (WechatAlbumListT entity : albums) {
 			imageUuidList.add(entity.getImgUuid());
 		}
@@ -146,6 +225,13 @@ public class WeChatAlbumController extends BaseController {
 
 	/**
 	 * 跳转详情
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param parentid
+	 * @param userid
+	 * @return
 	 */
 	@RequestMapping(value = "/toGallery")
 	public String toGallery(HttpServletRequest request, HttpServletResponse response, Model model, String parentid,
@@ -159,7 +245,7 @@ public class WeChatAlbumController extends BaseController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
 		map.put("isDelete", "0");
-		List<WechatAlbumListT> albums = listTService.selectAll(map);
+		List<WechatAlbumListT> albums = albumListService.selectAll(map);
 		List<String> imageUuidList = new ArrayList<String>();
 		for (WechatAlbumListT entity : albums) {
 			imageUuidList.add(entity.getImgUuid());
@@ -196,7 +282,7 @@ public class WeChatAlbumController extends BaseController {
 		model.addAttribute("title", "收藏详情");
 		model.addAttribute("userid", userid);
 
-		WechatAlbumListT albums = listTService.selectById(id);
+		WechatAlbumListT albums = albumListService.selectById(id);
 
 		List<String> imageUuidList = new ArrayList<String>();
 		imageUuidList.add(albums.getImgUuid());
