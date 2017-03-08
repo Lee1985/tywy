@@ -3,8 +3,9 @@ $(document).ready(function () {
     var sear = window.location.search;//获取浏览器URL参数
     var hash = sear.substr(4,32);
     var dom = $("#"+hash);
-    if(-1 != $(dom).index()){
-        index = $(dom).index();//获取当前页面要显示的第一张图片的下标
+    var num = $(dom).index();
+    if(-1 != num){
+        index = num/2;//获取当前页面要显示的第一张图片的下标
     }
 
     var len = $(".swiper-slide").length;
@@ -64,8 +65,4 @@ $(document).ready(function () {
         $("#swiper_wrapper").height($(window).height());
     }
 
-	//手指放大
-	$('div.pinch-zoom').each(function () {
-		new RTP.PinchZoom($(this), {});
-    });
 });
