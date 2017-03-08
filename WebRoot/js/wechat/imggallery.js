@@ -64,4 +64,8 @@ $(document).ready(function () {
         $("#swiper_wrapper").height($(window).height());
     }
 
+	//手指放大
+	$('div.pinch-zoom').each(function () {
+		new RTP.PinchZoom($(this), {});
+    });
 });
