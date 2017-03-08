@@ -32,6 +32,7 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 	private String effectDateStr;
 	private String createDateStr;
 	private String updateDateStr;
+	private String userid;
 	private SystemPictureInfo systemPictureInfo;
 
 	public java.lang.String getId() {
@@ -178,14 +179,12 @@ public class WechatAlbumListT extends BaseEntity implements Serializable {
 		this.systemPictureInfo = systemPictureInfo;
 	}
 
-	@Override
-	public String toString() {
-		return "WechatAlbumListT [id=" + id + ", parentid=" + parentid + ", orderList=" + orderList + ", imgUuid="
-				+ imgUuid + ", mediaId=" + mediaId + ", effectDate=" + effectDate + ", serialNumber=" + serialNumber
-				+ ", description=" + description + ", createDate=" + createDate + ", createUser=" + createUser
-				+ ", updateDate=" + updateDate + ", updateUser=" + updateUser + ", isDelete=" + isDelete + ", urlPath="
-				+ urlPath + ", effectDateStr=" + effectDateStr + ", createDateStr=" + createDateStr + ", updateDateStr="
-				+ updateDateStr + ", systemPictureInfo=" + systemPictureInfo + "]";
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 }

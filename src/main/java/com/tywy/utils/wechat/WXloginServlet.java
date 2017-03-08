@@ -1,13 +1,13 @@
 package com.tywy.utils.wechat;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,15 +57,11 @@ public class WXloginServlet extends HttpServlet {
 
 		String requestUrl = CfgConstant.GET_AUTH_OPENID_URL.replace("APPID", appid).replace("SECRET", secret)
 				.replace("CODE", code);
-
 		String result = NetWorkCenter.doGet(requestUrl, null);
-
-		return JSONUtil.toBean(result, OAuthInfo.class);
-	}
-
-	public static void main(String[] args) {
-		String string = URLEncoder.encode("http://1c612825a9.iask.in:12087/tywy/weixin/oauth");
-		// String string = URLEncoder.encode(CfgConstant.GET_CALLBACK_URL);
-		System.out.println(string);
+		if (StringUtils.isNotBlank(result) && (!result.contains("errcode"))) {
+			return JSONUtil.toBean(result, OAuthInfo.class);
+		} else {
+			return null;
+		}
 	}
 }
