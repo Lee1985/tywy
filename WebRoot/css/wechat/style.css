@@ -767,4 +767,5 @@ div.share {
 	background: url(../../images/wechat/icon_share.png) no-repeat center center;
 	background-size: 0.36rem 0.38rem;
 }
+.pinch-zoom-container{height: 100%!important;}
 /*图集*/

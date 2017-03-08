@@ -23,7 +23,10 @@
 		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.carousel.css"/>
 		<link rel="stylesheet" type="text/css" href="resource/website/css/owl.theme.css"/>
 		<!--owl css-->
+		<link rel="stylesheet" type="text/css" href="resource/website/css/jquery.fs.boxer.css"/>
 		<script src="resource/website/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="resource/website/js/jquery.fs.boxer.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="resource/website/js/lightbox.js" type="text/javascript" charset="utf-8"></script>
 		<title>天雅地毯</title>
 	</head>
 	<body>
@@ -60,7 +63,7 @@
 		        					<c:when test="${status.index % 6 eq 0 }">
 		        						<a href="javascript:;" <c:if test="${status.index eq 0 }">class="currenthx"</c:if>>
 			                   			<div class="j_box">
-			                   				<div>
+			                   				<div title="${cq.descName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }">
 			                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 			                   					<p>${cq.descName}</p>
 			                   				</div>
@@ -68,7 +71,7 @@
 		        					<c:otherwise>
 		        						<c:choose>
 		        							<c:when test="${status.count % 6 eq 0 || status.count eq list.size()}">
-				        								<div>
+				        								<div title="${cq.descName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }">
 						                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 						                   					<p>${cq.descName}</p>
 						                   				</div>
@@ -76,7 +79,7 @@
 						                   		</a>
 		        							</c:when>
 		        							<c:otherwise>
-		        								<div>
+		        								<div title="${cq.descName}" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }">
 				                   					<img src="downFileResult.do?urlPath=${cq.systemPictureInfo.urlPath }" width="300" height="200" alt="" />
 				                   					<p>${cq.descName}</p>
 				                   				</div>				                   				

@@ -71,7 +71,7 @@
 		        						<ul class="owl-item">
 				                            <li>
 				                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
-				                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+				                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }" style="width: 255px;height: 170px;"/>
 				                                </div>
 				                            </li>
 		        					</c:when>
@@ -80,7 +80,7 @@
 		        							<c:when test="${status.count % 4 eq 0 || status.count eq list.size()}">
 					        						<li>
 						                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
-						                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+						                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }" style="width: 255px;height: 170px;"/>
 						                                </div>
 						                           </li>
 						                        </ul>
@@ -88,7 +88,7 @@
 		        							<c:otherwise>
 		        								<li>
 					                                <div title="${pic.imageName }" rel="gallery" class="boxer" href="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }">
-					                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }"/>
+					                                	<img src="downFileResult.do?urlPath=${pic.systemPictureInfo.urlPath }" style="width: 255px;height: 170px;"/>
 					                                </div>
 					                            </li>				                   				
 		        							</c:otherwise>

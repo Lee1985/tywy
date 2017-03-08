@@ -26,8 +26,8 @@
 			    <div class="swiper-container" id="swiper_wrapper">
 			        <div class="swiper-wrapper">
 			            <div class="swiper-slide" id="${albums.id}">
-			                <div class="swiper-pic">
-			                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${albums.urlPath}" class="swiper-lazy" 
+			                <div class="swiper-pic pinch-zoom">
+			                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${albums.urlPath}" class="swiper-lazy pinch-zoom" 
 			                		 imgUid="${albums.id}" data-desc="${albums.description}">
 			                    <div class="swiper-lazy-preloader"></div>
 			                </div>
@@ -52,6 +52,7 @@
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/wechat/pinchzoom.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/imggallery.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">

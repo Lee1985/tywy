@@ -10,6 +10,6 @@
 	<ul class="items">
 		<li><div class="wx_box wx"><img src="resource/website/img/weinxin1.png" alt="" /></div></li>
 		<li id="qqLi"><div class="wx_box client"><img src="resource/website/img/online.png" alt="" /></div></li>
-		<li><div class="wx_box tels"><img src="resource/website/img/tele.png" alt="" /></li>
+		<li id="telLi"><div class="wx_box tels"><img src="resource/website/img/tele.png" alt="" /><span></span></li>
 	</ul>
 </div>

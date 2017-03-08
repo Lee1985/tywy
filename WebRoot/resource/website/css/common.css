@@ -52,7 +52,9 @@ div.sitemap ul li a:hover{color: #FFFFFF; -webkit-transition: all 0.4s;-o-transi
 div.code_box{float: right;}
 div.code_box p{padding-top: 17px; text-align: center; color: #878787;}
 
-div.address{width: 1200px; height: 240px; margin: auto; background: url(../img/location0.png) no-repeat left center; padding-left: 680px; margin-bottom: 10px; color: #FFFFFF;}
+div.address_box{width: 1200px; height: 240px; margin: auto; position: relative;}
+div.maps_box{width: 1200px; height: 240px; position: absolute; left: 0; top: 0; z-index: 0;}
+div.address{width: 1200px; height: 240px;  /*background: url(../img/location0.png) no-repeat left center;*/ padding-left: 680px; margin-bottom: 10px; color: #FFFFFF; position: relative; z-index: 99;}
 div.address_title{padding-top: 40px; padding-bottom: 40px; font-size: 16px;}
 div.address_title span{ cursor: pointer; display: inline-block; width: 80px; height: 36px; line-height: 36px; text-align: center; margin-right: 19px; border: 1px solid #8b8b8b; color: #8b8b8b;; -webkit-border-radius: 5px;-moz-border-radius: 5px;-ms-border-radius: 5px;-o-border-radius: 5px;border-radius: 5px;}
 div.address_title span.selected{border: 1px solid #FFFFFF; color: #FFFFFF;}
@@ -70,7 +72,7 @@ ul.items li:nth-child(3){background: url(../img/icon_tel.png) no-repeat center c
 ul.items li.selected{background-color: #74191D;}
 div.wx_box{position: absolute; left: -180px; display: none;  z-index: 100;}
 div.client{top: -50px;}
-div.tels{top: -100px;}
+div.tels span{position: absolute; bottom: 30px;display: inline-block; width: 100%; text-align: center; font-size: 18px; }
 
 div.banner{width: 100%;  background-size: cover; position: relative; margin-bottom: 100px;}
 div.banner_bg1{background: url(../img/banner_bg1.png) no-repeat center center;}

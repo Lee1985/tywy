@@ -27,7 +27,7 @@
 			        <div class="swiper-wrapper">
 				        <c:forEach items="${albums}" var="item" varStatus="status">
 				            <div class="swiper-slide" id="${item.id}">
-				                <div class="swiper-pic">
+				                <div class="swiper-pic pinch-zoom">
 				                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
 				                		 imgUid="${item.id}" data-desc="${item.description}">
 				                    <div class="swiper-lazy-preloader"></div>
@@ -54,6 +54,7 @@
 	<script src="js/wechat/rem.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/wechat/pinchzoom.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/imggallery.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">

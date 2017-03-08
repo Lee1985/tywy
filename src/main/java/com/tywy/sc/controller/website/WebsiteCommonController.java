@@ -1,5 +1,6 @@
 package com.tywy.sc.controller.website;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tywy.sc.base.controller.BaseController;
+import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.data.model.WebsiteBrandT;
 import com.tywy.sc.data.model.WebsiteCaseT;
 import com.tywy.sc.data.model.WebsiteCategoryT;
+import com.tywy.sc.data.model.WebsiteHomepageSalesT;
 import com.tywy.sc.data.model.WebsiteIntroductionT;
 import com.tywy.sc.services.ConfigInfoService;
 import com.tywy.sc.services.WebsiteBrandTService;
 import com.tywy.sc.services.WebsiteCaseTService;
 import com.tywy.sc.services.WebsiteCategoryTService;
+import com.tywy.sc.services.WebsiteHomepageSalesTService;
 import com.tywy.sc.services.WebsiteIntroductionTService;
 
 @Controller
@@ -40,6 +44,9 @@ public class WebsiteCommonController extends BaseController{
 	
 	@Resource
 	private ConfigInfoService configInfoService;
+	
+	@Resource
+	private WebsiteHomepageSalesTService websiteHomepageSalesTService;
 	
 	@RequestMapping(value = "aboutMenu")
 	@ResponseBody
@@ -81,17 +88,47 @@ public class WebsiteCommonController extends BaseController{
 		WebsiteCaseT info = new WebsiteCaseT();
 		info.setStatus("1");
 		info.setIsDelete("0");
-		info.setSort("createDate");
+		info.setSort("orderList");
 		info.setOrder("asc");
 		return websiteCaseTService.selectAll(info);
 	}
 	
-	@RequestMapping(value = "qqServer")
+	@RequestMapping(value = "contactInfo")
 	@ResponseBody
-	public Map<String,Object> qqServer(HttpServletRequest request,HttpServletResponse response){
+	public Map<String,Object> contactInfo(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> jsonMap = new HashMap<String,Object>();
+		
+		//qq
 		String qqvalue = configInfoService.getConfigValueByKey("contact_us_qq");
 		jsonMap.put("qqValue", qqvalue);
+		
+		//联系电话
+		String telvalue = configInfoService.getConfigValueByKey("contact_us_tel");
+		jsonMap.put("telValue", telvalue);
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value = "netInfo")
+	@ResponseBody
+	public Map<String,Object> netInfo(HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> jsonMap = new HashMap<String,Object>();
+		WebsiteHomepageSalesT info = new WebsiteHomepageSalesT();
+		info.setStatus("1");
+		info.setIsDelete("0");
+		PageInfo<WebsiteHomepageSalesT> pageInfo = new PageInfo<WebsiteHomepageSalesT>();
+		pageInfo.setPage(1);
+		pageInfo.setPageSize(5);
+		websiteHomepageSalesTService.selectAll(info,pageInfo);
+		List<WebsiteHomepageSalesT> list = pageInfo.getRows();
+		List<String> cityList = new ArrayList<String>();
+		if(list != null && !list.isEmpty()){
+			for(WebsiteHomepageSalesT sale : list){
+				cityList.add(sale.getCity());
+			}
+		}
+		jsonMap.put("cityList", cityList);
+		jsonMap.put("list", list);
 		return jsonMap;
 	}
 }
