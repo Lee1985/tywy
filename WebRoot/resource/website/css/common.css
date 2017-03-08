@@ -1,6 +1,6 @@
 * {margin: 0;padding: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
 nav,aside,main{display: block;}
-body {font-family: "Microsoft Yahei", "寰蒋闆呴粦", "Helvetica Neue", Helvetica, Arial, "榛戜綋", SimHei, "瀹嬩綋", SimSun, sans-serif;font-size: 14px;line-height: 1.5;color: #333333;background: #f7f7f7;}
+body {font-family: "Microsoft Yahei", "瀵邦喛钂嬮梿鍛寸拨", "Helvetica Neue", Helvetica, Arial, "姒涙垳缍�", SimHei, "鐎瑰缍�", SimSun, sans-serif;font-size: 14px;line-height: 1.5;color: #333333;background: #f7f7f7;}
 img {border: 0 none;display: block;margin: 0 auto;}
 h1,h2,h3,h4,h5,h6 {font-weight: normal;}
 ul {list-style: outside none none;}
@@ -26,12 +26,12 @@ div.search_box{width: 207px; height: 32px; line-height: 32px; float: right; marg
 div.search_box input[type="search"]{width: 177px; height: 100%; padding-left: 8px; padding-right: 8px; display: inline-block; float: left; background: none; border: none 0;
 -webkit-appearance: none;-moz-appearance: none;appearance: none; }
 input::-webkit-search-cancel-button {display: none;}
-div.search_box input[type="search"]::-webkit-input-placeholder { /* WebKit browsers */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "寰蒋闆呴粦", "Helvetica Neue", Helvetica, Arial, "榛戜綋", SimHei, "瀹嬩綋", SimSun, sans-serif; } 
-div.search_box input[type="search"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "寰蒋闆呴粦", "Helvetica Neue", Helvetica, Arial, "榛戜綋", SimHei, "瀹嬩綋", SimSun, sans-serif;} 
-div.search_box input[type="search"]::-moz-placeholder { /* Mozilla Firefox 19+ */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "寰蒋闆呴粦", "Helvetica Neue", Helvetica, Arial, "榛戜綋", SimHei, "瀹嬩綋", SimSun, sans-serif;} 
-div.search_box input[type="search"]:-ms-input-placeholder { /* Internet Explorer 10+ */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "寰蒋闆呴粦", "Helvetica Neue", Helvetica, Arial, "榛戜綋", SimHei, "瀹嬩綋", SimSun, sans-serif;}
+div.search_box input[type="search"]::-webkit-input-placeholder { /* WebKit browsers */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "瀵邦喛钂嬮梿鍛寸拨", "Helvetica Neue", Helvetica, Arial, "姒涙垳缍�", SimHei, "鐎瑰缍�", SimSun, sans-serif; } 
+div.search_box input[type="search"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "瀵邦喛钂嬮梿鍛寸拨", "Helvetica Neue", Helvetica, Arial, "姒涙垳缍�", SimHei, "鐎瑰缍�", SimSun, sans-serif;} 
+div.search_box input[type="search"]::-moz-placeholder { /* Mozilla Firefox 19+ */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "瀵邦喛钂嬮梿鍛寸拨", "Helvetica Neue", Helvetica, Arial, "姒涙垳缍�", SimHei, "鐎瑰缍�", SimSun, sans-serif;} 
+div.search_box input[type="search"]:-ms-input-placeholder { /* Internet Explorer 10+ */ color: #666666; font-size: 14px; font-family: "Microsoft Yahei", "瀵邦喛钂嬮梿鍛寸拨", "Helvetica Neue", Helvetica, Arial, "姒涙垳缍�", SimHei, "鐎瑰缍�", SimSun, sans-serif;}
 div.search_box span{display: inline-block;width: 14px; height: 14px; background: url(../img/search.png) no-repeat center center; cursor: pointer;}
-/*涓嬫媺鑿滃崟*/
+/*娑撳濯洪懣婊冨礋*/
 li.select_menu{background: url(../img/arrow.png) no-repeat 70px center;}
 div.second_menu{width: 260px; background-color: #FFFFFF; position: absolute; left: -92px; top: 80px; z-index: 999; display: none;}
 div.second_menu a{height: 60px; line-height: 60px;  display: block;  width: 100%; padding-left: 20px; padding-right: 20px;}
@@ -39,7 +39,7 @@ div.second_menu a span{border-bottom: 1px solid #e6e6e6; display: block; width: 
 div.second_menu a:last-child span {border-bottom: none!important;}
 div.second_menu a:hover{ background-color: #F5F5F5;}
 div.second_menu a:hover span{border-bottom: none;background: url(../img/arrow1.png) no-repeat right center #f5f5f5;}
-/*涓嬫媺鑿滃崟*/
+/*娑撳濯洪懣婊冨礋*/
 /*header*/
 /*footer*/
 footer{width: 100%; background-color: #1a1a1a;}
@@ -52,7 +52,9 @@ div.sitemap ul li a:hover{color: #FFFFFF; -webkit-transition: all 0.4s;-o-transi
 div.code_box{float: right;}
 div.code_box p{padding-top: 17px; text-align: center; color: #878787;}
 
+
 div.address_box{width: 1200px; height: 240px; margin: auto; position: relative;}
+div.maps_bg{width: 1200px; height: 240px; position: absolute; left: 0; top: 0; z-index: 10;background-image: url("../img/map_bg.png");}
 div.maps_box{width: 1200px; height: 240px; position: absolute; left: 0; top: 0; z-index: 0;}
 div.address{width: 1200px; height: 240px;  /*background: url(../img/location0.png) no-repeat left center;*/ padding-left: 680px; margin-bottom: 10px; color: #FFFFFF; position: relative; z-index: 99;}
 div.address_title{padding-top: 40px; padding-bottom: 40px; font-size: 16px;}

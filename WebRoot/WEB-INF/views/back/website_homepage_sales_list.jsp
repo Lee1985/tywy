@@ -140,9 +140,9 @@ div#rMenu {
 	     	}">
 			<thead>
 				<tr>
-					<th width="10%" data-options="field:'saleName',align:'left',sortable:true">网点名称</th>
-					<th width="5%" data-options="field:'city',align:'left',sortable:true">所在城市</th>					
-					<th width="15%" data-options="field:'address',align:'center',sortable:true">地址</th>
+					<th width="10%" data-options="field:'saleName',align:'center',sortable:true">网点名称</th>
+					<th width="5%" data-options="field:'city',align:'center',sortable:true">所在城市</th>					
+					<th width="20%" data-options="field:'address',align:'center',sortable:true">地址</th>
 					<th width="10%" data-options="field:'email',align:'center',sortable:true">邮箱</th>
 					<th width="20%" data-options="field:'webAddress',align:'center',sortable:true">网址</th>
 					<th width="5%" data-options="field:'status',align:'center',sortable:true,formatter:formatStatus">状态</th>

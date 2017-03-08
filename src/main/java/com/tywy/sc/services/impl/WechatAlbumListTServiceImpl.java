@@ -5,11 +5,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tywy.sc.base.page.PageInfo;
 import com.tywy.sc.base.service.BaseServiceImpl;
 import com.tywy.sc.data.dao.WechatAlbumListTDao;
 import com.tywy.sc.data.model.WechatAlbumListT;
 import com.tywy.sc.services.WechatAlbumListTService;
 import com.tywy.sc.services.aop.picture.PictureKey;
+import com.tywy.sc.services.aop.picture.PictureList;
 import com.tywy.sc.services.aop.picture.Pictureable;
 import com.tywy.utils.UUIDUtil;
 import com.tywy.utils.stream.util.StreamVO;
@@ -25,6 +27,12 @@ public class WechatAlbumListTServiceImpl extends BaseServiceImpl<WechatAlbumList
 	   super.setBaseDao(wechatAlbumListTDao);
 	}
 
+	@Override
+	@Pictureable
+	public PageInfo<WechatAlbumListT> selectAll(WechatAlbumListT info,@PictureList PageInfo<WechatAlbumListT> pageInfo) {
+		return super.selectAll(info, pageInfo);
+	}
+	
 	@Override
 	@Pictureable
 	public int insertWithImage(WechatAlbumListT info, @PictureKey StreamVO streamVO) {

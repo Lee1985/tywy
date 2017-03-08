@@ -182,9 +182,9 @@ public class WeChatAlbumController extends BaseController {
 		if (info.getPageSize() == null) {
 			info.setPageSize(15);
 		}
-
+		
 		info.setSort("updateDate");// 按照时间降序排列
-
+		info.setIsDelete("0");
 		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
 		pageInfo.setPage(info.getPage());
 		pageInfo.setPageSize(info.getPageSize());
@@ -194,7 +194,7 @@ public class WeChatAlbumController extends BaseController {
 
 		List<String> imageUuidList = new ArrayList<String>();
 		List<WechatAlbumListT> albums = pageList.getRows();
-
+		
 		model.addAttribute("currtotal", albums.size());
 
 		for (WechatAlbumListT entity : albums) {
@@ -241,10 +241,22 @@ public class WeChatAlbumController extends BaseController {
 
 		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
+		
+//		WechatAlbumListT info = new WechatAlbumListT();
+//		info.setParentid(parentid);
+//		info.setIsDelete("0");
+//		info.setSort("updateDate");
+//		info.setOrder("desc");
+//		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
+//		pageInfo.setPage(page);
+//		pageInfo.setPageSize(1);
+//		albumListService.selectAll(info, pageInfo);
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
 		map.put("isDelete", "0");
+		map.put("sort", "updateDate");
+		map.put("order", "desc");
 		List<WechatAlbumListT> albums = albumListService.selectAll(map);
 		List<String> imageUuidList = new ArrayList<String>();
 		for (WechatAlbumListT entity : albums) {
@@ -267,7 +279,8 @@ public class WeChatAlbumController extends BaseController {
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
 			entity.setSystemPictureInfo(pic);
 		}
-
+//
+//		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("albums", albums);
 		return "wechat/gallery";
 	}

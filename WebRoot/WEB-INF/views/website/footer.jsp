@@ -22,7 +22,7 @@
 					<ul>
 						<li>地址：{{value.address}}</li>
 						<li>邮箱：<a href="mailto:{{value.email}}">{{value.email}}</a></li>
-						<li>网址：<a href="http://www.tycarpet.com">http://www.tycarpet.com</a></li>
+						<li>网址：<a href="{{value.webAddress}}">{{value.webAddress}}</a></li>
 					</ul>
 				</div>
 				{{/each}}
@@ -41,6 +41,19 @@
 				$(".address_box").append(html);
 				$(".address_title span").eq(0).addClass("selected").siblings().removeClass("selected");
 				$(".address_detail").eq(0).show().siblings(".address_detail").hide();
+				
+				var map = new BMap.Map('mapContainer',{enableMapClick:false});            // 创建Map实例
+      			var point = new BMap.Point($(".address_detail").eq(0).data('lng')+0.02, $(".address_detail").eq(0).data('lat')); // 创建点坐标
+      			map.centerAndZoom(point,15);                 
+      			map.disableDragging();
+   				map.disableDoubleClickZoom();
+   				
+   				var markerPoint = new BMap.Point($(".address_detail").eq(0).data('lng'), $(".address_detail").eq(0).data('lat'));
+	      		var locationIcon = new BMap.Icon("resource/website/img/location.png", new BMap.Size(46,76));
+				var marker = new BMap.Marker(markerPoint,{icon:locationIcon});
+				marker.setZIndex(9999);
+				map.addOverlay(marker);
+				
 				$(".address_title span").on("click",function(){
 					var indexs=$(this).index();
 					$(this).addClass("selected").siblings().removeClass("selected");
@@ -51,39 +64,12 @@
 	      			map.centerAndZoom(point,15);                 
 	      			map.disableDragging();
 	   				map.disableDoubleClickZoom();
-	      			
-	   				
-					
-/* 					var bo = map.getBounds();
-					//右上角（东北） 
-					var marker3 = new BMap.Marker(bo.getSouthWest());
-
-					
-					//左下角 （西南）
-					var marker4 = new BMap.Marker(bo.getNorthEast());
-					map.addOverlay(marker4); */
-					
-/*  					var bo = map.getBounds();
-					var polygon = new BMap.Polygon([
-                    		bo.getSouthWest(),
-                    		new BMap.Point(bo.getNorthEast().lng, bo.getSouthWest().lat),
-                    		bo.getNorthEast(),
-                    		
-                    		new BMap.Point(bo.getSouthWest().lng, bo.getNorthEast().lat)
-                    		//bo.getCenter()
-                    		
-                    	], {strokeColor:"black", fillColor:"black",strokeWeight:0.1, strokeOpacity:0.9,fillOpacity:0.9});
-					//polygon.setZIndex(10);
-					map.addOverlay(polygon);  */
 					
 					var markerPoint = new BMap.Point($(".address_detail").eq(indexs).data('lng'), $(".address_detail").eq(indexs).data('lat'));
  	      			var locationIcon = new BMap.Icon("resource/website/img/location.png", new BMap.Size(46,76));
 					var marker = new BMap.Marker(markerPoint,{icon:locationIcon});
 					marker.setZIndex(9999);
 					map.addOverlay(marker);
-					
-					/* var oval = new BMap.Circle(markerPoint,500,{strokeColor:"white",fillColor:"white",strokeWeight:1,strokeOpacity:0.1,fillOpacity:0.1});
-					map.addOverlay(oval); */
 				});
 			},
 			error:function(jqXHR){
@@ -91,11 +77,15 @@
 			}
 		});
 	});
+	
+	function showMap(){
+		
+	}
 </script>
 <style type="text/css">
 	.anchorBL{ 
 		display:none; 
-	} 
+	}
 </style>
 
 <div class="sitemap clearfix">
@@ -119,6 +109,7 @@
 	</div>
 </div>	
 <div class="address_box">
+	<div class="maps_bg"></div>
 	<div id="mapContainer" class="maps_box"></div>
 </div>
 <div class="copyright">Copyright © 2009-2016 吉林省天雅万印毯业科技有限公司版权所有 All Rights Reserved.</div>

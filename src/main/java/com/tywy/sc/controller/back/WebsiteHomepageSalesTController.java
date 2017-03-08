@@ -45,6 +45,8 @@ public class WebsiteHomepageSalesTController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
+		info.setSort("createDate");
+		info.setOrder("asc");
 		websiteHomepageSalesTService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -75,7 +77,8 @@ public class WebsiteHomepageSalesTController extends BaseController {
 			HttpServletResponse response, WebsiteHomepageSalesT info) {
 		int result = 0;
 		try {
-			result = websiteHomepageSalesTService.delete(info);
+			info.setIsDelete("1");
+			result = websiteHomepageSalesTService.update(info);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -83,13 +86,12 @@ public class WebsiteHomepageSalesTController extends BaseController {
 		return getJsonResult(result,"操作成功", "操作失败！");
 	}
 	
-	@RequestMapping(value = "system/websiteHomepageSalesTAjaxDelete")
+	@RequestMapping(value = "system/websiteHomepageSalesTAjaxUpdate")
 	@ResponseBody
 	public Map<String,Object> websiteHomepageSalesTAjaxUpdate(HttpServletRequest request,
 			HttpServletResponse response, WebsiteHomepageSalesT info) {
 		int result = 0;
 		try {
-			info.setIsDelete("1");
 			result = websiteHomepageSalesTService.update(info);
 		} catch (Exception e) {
 			// TODO: handle exception
