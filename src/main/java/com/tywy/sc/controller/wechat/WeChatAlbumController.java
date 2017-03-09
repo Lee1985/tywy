@@ -61,9 +61,16 @@ public class WeChatAlbumController extends BaseController {
 		map.put("order", "asc");
 		map.put("isDelete", "0");
 		List<WechatHomepageAlbumT> carousels = albumTService.selectAll(map);
+
 		List<String> imgUuidList = new ArrayList<String>();
 		for (WechatHomepageAlbumT entity : carousels) {
 			imgUuidList.add(entity.getImgUuid());
+		}
+		if (imgUuidList == null || imgUuidList.isEmpty()) {
+			model.addAttribute("carousels", carousels);
+			List<WechatElectronicAlbumT> list = new ArrayList<>();
+			model.addAttribute("albums", list);
+			return "wechat/pictures";
 		}
 		List<SystemPictureInfo> carouselList = systemPictureInfoService.selectByUuids(imgUuidList);
 		Map<String, SystemPictureInfo> carouselMap = new HashMap<String, SystemPictureInfo>();
@@ -79,12 +86,19 @@ public class WeChatAlbumController extends BaseController {
 		// 获取专区
 		map.put("status", "1");
 		List<WechatElectronicAlbumT> albums = electronicService.selectAll(map);
+
 		List<String> imageUuidList = new ArrayList<String>();
 		for (WechatElectronicAlbumT entity : albums) {
 			imageUuidList.add(entity.getImgUuid());
 		}
+		if (imageUuidList == null || imageUuidList.isEmpty()) {
+			model.addAttribute("albums", albums);
+			return "wechat/pictures";
+		}
+
 		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
 		if (picList == null || picList.isEmpty()) {
+			model.addAttribute("albums", albums);
 			return "wechat/pictures";
 		}
 		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
@@ -95,8 +109,8 @@ public class WeChatAlbumController extends BaseController {
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
 			entity.setSystemPictureInfo(pic);
 		}
-		model.addAttribute("albums", albums);
 
+		model.addAttribute("albums", albums);
 		return "wechat/pictures";
 	}
 
@@ -137,11 +151,15 @@ public class WeChatAlbumController extends BaseController {
 			imageUuidList.add(entity.getImgUuid());
 		}
 		if (imageUuidList == null || imageUuidList.isEmpty()) {
-			jsonObject.put("albums", albums);
+			jsonObject.put("albums", JSONArray.toJSON(albums));
+			jsonObject.put("currtotal", albums.size());
+			return jsonObject;
 		}
 		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
 		if (picList == null || picList.isEmpty()) {
-			jsonObject.put("albums", albums);
+			jsonObject.put("albums", JSONArray.toJSON(albums));
+			jsonObject.put("currtotal", albums.size());
+			return jsonObject;
 		}
 		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
 		for (SystemPictureInfo pictureInfo : picList) {
@@ -182,7 +200,7 @@ public class WeChatAlbumController extends BaseController {
 		if (info.getPageSize() == null) {
 			info.setPageSize(15);
 		}
-		
+
 		info.setSort("updateDate");// 按照时间降序排列
 		info.setIsDelete("0");
 		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
@@ -194,7 +212,7 @@ public class WeChatAlbumController extends BaseController {
 
 		List<String> imageUuidList = new ArrayList<String>();
 		List<WechatAlbumListT> albums = pageList.getRows();
-		
+
 		model.addAttribute("currtotal", albums.size());
 
 		for (WechatAlbumListT entity : albums) {
@@ -219,7 +237,6 @@ public class WeChatAlbumController extends BaseController {
 		}
 
 		model.addAttribute("albums", albums);
-
 		return "wechat/differentArea";
 	}
 
@@ -241,16 +258,17 @@ public class WeChatAlbumController extends BaseController {
 
 		WechatElectronicAlbumT wechatElectronicAlbumT = electronicService.selectById(parentid);
 		model.addAttribute("title", wechatElectronicAlbumT.getAlbumName());
-		
-//		WechatAlbumListT info = new WechatAlbumListT();
-//		info.setParentid(parentid);
-//		info.setIsDelete("0");
-//		info.setSort("updateDate");
-//		info.setOrder("desc");
-//		PageInfo<WechatAlbumListT> pageInfo = new PageInfo<WechatAlbumListT>();
-//		pageInfo.setPage(page);
-//		pageInfo.setPageSize(1);
-//		albumListService.selectAll(info, pageInfo);
+
+		// WechatAlbumListT info = new WechatAlbumListT();
+		// info.setParentid(parentid);
+		// info.setIsDelete("0");
+		// info.setSort("updateDate");
+		// info.setOrder("desc");
+		// PageInfo<WechatAlbumListT> pageInfo = new
+		// PageInfo<WechatAlbumListT>();
+		// pageInfo.setPage(page);
+		// pageInfo.setPageSize(1);
+		// albumListService.selectAll(info, pageInfo);
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("parentid", parentid);
@@ -279,8 +297,8 @@ public class WeChatAlbumController extends BaseController {
 			SystemPictureInfo pic = picMap.get(entity.getImgUuid());
 			entity.setSystemPictureInfo(pic);
 		}
-//
-//		model.addAttribute("pageInfo",pageInfo);
+		//
+		// model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("albums", albums);
 		return "wechat/gallery";
 	}
@@ -302,13 +320,13 @@ public class WeChatAlbumController extends BaseController {
 
 		if (imageUuidList == null || imageUuidList.isEmpty()) {
 			model.addAttribute("albums", albums);
-			return "wechat/gallery";
+			return "wechat/collectDetail";
 		}
 
 		List<SystemPictureInfo> picList = systemPictureInfoService.selectByUuids(imageUuidList);
 		if (picList == null || picList.isEmpty()) {
 			model.addAttribute("albums", albums);
-			return "wechat/gallery";
+			return "wechat/collectDetail";
 		}
 		Map<String, SystemPictureInfo> picMap = new HashMap<String, SystemPictureInfo>();
 		for (SystemPictureInfo pictureInfo : picList) {

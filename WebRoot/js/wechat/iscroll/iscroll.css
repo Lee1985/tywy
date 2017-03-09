@@ -1,8 +1,8 @@
 #wrapper {
 	position: absolute;
 	z-index: 1;
-	top: 45px;
-	bottom: 48px;
+	top: 0px;
+	bottom: 1rem;
 	left: -9999px;
 	width: 100%;
 	/* background: #aaa; */
@@ -12,7 +12,7 @@
 #scroller {
 	position: absolute;
 	z-index: 1;
-	/*	-webkit-touch-callout:none;*/
+	-webkit-touch-callout:none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	width: 100%;
 	padding: 0;
@@ -27,12 +27,9 @@
 }
 
 #scroller li {
-	padding: 0 10px;
-	height: 40px;
 	line-height: 40px;
 	border-bottom: 1px solid #ccc;
 	border-top: 1px solid #fff;
-	/* background-color: #fafafa; */
 	font-size: 14px;
 }
 
