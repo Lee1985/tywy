@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -102,8 +101,6 @@ public class DownloadFileController extends BaseController {
             }  
             //输出  
             os.flush();
-		}catch(ClientAbortException e){
-			//客户端关闭
 		} catch (FileNotFoundException e) {
 //			404
 			System.out.println("下载文件异常,文件不存在");
