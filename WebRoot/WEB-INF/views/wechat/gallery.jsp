@@ -30,11 +30,11 @@
 				                <div class="swiper-pic pinch-zoom">
 				                	<img alt="" id="${status.index+1}" data-src="downFileResult.do?urlPath=${item.urlPath}" class="swiper-lazy" 
 				                		 imgUid="${item.id}" data-desc="${item.description}">
-				                    <div class="swiper-lazy-preloader"></div>
+				                    <!-- <div class="swiper-lazy-preloader"></div> -->
 				                </div>
 				            </div>
-			            	<div class="clearfix"></div>
 						</c:forEach>
+						<div class="clearfix"></div>
 			        </div>
 			    </div>
 

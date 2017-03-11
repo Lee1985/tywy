@@ -21,8 +21,8 @@
 					<h3 class="address_name">{{value.saleName}}</h3>
 					<ul>
 						<li>地址：{{value.address}}</li>
-						<li>邮箱：<a href="mailto:{{value.email}}">{{value.email}}</a></li>
-						<li>网址：<a href="{{value.webAddress}}">{{value.webAddress}}</a></li>
+						<li>邮箱：{{value.email}}</li>
+						<li>网址：{{value.webAddress}}</li>
 					</ul>
 				</div>
 				{{/each}}

@@ -29,7 +29,7 @@ $(document).ready(function () {
         preloadImages: false,
         // Enable lazy loading
         lazyLoading : true,
-        /*observer:true,*/
+        //observer:true,
 
         resistance : '100%',
         grabCursor: true,

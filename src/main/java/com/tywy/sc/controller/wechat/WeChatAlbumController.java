@@ -82,7 +82,7 @@ public class WeChatAlbumController extends BaseController {
 			entity.setSystemPictureInfo(pic);
 		}
 		model.addAttribute("carousels", carousels);
-
+		
 		// 获取专区
 		map.put("status", "1");
 		List<WechatElectronicAlbumT> albums = electronicService.selectAll(map);
