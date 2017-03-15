@@ -39,50 +39,66 @@
 		</style>
 	</head>
 	<body class="gray_bg">
-		<main>	
-		   <div class="piclist_box demo-gallery" data-pswp-uid="1">
-		   		<c:forEach items="${albums}" var="item" varStatus="status">
-				   	<a href="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" data-size="1600x1600" data-med="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" data-med-size="1500x2412"  class="demo-gallery__img--main">
-		       			<img class="lazy"   width="10" height="10"  src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" />
-		       			<figure>${item.description}</figure>
-		       			<p>${item.serialNumber}</p>
-		       			<div class="single_select">
-		       				<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/><label for="${item.id}"></label>
-		       			</div>
-	       			</a>
-	       		</c:forEach>
-		   </div>
-		   <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-       			<div class="pswp__bg"></div>
-       			<div class="pswp__scroll-wrap">
-		          	<div class="pswp__container">
-						<div class="pswp__item"></div>
-						<div class="pswp__item"></div>
-						<div class="pswp__item"></div>
-		          	</div>
-         			<div class="pswp__ui pswp__ui--hidden">
-            			<div class="pswp__top-bar">
-							<div class="pswp__counter"></div>
-							<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-							<button class="pswp__button pswp__button--share" title="Share"></button>
-							<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-							<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-							<div class="pswp__preloader">
-								<div class="pswp__preloader__icn">
-						  			<div class="pswp__preloader__cut">
-							    		<div class="pswp__preloader__donut"></div>
-							  		</div>
+		<!--loading-->
+		<div class="load">
+	        <div class="line-scale">
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	        </div>
+  		</div>
+		<!--loading-->
+		
+		<!--container-->
+		<div class="container">
+			<main>	
+			   <div class="piclist_box demo-gallery" data-pswp-uid="1">
+			   		<c:forEach items="${albums}" var="item" varStatus="status">
+					   	<a href="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" data-size="1600x1600" data-med="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" data-med-size="1500x2412"  class="demo-gallery__img--main">
+			       			<img class="lazy"   width="10" height="10"  src="downFileResult.do?urlPath=${item.systemPictureInfo.urlPath}" />
+			       			<figure>${item.description}</figure>
+			       			<p>${item.serialNumber}</p>
+			       			<div class="single_select">
+			       				<input type="checkbox" name="single" id="${item.id}" value="${item.id}"/><label for="${item.id}"></label>
+			       			</div>
+		       			</a>
+		       		</c:forEach>
+			   </div>
+			   <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+	       			<div class="pswp__bg"></div>
+	       			<div class="pswp__scroll-wrap">
+			          	<div class="pswp__container">
+							<div class="pswp__item"></div>
+							<div class="pswp__item"></div>
+							<div class="pswp__item"></div>
+			          	</div>
+	         			<div class="pswp__ui pswp__ui--hidden">
+	            			<div class="pswp__top-bar">
+								<div class="pswp__counter"></div>
+								<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+								<button class="pswp__button pswp__button--share" title="Share"></button>
+								<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+								<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+								<div class="pswp__preloader">
+									<div class="pswp__preloader__icn">
+							  			<div class="pswp__preloader__cut">
+								    		<div class="pswp__preloader__donut"></div>
+								  		</div>
+									</div>
 								</div>
-							</div>
-	            		</div>
-	            		<div class="pswp__caption">
-	              			<div class="pswp__caption__center"></div>
-	            		</div>
-          			</div>
-       			</div>
-   			</div>
-   		</main>
-		<!--main-->
+		            		</div>
+		            		<div class="pswp__caption">
+		              			<div class="pswp__caption__center"></div>
+		            		</div>
+	          			</div>
+	       			</div>
+	   			</div>
+	   		</main>
+			<!--main-->
+		</div>
+		<!--container-->
 		<div class="sc_share">
 			<div class="scang"></div>
 			<div class="share"></div>
@@ -110,6 +126,12 @@
 	<script src="js/wechat/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/wechat/layer.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+	// loading 效果
+	window.onload=function () {
+		$(".load").hide();
+		$(".container").css("opacity","1");
+	}
+	
 	$(function() {
 		  //获取列表图片高度
 		  $(window).on("load resize",
@@ -128,7 +150,7 @@
 		    $(this).hide();
 		    $(".sc_operate,.single_select").show();
 		    //禁用分页
-		    $('main').css('overflow','scroll');
+		    $('main').css('height','auto');
 		  });
 		  //全选
 		  $(".select_all").on("click",
