@@ -8,5 +8,5 @@ public class SessionConstants {
 	public final static String SESSION_PERMISSACT="SESSION_PERMISSACT";
 	public final static String SESSION_PERMISSURL="SESSION_PERMISSURL";
 	public final static String SESSION_USER = "SESSION_USER";
-	public final static String SESSION_WECHAT_OPENID = "SESSION_WECHAT_OPENID";
+	public final static String SESSION_WECHAT_OPENID = "SESSION_WECHAT_OPENID";//
 }
